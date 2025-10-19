@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Blog - Space Alone</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/styles/main.css">
+    <style>
+        .blog-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1200') center/cover;
+            margin-top: 100px;
+            margin-bottom: 80px;
+        }
+        
+        .blog-hero .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .blog-hero .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 20px;
+            text-shadow: 0 0 40px rgba(0, 243, 255, 0.6);
+            letter-spacing: 2px;
+        }
+        
+        .blog-hero .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .blog-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .blog-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+
+        .blog-card-full {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(13, 17, 23, 0.95) 100%);
+            border: 1px solid var(--border-blue);
+            border-radius: var(--radius-md);
+            padding: 0;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-full:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 20px 50px rgba(0, 243, 255, 0.4);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+        }
+
+        .blog-card-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-full h3 {
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .blog-excerpt {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .load-more-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-load-more {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            padding: 15px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-load-more:hover {
+            background: var(--neon-blue);
+            color: var(--space-black);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-load-more:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .blog-grid-full {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-hero {
+                min-height: 35vh;
+                margin-top: 90px;
+            }
+            
+            .blog-hero .hero-title {
+                font-size: 2rem;
+            }
+            
+            .blog-hero .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .blog-hero {
+                margin-top: 80px;
+                min-height: 30vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <nav class="glass-header">
+        <div class="nav-container">
+            <h3 class="logo">SPACE ALONE</h3>
+            <div class="nav-links">
+                <a href="/" class="nav-link-space">Home</a>
+                <a href="/#solar" class="nav-link-space">Solar System</a>
+                <a href="/#nasa" class="nav-link-space">NASA Data</a>
+                <a href="/#apod" class="nav-link-space">APOD</a>
+                <a href="/blog.html" class="nav-link-space active">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="blog-hero">
+        <div class="hero-content">
+            <h1 class="hero-title text-gradient">Space Exploration Blog</h1>
+            <p class="hero-subtitle">Latest discoveries and cosmic insights from across the universe</p>
+        </div>
+    </section>
+    <div class="section-divider"></div>
+    <div class="blog-container">
+        <div class="blog-grid-full" id="blog-grid"></div>
+        
+        <div class="load-more-container">
+            <button class="btn-load-more" id="load-more-btn">
+                Load More Posts
+            </button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4 class="text-gradient footer-title">SPACE ALONE</h4>
+                    <p class="footer-text">Exploring the universe through NASA's eyes.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <nav class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/#solar">Solar System</a>
+                        <a href="/#nasa">NASA Data</a>
+                        <a href="/blog.html">Blog</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Space Alone. Exploring the Universe Together.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./src/js/particles.js"></script>
+    <script>
+        const API_BASE = window.location.origin;
+        let allPosts = [];
+        let displayedPosts = 0;
+        const POSTS_PER_PAGE = 6;
+
+        const blogImages = [
+            'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?w=400&h=250&fit=crop'
+        ];
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getRandomImage() {
+            return blogImages[Math.floor(Math.random() * blogImages.length)];
+        }
+
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch(`${API_BASE}/api/posts`);
+                if (!response.ok) throw new Error('Failed to fetch posts');
+                
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    allPosts = data;
+                    displayPosts();
+                } else {
+                    displayFallbackPosts();
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                displayFallbackPosts();
+            }
+        }
+
+        function displayPosts() {
+            const grid = document.getElementById('blog-grid');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            
+            const postsToShow = allPosts.slice(displayedPosts, displayedPosts + POSTS_PER_PAGE);
+            
+            postsToShow.forEach(post => {
+                const card = createPostCard(post);
+                grid.appendChild(card);
+            });
+            
+            displayedPosts += postsToShow.length;
+            
+            if (displayedPosts >= allPosts.length) {
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.textContent = 'No More Posts';
+            }
+        }
+
+        function createPostCard(post) {
+            const card = document.createElement('div');
+            card.className = 'blog-card-full';
+            card.onclick = () => window.location.href = `/post.html?id=${post.id}`;
+            
+            const excerpt = post.content.length > 180 
+                ? post.content.substring(0, 180) + '...' 
+                : post.content;
+            
+            card.innerHTML = `
+                <img src="${getRandomImage()}" 
+                     alt="${escapeHtml(post.title)}" 
+                     class="blog-card-image"
+                     onerror="this.src='https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&h=250&fit=crop'">
+                <div class="blog-card-content">
+                    <h3>${escapeHtml(post.title)}</h3>
+                    <div class="blog-meta">
+                        <span class="blog-date">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            ${new Date(post.created_at).toLocaleDateString('en-US', { 
+                                year: 'numeric', month: 'short', day: 'numeric' 
+                            })}
+                        </span>
+                        ${post.author_name ? `<span>By ${escapeHtml(post.author_name)}</span>` : ''}
+                    </div>
+                    <p class="blog-excerpt">${escapeHtml(excerpt)}</p>
+                    <a href="/post.html?id=${post.id}" class="blog-read-more" onclick="event.stopPropagation();">
+                        Read Full Article
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function displayFallbackPosts() {
+            const fallbackPosts = [
+                {
+                    id: 1,
+                    title: 'The Search for Extraterrestrial Life',
+                    content: 'Scientists continue their quest to find signs of life beyond Earth. With advanced telescopes and space missions, we are exploring distant planets and moons that might harbor the conditions necessary for life. Recent discoveries of exoplanets in habitable zones have renewed excitement in the scientific community.',
+                    created_at: '2025-01-15T10:00:00Z',
+                    author_name: 'Space Explorer'
+                },
+                {
+                    id: 2,
+                    title: 'Understanding Black Holes',
+                    content: 'Black holes remain one of the universe\'s greatest mysteries. These regions of spacetime exhibit such strong gravitational effects that nothing, not even light, can escape. Recent observations from the Event Horizon Telescope have provided unprecedented views of these cosmic phenomena.',
+                    created_at: '2025-01-10T14:30:00Z',
+                    author_name: 'Cosmic Scientist'
+                },
+                {
+                    id: 3,
+                    title: 'Journey to Mars: The Next Frontier',
+                    content: 'Mars exploration has entered an exciting new phase with multiple rovers exploring the Red Planet. NASA\'s Perseverance rover is collecting samples that could reveal ancient microbial life. The mission represents a crucial step toward human exploration of Mars.',
+                    created_at: '2025-01-05T09:15:00Z',
+                    author_name: 'Mars Explorer'
+                },
+                {
+                    id: 4,
+                    title: 'The James Webb Space Telescope Revolution',
+                    content: 'The James Webb Space Telescope is transforming our understanding of the early universe. Its infrared capabilities allow us to peer further back in time than ever before, revealing galaxies that formed just hundreds of millions of years after the Big Bang.',
+                    created_at: '2024-12-28T11:20:00Z',
+                    author_name: 'Astronomy Today'
+                },
+                {
+                    id: 5,
+                    title: 'Exploring Europa: Ocean Worlds Beyond Earth',
+                    content: 'Jupiter\'s moon Europa harbors a vast ocean beneath its icy surface. This subsurface ocean could potentially support microbial life. NASA\'s upcoming Europa Clipper mission will investigate this fascinating moon and its potential for habitability.',
+                    created_at: '2024-12-20T16:45:00Z',
+                    author_name: 'Deep Space Explorer'
+                },
+                {
+                    id: 6,
+                    title: 'The Mysteries of Dark Matter and Dark Energy',
+                    content: 'Dark matter and dark energy comprise about 95% of the universe, yet remain largely mysterious. Scientists are using advanced detectors and astronomical observations to unravel these cosmic enigmas that shape the structure and fate of our universe.',
+                    created_at: '2024-12-15T08:30:00Z',
+                    author_name: 'Cosmology Insights'
+                }
+            ];
+            
+            allPosts = fallbackPosts;
+            displayPosts();
+        }
+
+        document.getElementById('load-more-btn').addEventListener('click', () => {
+            displayPosts();
+        });
+
+        // Initialize particles
+        function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initParticleArray();
+            }
+            
+            function initParticleArray() {
+                particles = [];
+                const particleCount = Math.min(100, Math.floor(window.innerWidth / 20));
+                
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 1.5 + 0.5,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        opacity: Math.random() * 0.5 + 0.3
+                    });
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach((p) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 243, 255, ${p.opacity})`;
+                    ctx.fill();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            resizeCanvas();
+            animate();
+            window.addEventListener('resize', resizeCanvas);
+        }
+
+        initParticles();
+        loadBlogPosts();
+    </script>
+</body>
+</html>

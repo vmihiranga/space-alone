@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Space Alone</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGradient' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGradient)'/%3E%3C/svg%3E">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2a1b4a 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+        }
+
+        .admin-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            background: rgba(26, 31, 58, 0.85);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00f3ff, #b800ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .nav-tabs {
+            background: rgba(26, 31, 58, 0.85);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            border-radius: 20px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-tabs .nav-link {
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(90deg, #00f3ff, #b800ff);
+            color: #ffffff;
+        }
+
+        .nav-tabs .nav-link:hover:not(.active) {
+            background: rgba(0, 243, 255, 0.1);
+        }
+
+        .content-card {
+            background: rgba(26, 31, 58, 0.85);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(90deg, #00f3ff, #b800ff);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.5);
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(90deg, #ff0055, #ff3366);
+            border: none;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-warning-custom {
+            background: linear-gradient(90deg, #ffaa00, #ff8800);
+            border: none;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-custom {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 10px;
+            padding: 0.75rem;
+            color: #ffffff;
+        }
+
+        .form-control-custom:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #00f3ff;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .form-control-custom::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-label-custom {
+            color: #00f3ff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .post-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 243, 255, 0.5);
+        }
+
+        .post-title {
+            color: #00f3ff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-meta {
+            color: #888;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .alert-custom {
+            background: rgba(0, 243, 255, 0.2);
+            border: 1px solid #00f3ff;
+            color: #00f3ff;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .alert-error {
+            background: rgba(255, 0, 85, 0.2);
+            border: 1px solid #ff0055;
+            color: #ff0055;
+        }
+
+        .modal-content-custom {
+            background: rgba(26, 31, 58, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            border-radius: 20px;
+            color: #ffffff;
+        }
+
+        .modal-header-custom {
+            border-bottom: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .modal-footer-custom {
+            border-top: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        textarea.form-control-custom {
+            min-height: 200px;
+            font-family: monospace;
+        }
+
+        .range-value {
+            display: inline-block;
+            min-width: 50px;
+            text-align: center;
+            color: #00f3ff;
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        input[type="color"] {
+            height: 50px;
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            border-radius: 10px;
+            background: transparent;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div>
+                <h1>🚀 Admin Dashboard</h1>
+                <p class="mb-0" id="user-info">Loading...</p>
+            </div>
+            <button class="btn btn-danger-custom" onclick="logout()">
+                🚪 Logout
+            </button>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button">
+                    📝 Posts Management
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button">
+                    🔐 Change Password
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="solar-tab" data-bs-toggle="tab" data-bs-target="#solar" type="button">
+                    🌌 Solar Configuration
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="adminTabContent">
+            <!-- Posts Management Tab -->
+            <div class="tab-pane fade show active" id="posts" role="tabpanel">
+                <div class="content-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Blog Posts</h2>
+                        <button class="btn btn-primary-custom" onclick="showCreatePostModal()">
+                            ➕ Create New Post
+                        </button>
+                    </div>
+                    
+                    <div id="alert-posts"></div>
+                    <div id="posts-list">Loading posts...</div>
+                </div>
+            </div>
+
+            <!-- Change Password Tab -->
+            <div class="tab-pane fade" id="password" role="tabpanel">
+                <div class="content-card">
+                    <h2 class="mb-4">Change Password</h2>
+                    
+                    <div id="alert-password"></div>
+                    
+                    <form id="password-form">
+                        <div class="mb-3">
+                            <label class="form-label-custom">Current Password</label>
+                            <input type="password" class="form-control-custom form-control" id="current-password" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label-custom">New Password</label>
+                            <input type="password" class="form-control-custom form-control" id="new-password" required minlength="6">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label-custom">Confirm New Password</label>
+                            <input type="password" class="form-control-custom form-control" id="confirm-password" required minlength="6">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary-custom">
+                            🔐 Update Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Solar Configuration Tab -->
+            <div class="tab-pane fade" id="solar" role="tabpanel">
+                <div class="content-card">
+                    <h2 class="mb-4">Solar System Configuration</h2>
+                    
+                    <div id="alert-solar"></div>
+                    
+                    <form id="solar-form">
+                        <div class="mb-4">
+                            <label class="form-label-custom">Rotation Speed: <span class="range-value" id="rotation-value">0.5</span></label>
+                            <input type="range" class="form-range" id="rotation-speed" min="0.1" max="5" step="0.1" value="0.5" oninput="document.getElementById('rotation-value').textContent = this.value">
+                            <small class="text-muted">Adjust how fast planets orbit (0.1 = slowest, 5 = fastest)</small>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label-custom">Number of Planets</label>
+                            <select class="form-control-custom form-select" id="planet-count">
+                                <option value="3">3 Planets</option>
+                                <option value="5">5 Planets</option>
+                                <option value="8" selected>8 Planets</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label-custom">Orbit Color</label>
+                            <input type="color" class="form-control" id="orbit-color" value="#00f3ff">
+                            <small class="text-muted">Choose the color for planet orbits</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary-custom">
+                            💾 Save Configuration
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Edit Post Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title" id="postModalLabel">Create New Post</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="post-form">
+                        <input type="hidden" id="post-id">
+                        
+                        <div class="mb-3">
+                            <label class="form-label-custom">Title</label>
+                            <input type="text" class="form-control-custom form-control" id="post-title" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label-custom">Content</label>
+                            <textarea class="form-control-custom form-control" id="post-content" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer modal-footer-custom">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="savePost()">Save Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check authentication using session
+        let currentUser = null;
+
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/auth/verify', {
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    window.location.href = '/login';
+                    return false;
+                }
+
+                const data = await response.json();
+                currentUser = data.user;
+                document.getElementById('user-info').textContent = `Welcome, ${currentUser.username}`;
+                return true;
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                window.location.href = '/login';
+                return false;
+            }
+        }
+
+        // API helper function with session support
+        async function apiCall(endpoint, method = 'GET', body = null) {
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            };
+
+            if (body) {
+                options.body = JSON.stringify(body);
+            }
+
+            const response = await fetch(endpoint, options);
+            const data = await response.json();
+
+            if (!response.ok) {
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                }
+                throw new Error(data.error || 'Request failed');
+            }
+
+            return data;
+        }
+
+        // Alert helper
+        function showAlert(containerId, message, type = 'success') {
+            const container = document.getElementById(containerId);
+            const alertClass = type === 'success' ? 'alert-custom' : 'alert-error alert-custom';
+            container.innerHTML = `<div class="${alertClass}">${message}</div>`;
+            setTimeout(() => container.innerHTML = '', 5000);
+        }
+
+        // Load posts
+        async function loadPosts() {
+            try {
+                const data = await apiCall('/api/posts');
+                const postsList = document.getElementById('posts-list');
+                
+                if (!data.posts || data.posts.length === 0) {
+                    postsList.innerHTML = '<p class="text-muted">No posts yet. Create your first post!</p>';
+                    return;
+                }
+
+                postsList.innerHTML = data.posts.map(post => `
+                    <div class="post-item">
+                        <div class="post-title">${escapeHtml(post.title)}</div>
+                        <div class="post-meta">
+                            By ${escapeHtml(post.author_name || 'Unknown')} • ${new Date(post.created_at).toLocaleDateString()}
+                        </div>
+                        <div class="mb-3">${escapeHtml(post.content.substring(0, 200))}...</div>
+                        <div>
+                            <button class="btn btn-warning-custom btn-sm me-2" onclick="editPost(${post.id})">
+                                ✏️ Edit
+                            </button>
+                            <button class="btn btn-danger-custom btn-sm" onclick="deletePost(${post.id})">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showAlert('alert-posts', error.message, 'error');
+            }
+        }
+
+        // HTML escape function
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Show create post modal
+        function showCreatePostModal() {
+            document.getElementById('postModalLabel').textContent = 'Create New Post';
+            document.getElementById('post-id').value = '';
+            document.getElementById('post-title').value = '';
+            document.getElementById('post-content').value = '';
+            new bootstrap.Modal(document.getElementById('postModal')).show();
+        }
+
+        // Edit post
+        async function editPost(id) {
+            try {
+                const post = await apiCall(`/api/posts/${id}`);
+                document.getElementById('postModalLabel').textContent = 'Edit Post';
+                document.getElementById('post-id').value = post.id;
+                document.getElementById('post-title').value = post.title;
+                document.getElementById('post-content').value = post.content;
+                new bootstrap.Modal(document.getElementById('postModal')).show();
+            } catch (error) {
+                showAlert('alert-posts', error.message, 'error');
+            }
+        }
+
+        // Save post
+        async function savePost() {
+            const id = document.getElementById('post-id').value;
+            const title = document.getElementById('post-title').value;
+            const content = document.getElementById('post-content').value;
+
+            if (!title || !content) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                if (id) {
+                    await apiCall(`/api/posts/${id}`, 'PUT', { title, content });
+                    showAlert('alert-posts', 'Post updated successfully!');
+                } else {
+                    await apiCall('/api/posts', 'POST', { title, content });
+                    showAlert('alert-posts', 'Post created successfully!');
+                }
+
+                bootstrap.Modal.getInstance(document.getElementById('postModal')).hide();
+                loadPosts();
+            } catch (error) {
+                showAlert('alert-posts', error.message, 'error');
+            }
+        }
+
+        // Delete post
+        async function deletePost(id) {
+            if (!confirm('Are you sure you want to delete this post?')) return;
+
+            try {
+                await apiCall(`/api/posts/${id}`, 'DELETE');
+                showAlert('alert-posts', 'Post deleted successfully!');
+                loadPosts();
+            } catch (error) {
+                showAlert('alert-posts', error.message, 'error');
+            }
+        }
+
+        // Change password
+        document.getElementById('password-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword !== confirmPassword) {
+                showAlert('alert-password', 'New passwords do not match!', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showAlert('alert-password', 'Password must be at least 6 characters!', 'error');
+                return;
+            }
+
+            try {
+                await apiCall('/api/auth/change-password', 'POST', {
+                    currentPassword,
+                    newPassword
+                });
+                
+                showAlert('alert-password', 'Password changed successfully!');
+                document.getElementById('password-form').reset();
+            } catch (error) {
+                showAlert('alert-password', error.message, 'error');
+            }
+        });
+
+        // Load solar config
+        async function loadSolarConfig() {
+            try {
+                const config = await apiCall('/api/solar-config');
+                document.getElementById('rotation-speed').value = config.solar_rotation_speed || 0.5;
+                document.getElementById('rotation-value').textContent = config.solar_rotation_speed || 0.5;
+                document.getElementById('planet-count').value = config.solar_planet_count || 8;
+                document.getElementById('orbit-color').value = config.solar_orbit_color || '#00f3ff';
+            } catch (error) {
+                console.error('Failed to load solar config:', error);
+            }
+        }
+
+        // Save solar config
+        document.getElementById('solar-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const rotationSpeed = parseFloat(document.getElementById('rotation-speed').value);
+            const planetCount = parseInt(document.getElementById('planet-count').value);
+            const orbitColor = document.getElementById('orbit-color').value;
+
+            try {
+                await apiCall('/api/solar-config', 'PUT', {
+                    rotation_speed: rotationSpeed,
+                    planet_count: planetCount,
+                    orbit_color: orbitColor
+                });
+                
+                showAlert('alert-solar', 'Solar configuration updated successfully!');
+            } catch (error) {
+                showAlert('alert-solar', error.message, 'error');
+            }
+        });
+
+        // Logout
+        async function logout() {
+            if (!confirm('Are you sure you want to logout?')) return;
+
+            try {
+                await apiCall('/api/auth/logout', 'POST');
+                window.location.href = '/login';
+            } catch (error) {
+                console.error('Logout failed:', error);
+                // Force redirect even if API call fails
+                window.location.href = '/login';
+            }
+        }
+
+        // Initialize
+        checkAuth().then(authenticated => {
+            if (authenticated) {
+                loadPosts();
+                loadSolarConfig();
+            }
+        });
+    </script>
+</body>
+</html>
