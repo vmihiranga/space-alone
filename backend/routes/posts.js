@@ -1,6 +1,6 @@
 const express = require('express');
 
-module.exports = (db) => {
+module.exports = (sql) => {
   const router = express.Router();
 
   const authMiddleware = (req, res, next) => {
@@ -27,97 +27,98 @@ module.exports = (db) => {
       .trim();
   }
 
-  router.get('/', (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 100;
-    const offset = (page - 1) * limit;
+  router.get('/', async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 100;
+      const offset = (page - 1) * limit;
 
-    db.get('SELECT COUNT(*) as total FROM posts', [], (err, countRow) => {
-      if (err) {
-        console.error('Error counting posts:', err);
-        return res.status(500).json({ error: 'Database error' });
-      }
+      const countResult = await sql`SELECT COUNT(*) as total FROM posts`;
+      const total = parseInt(countResult[0].total);
 
-      db.all(
-        `SELECT p.*, 
-         (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
-         (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
-         FROM posts p 
-         ORDER BY created_at DESC LIMIT ? OFFSET ?`,
-        [limit, offset],
-        (err, rows) => {
-          if (err) {
-            console.error('Error fetching posts:', err);
-            return res.status(500).json({ error: 'Database error' });
-          }
-          
-          res.json({
-            posts: rows || [],
-            pagination: {
-              page,
-              limit,
-              total: countRow.total,
-              totalPages: Math.ceil(countRow.total / limit)
-            }
-          });
+      const posts = await sql`
+        SELECT p.*, 
+          (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+          (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
+        FROM posts p 
+        ORDER BY created_at DESC 
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      
+      res.json({
+        posts: posts || [],
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit)
         }
-      );
-    });
+      });
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.get('/search/query', (req, res) => {
+  router.get('/search/query', async (req, res) => {
     const searchTerm = req.query.q;
     
     if (!searchTerm) {
       return res.status(400).json({ error: 'Search query required' });
     }
 
-    db.all(
-      `SELECT p.*, 
-       (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
-       (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
-       FROM posts p 
-       WHERE title LIKE ? OR content LIKE ? 
-       ORDER BY created_at DESC`,
-      [`%${searchTerm}%`, `%${searchTerm}%`],
-      (err, rows) => {
-        if (err) {
-          console.error('Error searching posts:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        res.json(rows || []);
-      }
-    );
+    try {
+      const posts = await sql`
+        SELECT p.*, 
+          (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+          (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
+        FROM posts p 
+        WHERE title ILIKE ${'%' + searchTerm + '%'} OR content ILIKE ${'%' + searchTerm + '%'}
+        ORDER BY created_at DESC
+      `;
+      res.json(posts || []);
+    } catch (error) {
+      console.error('Error searching posts:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.get('/:id', (req, res) => {
-    const identifier = req.params.id;
-    const isNumeric = /^\d+$/.test(identifier);
+  router.get('/:id', async (req, res) => {
+    try {
+      const identifier = req.params.id;
+      const isNumeric = /^\d+$/.test(identifier);
 
-    const query = isNumeric 
-      ? `SELECT p.*, 
-         (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
-         (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
-         FROM posts p WHERE p.id = ?`
-      : `SELECT p.*, 
-         (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
-         (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
-         FROM posts p WHERE p.slug = ?`;
-
-    db.get(query, [identifier], (err, row) => {
-      if (err) {
-        console.error('Error fetching post:', err);
-        return res.status(500).json({ error: 'Database error' });
+      let post;
+      if (isNumeric) {
+        const result = await sql`
+          SELECT p.*, 
+            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+            (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
+          FROM posts p WHERE p.id = ${parseInt(identifier)}
+        `;
+        post = result[0];
+      } else {
+        const result = await sql`
+          SELECT p.*, 
+            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+            (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
+          FROM posts p WHERE p.slug = ${identifier}
+        `;
+        post = result[0];
       }
-      if (!row) {
+
+      if (!post) {
         return res.status(404).json({ error: 'Post not found' });
       }
-      res.json(row);
-    });
+      res.json(post);
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.post('/', authMiddleware, adminMiddleware, (req, res) => {
-    const { title, content } = req.body;
+  router.post('/', authMiddleware, adminMiddleware, async (req, res) => {
+    const { title, content, image_url } = req.body;
 
     if (!title || !content) {
       return res.status(400).json({ error: 'Title and content are required' });
@@ -125,38 +126,33 @@ module.exports = (db) => {
 
     const slug = createSlug(title);
 
-    db.run(
-      'INSERT INTO posts (title, slug, content, author_id, author_name) VALUES (?, ?, ?, ?, ?)',
-      [title, slug, content, req.user.id, req.user.username],
-      function(err) {
-        if (err) {
-          console.error('Error creating post:', err);
-          if (err.message.includes('UNIQUE')) {
-            return res.status(400).json({ error: 'A post with this title already exists' });
-          }
-          return res.status(500).json({ error: 'Database error' });
-        }
-        
-        db.run(
-          'INSERT INTO user_activity (user_id, username, action, details) VALUES (?, ?, ?, ?)',
-          [req.user.id, req.user.username, 'CREATE_POST', `Created post: ${title}`],
-          () => {}
-        );
+    try {
+      const result = await sql`
+        INSERT INTO posts (title, slug, content, image_url, author_id, author_name)
+        VALUES (${title}, ${slug}, ${content}, ${image_url || null}, ${req.user.id}, ${req.user.username})
+        RETURNING *
+      `;
+      
+      await sql`
+        INSERT INTO user_activity (user_id, username, action, details)
+        VALUES (${req.user.id}, ${req.user.username}, 'CREATE_POST', ${'Created post: ' + title})
+      `;
 
-        res.status(201).json({ 
-          id: this.lastID, 
-          title, 
-          slug,
-          content,
-          author_name: req.user.username,
-          message: 'Post created successfully' 
-        });
+      res.status(201).json({ 
+        ...result[0],
+        message: 'Post created successfully' 
+      });
+    } catch (error) {
+      console.error('Error creating post:', error);
+      if (error.message.includes('unique') || error.message.includes('duplicate')) {
+        return res.status(400).json({ error: 'A post with this title already exists' });
       }
-    );
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.put('/:id', authMiddleware, adminMiddleware, (req, res) => {
-    const { title, content } = req.body;
+  router.put('/:id', authMiddleware, adminMiddleware, async (req, res) => {
+    const { title, content, image_url } = req.body;
 
     if (!title || !content) {
       return res.status(400).json({ error: 'Title and content are required' });
@@ -164,187 +160,172 @@ module.exports = (db) => {
 
     const slug = createSlug(title);
 
-    db.run(
-      'UPDATE posts SET title = ?, slug = ?, content = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-      [title, slug, content, req.params.id],
-      function(err) {
-        if (err) {
-          console.error('Error updating post:', err);
-          if (err.message.includes('UNIQUE')) {
-            return res.status(400).json({ error: 'A post with this title already exists' });
-          }
-          return res.status(500).json({ error: 'Database error' });
-        }
-        if (this.changes === 0) {
-          return res.status(404).json({ error: 'Post not found' });
-        }
-
-        db.run(
-          'INSERT INTO user_activity (user_id, username, action, details) VALUES (?, ?, ?, ?)',
-          [req.user.id, req.user.username, 'UPDATE_POST', `Updated post: ${title}`],
-          () => {}
-        );
-
-        res.json({ message: 'Post updated successfully', slug });
-      }
-    );
-  });
-
-  router.delete('/:id', authMiddleware, adminMiddleware, (req, res) => {
-    db.get('SELECT title FROM posts WHERE id = ?', [req.params.id], (err, post) => {
-      if (err || !post) {
+    try {
+      const result = await sql`
+        UPDATE posts 
+        SET title = ${title}, slug = ${slug}, content = ${content}, 
+            image_url = ${image_url || null}, updated_at = CURRENT_TIMESTAMP 
+        WHERE id = ${parseInt(req.params.id)}
+        RETURNING *
+      `;
+      
+      if (result.length === 0) {
         return res.status(404).json({ error: 'Post not found' });
       }
 
-      db.run(
-        'DELETE FROM posts WHERE id = ?',
-        [req.params.id],
-        function(err) {
-          if (err) {
-            console.error('Error deleting post:', err);
-            return res.status(500).json({ error: 'Database error' });
-          }
+      await sql`
+        INSERT INTO user_activity (user_id, username, action, details)
+        VALUES (${req.user.id}, ${req.user.username}, 'UPDATE_POST', ${'Updated post: ' + title})
+      `;
 
-          db.run(
-            'INSERT INTO user_activity (user_id, username, action, details) VALUES (?, ?, ?, ?)',
-            [req.user.id, req.user.username, 'DELETE_POST', `Deleted post: ${post.title}`],
-            () => {}
-          );
-
-          res.json({ message: 'Post deleted successfully' });
-        }
-      );
-    });
-  });
-
-
-  router.get('/:id/likes', (req, res) => {
-    db.get(
-      'SELECT COUNT(*) as count FROM post_likes WHERE post_id = ?',
-      [req.params.id],
-      (err, row) => {
-        if (err) {
-          console.error('Error counting likes:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        res.json({ count: row.count });
+      res.json({ message: 'Post updated successfully', slug, post: result[0] });
+    } catch (error) {
+      console.error('Error updating post:', error);
+      if (error.message.includes('unique') || error.message.includes('duplicate')) {
+        return res.status(400).json({ error: 'A post with this title already exists' });
       }
-    );
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.post('/:id/like', (req, res) => {
-    const postId = req.params.id;
-    const userIdentifier = req.session?.user?.id || req.ip || 'anonymous';
+  router.delete('/:id', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+      const postResult = await sql`
+        SELECT title FROM posts WHERE id = ${parseInt(req.params.id)}
+      `;
 
-    db.run(
-      'INSERT OR IGNORE INTO post_likes (post_id, user_identifier) VALUES (?, ?)',
-      [postId, userIdentifier],
-      function(err) {
-        if (err) {
-          console.error('Error adding like:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        
-        db.get(
-          'SELECT COUNT(*) as count FROM post_likes WHERE post_id = ?',
-          [postId],
-          (err, row) => {
-            if (err) {
-              return res.status(500).json({ error: 'Database error' });
-            }
-            res.json({ 
-              message: 'Post liked', 
-              likes: row.count,
-              liked: true
-            });
-          }
-        );
+      if (postResult.length === 0) {
+        return res.status(404).json({ error: 'Post not found' });
       }
-    );
+
+      const post = postResult[0];
+
+      await sql`
+        DELETE FROM posts WHERE id = ${parseInt(req.params.id)}
+      `;
+
+      await sql`
+        INSERT INTO user_activity (user_id, username, action, details)
+        VALUES (${req.user.id}, ${req.user.username}, 'DELETE_POST', ${'Deleted post: ' + post.title})
+      `;
+
+      res.json({ message: 'Post deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.delete('/:id/like', (req, res) => {
-    const postId = req.params.id;
-    const userIdentifier = req.session?.user?.id || req.ip || 'anonymous';
-
-    db.run(
-      'DELETE FROM post_likes WHERE post_id = ? AND user_identifier = ?',
-      [postId, userIdentifier],
-      function(err) {
-        if (err) {
-          console.error('Error removing like:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        
-        db.get(
-          'SELECT COUNT(*) as count FROM post_likes WHERE post_id = ?',
-          [postId],
-          (err, row) => {
-            if (err) {
-              return res.status(500).json({ error: 'Database error' });
-            }
-            res.json({ 
-              message: 'Like removed', 
-              likes: row.count,
-              liked: false
-            });
-          }
-        );
-      }
-    );
+  router.get('/:id/likes', async (req, res) => {
+    try {
+      const result = await sql`
+        SELECT COUNT(*) as count FROM post_likes WHERE post_id = ${parseInt(req.params.id)}
+      `;
+      res.json({ count: parseInt(result[0].count) });
+    } catch (error) {
+      console.error('Error counting likes:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.get('/:id/liked', (req, res) => {
-    const postId = req.params.id;
-    const userIdentifier = req.session?.user?.id || req.ip || 'anonymous';
+  router.post('/:id/like', async (req, res) => {
+    const postId = parseInt(req.params.id);
+    const userIdentifier = req.session?.user?.id?.toString() || req.ip || 'anonymous';
 
-    db.get(
-      'SELECT * FROM post_likes WHERE post_id = ? AND user_identifier = ?',
-      [postId, userIdentifier],
-      (err, row) => {
-        if (err) {
-          console.error('Error checking like status:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        res.json({ liked: !!row });
-      }
-    );
+    try {
+      await sql`
+        INSERT INTO post_likes (post_id, user_identifier)
+        VALUES (${postId}, ${userIdentifier})
+        ON CONFLICT (post_id, user_identifier) DO NOTHING
+      `;
+      
+      const result = await sql`
+        SELECT COUNT(*) as count FROM post_likes WHERE post_id = ${postId}
+      `;
+      
+      res.json({ 
+        message: 'Post liked', 
+        likes: parseInt(result[0].count),
+        liked: true
+      });
+    } catch (error) {
+      console.error('Error adding like:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.post('/:id/share', (req, res) => {
-    const postId = req.params.id;
+  router.delete('/:id/like', async (req, res) => {
+    const postId = parseInt(req.params.id);
+    const userIdentifier = req.session?.user?.id?.toString() || req.ip || 'anonymous';
+
+    try {
+      await sql`
+        DELETE FROM post_likes 
+        WHERE post_id = ${postId} AND user_identifier = ${userIdentifier}
+      `;
+      
+      const result = await sql`
+        SELECT COUNT(*) as count FROM post_likes WHERE post_id = ${postId}
+      `;
+      
+      res.json({ 
+        message: 'Like removed', 
+        likes: parseInt(result[0].count),
+        liked: false
+      });
+    } catch (error) {
+      console.error('Error removing like:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
+  });
+
+  router.get('/:id/liked', async (req, res) => {
+    const postId = parseInt(req.params.id);
+    const userIdentifier = req.session?.user?.id?.toString() || req.ip || 'anonymous';
+
+    try {
+      const result = await sql`
+        SELECT * FROM post_likes 
+        WHERE post_id = ${postId} AND user_identifier = ${userIdentifier}
+      `;
+      res.json({ liked: result.length > 0 });
+    } catch (error) {
+      console.error('Error checking like status:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
+  });
+
+  router.post('/:id/share', async (req, res) => {
+    const postId = parseInt(req.params.id);
     const { platform } = req.body;
-    const userIdentifier = req.session?.user?.id || req.ip || 'anonymous';
+    const userIdentifier = req.session?.user?.id?.toString() || req.ip || 'anonymous';
 
     if (!platform) {
       return res.status(400).json({ error: 'Platform required' });
     }
 
-    db.run(
-      'INSERT INTO post_shares (post_id, platform, user_identifier) VALUES (?, ?, ?)',
-      [postId, platform, userIdentifier],
-      function(err) {
-        if (err) {
-          console.error('Error tracking share:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        res.json({ message: 'Share tracked successfully' });
-      }
-    );
+    try {
+      await sql`
+        INSERT INTO post_shares (post_id, platform, user_identifier)
+        VALUES (${postId}, ${platform}, ${userIdentifier})
+      `;
+      res.json({ message: 'Share tracked successfully' });
+    } catch (error) {
+      console.error('Error tracking share:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  router.get('/:id/shares', (req, res) => {
-    db.get(
-      'SELECT COUNT(*) as count FROM post_shares WHERE post_id = ?',
-      [req.params.id],
-      (err, row) => {
-        if (err) {
-          console.error('Error counting shares:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        res.json({ count: row.count });
-      }
-    );
+  router.get('/:id/shares', async (req, res) => {
+    try {
+      const result = await sql`
+        SELECT COUNT(*) as count FROM post_shares WHERE post_id = ${parseInt(req.params.id)}
+      `;
+      res.json({ count: parseInt(result[0].count) });
+    } catch (error) {
+      console.error('Error counting shares:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
   return router;
