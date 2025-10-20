@@ -94,3 +94,17 @@ CREATE TABLE IF NOT EXISTS user_activity (
 -- Create indexes for activity logs
 CREATE INDEX IF NOT EXISTS idx_user_activity_user_id ON user_activity(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_activity_created_at ON user_activity(created_at);
+
+-- Application settings (single row) for UI configs like solar controls
+CREATE TABLE IF NOT EXISTS app_settings (
+    id INTEGER PRIMARY KEY DEFAULT 1,
+    solar_rotation_speed REAL DEFAULT 0.5,
+    solar_planet_count INTEGER DEFAULT 8,
+    solar_orbit_color TEXT DEFAULT '#00f3ff',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Ensure single settings row exists
+INSERT INTO app_settings (id)
+SELECT 1
+WHERE NOT EXISTS (SELECT 1 FROM app_settings WHERE id = 1);
