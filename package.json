@@ -2,10 +2,10 @@
   "name": "space-alone",
   "version": "1.0.0",
   "description": "Space Alone - Cosmic Blog Platform with Admin Dashboard",
-  "main": "server.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -37,3 +37,4 @@
     "node": ">=14.0.0"
   }
 }
+
