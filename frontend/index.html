@@ -712,8 +712,102 @@
             </div>
         </section>
 
-        <div class="section-divider"></div>
+        <!-- Add this after the APOD section and before the blog section -->
+<div class="section-divider"></div>
 
+<section id="spacex" class="section-space">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title text-gradient">
+                SpaceX Mission Control
+            </h2>
+            <p class="section-subtitle">
+                Live launch data • Mission stats • Starlink constellation
+            </p>
+        </div>
+
+        <!-- SpaceX Stats Overview -->
+        <div class="spacex-stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="total-launches">--</div>
+                <div class="stat-label">Total Launches</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="upcoming-count">--</div>
+                <div class="stat-label">Upcoming Missions</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="success-rate">--</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="successful-launches">--</div>
+                <div class="stat-label">Successful Missions</div>
+            </div>
+        </div>
+
+        <!-- Latest Launch Showcase -->
+        <div class="latest-launch-section">
+            <h3 class="subsection-title text-gradient">Latest Launch</h3>
+            <div id="latest-launch-container" class="latest-launch-container">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading latest mission...</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Upcoming Launches -->
+        <div class="upcoming-launches-section">
+            <h3 class="subsection-title text-gradient">Upcoming Missions</h3>
+            <div id="upcoming-launches-grid" class="upcoming-launches-grid">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading upcoming missions...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Starlink Constellation -->
+        <div class="starlink-section">
+            <h3 class="subsection-title text-gradient">Starlink Constellation</h3>
+            <div id="starlink-viz-container" class="starlink-viz-container"></div>
+            <div id="starlink-stats" class="starlink-stats">
+                <div class="loading-state">
+                    <div class="spinner-small"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="section-divider"></div>
         <section id="blog" class="section-space">
             <div class="container">
                 <div class="section-header">
