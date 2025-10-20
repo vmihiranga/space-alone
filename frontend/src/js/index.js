@@ -799,6 +799,536 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
+// Add these variables at the top with other global variables
+let rocketScene, rocketCamera, rocketRenderer, rocket, rocketParticles = [];
+let isLaunching = false;
+let starlinkScene, starlinkCamera, starlinkRenderer, starlinkSatellites = [];
+
+// SpaceX Functions
+
+async function loadSpaceXStats() {
+    try {
+        const response = await fetch(`${API_BASE}/api/spacex/stats`);
+        if (!response.ok) throw new Error('SpaceX stats fetch failed');
+        
+        const data = await response.json();
+        
+        document.getElementById('total-launches').textContent = data.totalLaunches || '0';
+        document.getElementById('upcoming-count').textContent = data.upcomingLaunches || '0';
+        document.getElementById('success-rate').textContent = data.successRate + '%' || '0%';
+        document.getElementById('successful-launches').textContent = data.successfulLaunches || '0';
+        
+        animateCountUp('total-launches', data.totalLaunches);
+        animateCountUp('upcoming-count', data.upcomingLaunches);
+        animateCountUp('successful-launches', data.successfulLaunches);
+    } catch (error) {
+        console.error('SpaceX Stats Error:', error);
+        document.getElementById('total-launches').textContent = '187';
+        document.getElementById('upcoming-count').textContent = '12';
+        document.getElementById('success-rate').textContent = '96.8%';
+        document.getElementById('successful-launches').textContent = '181';
+    }
+}
+
+async function loadLatestLaunch() {
+    try {
+        const response = await fetch(`${API_BASE}/api/spacex/latest`);
+        if (!response.ok) throw new Error('Latest launch fetch failed');
+        
+        const launch = await response.json();
+        displayLatestLaunch(launch);
+    } catch (error) {
+        console.error('Latest Launch Error:', error);
+        displayFallbackLatestLaunch();
+    }
+}
+
+function displayLatestLaunch(launch) {
+    const container = document.getElementById('latest-launch-container');
+    const launchDate = new Date(launch.date_utc);
+    
+    container.innerHTML = `
+        <div class="latest-launch-card">
+            <div class="launch-image-container">
+                <img src="${launch.links?.patch?.large || launch.links?.flickr?.original?.[0] || 'https://images.unsplash.com/photo-1516849677043-ef67c9557e16?w=800&h=400&fit=crop'}" 
+                     alt="${escapeHtml(launch.name)}" 
+                     class="launch-image"
+                     onerror="this.src='https://images.unsplash.com/photo-1516849677043-ef67c9557e16?w=800&h=400&fit=crop'">
+                <div class="launch-badge ${launch.success ? '' : 'failed'}">
+                    ${launch.success ? 'SUCCESS' : launch.success === false ? 'FAILED' : 'PENDING'}
+                </div>
+            </div>
+            <div class="launch-details">
+                <h3 class="launch-name">${escapeHtml(launch.name)}</h3>
+                <div class="launch-date">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    ${launchDate.toLocaleDateString('en-US', { 
+                        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+                        hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+                    })}
+                </div>
+                <p class="launch-description">
+                    ${escapeHtml(launch.details || 'This mission represents another milestone in SpaceX\'s journey to make space more accessible and advance humanity\'s reach beyond Earth.')}
+                </p>
+                <div class="launch-info-grid">
+                    <div class="launch-info-item">
+                        <div class="launch-info-label">Rocket</div>
+                        <div class="launch-info-value">${launch.rocket || 'Falcon 9'}</div>
+                    </div>
+                    <div class="launch-info-item">
+                        <div class="launch-info-label">Launchpad</div>
+                        <div class="launch-info-value">${launch.launchpad || 'CCSFS SLC 40'}</div>
+                    </div>
+                    <div class="launch-info-item">
+                        <div class="launch-info-label">Flight Number</div>
+                        <div class="launch-info-value">#${launch.flight_number || 'N/A'}</div>
+                    </div>
+                    <div class="launch-info-item">
+                        <div class="launch-info-label">Cores Reused</div>
+                        <div class="launch-info-value">${launch.cores?.[0]?.reused ? 'Yes' : 'No'}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function displayFallbackLatestLaunch() {
+    const container = document.getElementById('latest-launch-container');
+    container.innerHTML = `
+        <div class="loading-state">
+            <p style="color: var(--neon-blue);">Unable to load latest launch data.</p>
+        </div>
+    `;
+}
+
+async function loadUpcomingLaunches() {
+    try {
+        const response = await fetch(`${API_BASE}/api/spacex/upcoming`);
+        if (!response.ok) throw new Error('Upcoming launches fetch failed');
+        
+        const launches = await response.json();
+        displayUpcomingLaunches(launches);
+    } catch (error) {
+        console.error('Upcoming Launches Error:', error);
+        displayFallbackUpcomingLaunches();
+    }
+}
+
+function displayUpcomingLaunches(launches) {
+    const container = document.getElementById('upcoming-launches-grid');
+    
+    if (!launches || launches.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">No upcoming launches scheduled.</p>';
+        return;
+    }
+    
+    container.innerHTML = launches.map(launch => {
+        const launchDate = new Date(launch.date_utc);
+        const countdown = getCountdown(launchDate);
+        
+        return `
+            <div class="upcoming-launch-card">
+                <h4>${escapeHtml(launch.name)}</h4>
+                <div class="launch-date">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    ${launchDate.toLocaleDateString('en-US', { 
+                        month: 'short', day: 'numeric', year: 'numeric', 
+                        hour: '2-digit', minute: '2-digit'
+                    })}
+                </div>
+                <p>${escapeHtml(launch.details?.substring(0, 120) || 'Upcoming SpaceX mission to deliver payloads to orbit.')}${launch.details?.length > 120 ? '...' : ''}</p>
+                <div class="countdown-timer">
+                    <div class="countdown-label">T-Minus</div>
+                    <div class="countdown-value">${countdown}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function displayFallbackUpcomingLaunches() {
+    const container = document.getElementById('upcoming-launches-grid');
+    container.innerHTML = `
+        <div class="loading-state">
+            <p style="color: var(--neon-blue);">Unable to load upcoming launches.</p>
+        </div>
+    `;
+}
+
+function getCountdown(targetDate) {
+    const now = new Date();
+    const diff = targetDate - now;
+    
+    if (diff < 0) return 'Launched';
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    
+    if (days > 0) {
+        return `${days}d ${hours}h`;
+    } else {
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        return `${hours}h ${minutes}m`;
+    }
+}
+
+function animateCountUp(elementId, targetValue) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    const duration = 2000;
+    const increment = targetValue / (duration / 16);
+    let currentValue = 0;
+    
+    const timer = setInterval(() => {
+        currentValue += increment;
+        if (currentValue >= targetValue) {
+            element.textContent = Math.round(targetValue);
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.round(currentValue);
+        }
+    }, 16);
+}
+
+// 3D Rocket Animation
+function init3DRocket() {
+    const container = document.getElementById('rocket-3d-container');
+    if (!container) return;
+    
+    rocketScene = new THREE.Scene();
+    rocketCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    rocketRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    rocketRenderer.setSize(container.clientWidth, container.clientHeight);
+    rocketRenderer.setClearColor(0x000000, 0);
+    container.appendChild(rocketRenderer.domElement);
+    
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    rocketScene.add(ambientLight);
+    
+    const pointLight = new THREE.PointLight(0x00f3ff, 2, 100);
+    pointLight.position.set(0, 10, 10);
+    rocketScene.add(pointLight);
+    
+    // Create rocket body
+    const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 4, 32);
+    const bodyMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0xcccccc,
+        shininess: 100,
+        specular: 0x00f3ff
+    });
+    rocket = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    
+    // Rocket nose cone
+    const noseGeometry = new THREE.ConeGeometry(0.5, 1.5, 32);
+    const noseMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0xff0000,
+                shininess: 100,
+        emissive: 0xff0000,
+        emissiveIntensity: 0.3
+    });
+    const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+    nose.position.y = 2.75;
+    rocket.add(nose);
+    
+    // Rocket fins
+    const finGeometry = new THREE.BoxGeometry(0.2, 1, 0.8);
+    const finMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0x333333,
+        shininess: 50
+    });
+    
+    for (let i = 0; i < 4; i++) {
+        const fin = new THREE.Mesh(finGeometry, finMaterial);
+        const angle = (i / 4) * Math.PI * 2;
+        fin.position.x = Math.cos(angle) * 0.6;
+        fin.position.z = Math.sin(angle) * 0.6;
+        fin.position.y = -1.5;
+        fin.rotation.y = angle;
+        rocket.add(fin);
+    }
+    
+    // Engine glow
+    const engineGlowGeometry = new THREE.CylinderGeometry(0.3, 0.4, 0.5, 32);
+    const engineGlowMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xff6600,
+        transparent: true,
+        opacity: 0.8
+    });
+    const engineGlow = new THREE.Mesh(engineGlowGeometry, engineGlowMaterial);
+    engineGlow.position.y = -2.25;
+    rocket.add(engineGlow);
+    
+    rocketScene.add(rocket);
+    rocket.position.y = 0;
+    
+    // Create stars background
+    const starGeometry = new THREE.BufferGeometry();
+    const starVertices = [];
+    for (let i = 0; i < 1000; i++) {
+        const x = (Math.random() - 0.5) * 200;
+        const y = (Math.random() - 0.5) * 200;
+        const z = (Math.random() - 0.5) * 200;
+        starVertices.push(x, y, z);
+    }
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0x00f3ff, size: 0.5 });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    rocketScene.add(stars);
+    
+    rocketCamera.position.set(5, 3, 10);
+    rocketCamera.lookAt(0, 0, 0);
+    
+    animate3DRocket();
+}
+
+function animate3DRocket() {
+    requestAnimationFrame(animate3DRocket);
+    
+    if (!isLaunching) {
+        rocket.rotation.y += 0.01;
+    } else {
+        rocket.position.y += 0.1;
+        rocket.rotation.y += 0.02;
+        
+        // Create exhaust particles
+        if (Math.random() > 0.7) {
+            const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+            const particleMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xff6600,
+                transparent: true,
+                opacity: 0.8
+            });
+            const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+            particle.position.set(
+                rocket.position.x + (Math.random() - 0.5) * 0.5,
+                rocket.position.y - 2.5,
+                rocket.position.z + (Math.random() - 0.5) * 0.5
+            );
+            particle.velocity = { y: -0.1, opacity: 0.8 };
+            rocketParticles.push(particle);
+            rocketScene.add(particle);
+        }
+        
+        // Update particles
+        rocketParticles.forEach((particle, index) => {
+            particle.position.y += particle.velocity.y;
+            particle.velocity.opacity -= 0.02;
+            particle.material.opacity = particle.velocity.opacity;
+            
+            if (particle.velocity.opacity <= 0) {
+                rocketScene.remove(particle);
+                rocketParticles.splice(index, 1);
+            }
+        });
+        
+        if (rocket.position.y > 20) {
+            isLaunching = false;
+            rocket.position.y = 0;
+        }
+    }
+    
+    rocketRenderer.render(rocketScene, rocketCamera);
+}
+
+function setupRocketControls() {
+    const launchBtn = document.getElementById('launch-rocket');
+    const resetBtn = document.getElementById('reset-rocket');
+    
+    if (launchBtn) {
+        launchBtn.addEventListener('click', () => {
+            if (!isLaunching) {
+                isLaunching = true;
+                launchBtn.disabled = true;
+                setTimeout(() => {
+                    launchBtn.disabled = false;
+                }, 3000);
+            }
+        });
+    }
+    
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            isLaunching = false;
+            rocket.position.y = 0;
+            rocket.rotation.y = 0;
+            rocketParticles.forEach(p => rocketScene.remove(p));
+            rocketParticles = [];
+        });
+    }
+}
+
+// Starlink Visualization
+function initStarlinkVisualization() {
+    const container = document.getElementById('starlink-viz-container');
+    if (!container) return;
+    
+    starlinkScene = new THREE.Scene();
+    starlinkCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    starlinkRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    starlinkRenderer.setSize(container.clientWidth, container.clientHeight);
+    starlinkRenderer.setClearColor(0x000000, 0);
+    container.appendChild(starlinkRenderer.domElement);
+    
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    starlinkScene.add(ambientLight);
+    
+    // Create Earth
+    const earthGeometry = new THREE.SphereGeometry(2, 32, 32);
+    const earthMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0x4a90e2,
+        emissive: 0x1a3a5a,
+        emissiveIntensity: 0.5,
+        shininess: 30
+    });
+    const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+    starlinkScene.add(earth);
+    
+    // Add Earth glow
+    const glowGeometry = new THREE.SphereGeometry(2.3, 32, 32);
+    const glowMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0x00f3ff,
+        transparent: true,
+        opacity: 0.2
+    });
+    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    starlinkScene.add(glow);
+    
+    // Create Starlink satellites
+    const satelliteGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+    const satelliteMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0x00f3ff,
+        emissive: 0x00f3ff,
+        emissiveIntensity: 0.5
+    });
+    
+    for (let i = 0; i < 80; i++) {
+        const satellite = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
+        const radius = 3 + Math.random() * 1.5;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.random() * Math.PI;
+        
+        satellite.position.x = radius * Math.sin(phi) * Math.cos(theta);
+        satellite.position.y = radius * Math.sin(phi) * Math.sin(theta);
+        satellite.position.z = radius * Math.cos(phi);
+        
+        satellite.userData = {
+            orbitRadius: radius,
+            orbitSpeed: 0.001 + Math.random() * 0.002,
+            angle: theta,
+            phi: phi
+        };
+        
+        starlinkSatellites.push(satellite);
+        starlinkScene.add(satellite);
+    }
+    
+    starlinkCamera.position.set(0, 5, 8);
+    starlinkCamera.lookAt(0, 0, 0);
+    
+    animateStarlink();
+}
+
+function animateStarlink() {
+    requestAnimationFrame(animateStarlink);
+    
+    // Rotate Earth
+    const earth = starlinkScene.children.find(obj => obj.geometry?.type === 'SphereGeometry' && obj.geometry.parameters.radius === 2);
+    if (earth) {
+        earth.rotation.y += 0.002;
+    }
+    
+    // Orbit satellites
+    starlinkSatellites.forEach(satellite => {
+        satellite.userData.angle += satellite.userData.orbitSpeed;
+        
+        satellite.position.x = satellite.userData.orbitRadius * Math.sin(satellite.userData.phi) * Math.cos(satellite.userData.angle);
+        satellite.position.y = satellite.userData.orbitRadius * Math.sin(satellite.userData.phi) * Math.sin(satellite.userData.angle);
+        satellite.position.z = satellite.userData.orbitRadius * Math.cos(satellite.userData.phi);
+    });
+    
+    starlinkRenderer.render(starlinkScene, starlinkCamera);
+}
+
+async function loadStarlinkStats() {
+    try {
+        const response = await fetch(`${API_BASE}/api/spacex/starlink?limit=50`);
+        if (!response.ok) throw new Error('Starlink fetch failed');
+        
+        const satellites = await response.json();
+        
+        const active = satellites.filter(s => s.spaceTrack?.OBJECT_TYPE === 'PAYLOAD').length;
+        const avgAltitude = satellites.reduce((sum, s) => sum + (s.height_km || 550), 0) / satellites.length;
+        
+        document.getElementById('starlink-stats').innerHTML = `
+            <div class="starlink-stat-item">
+                <strong>Active Satellites</strong>
+                <span>${active || '4,500'}+</span>
+            </div>
+            <div class="starlink-stat-item">
+                <strong>Avg Altitude</strong>
+                <span>${Math.round(avgAltitude || 550)} km</span>
+            </div>
+            <div class="starlink-stat-item">
+                <strong>Orbital Speed</strong>
+                <span>27,000 km/h</span>
+            </div>
+            <div class="starlink-stat-item">
+                <strong>Coverage</strong>
+                <span>60+ Countries</span>
+            </div>
+        `;
+    } catch (error) {
+        console.error('Starlink Error:', error);
+        document.getElementById('starlink-stats').innerHTML = `
+            <div class="starlink-stat-item">
+                <strong>Active Satellites</strong>
+                <span>4,500+</span>
+            </div>
+            <div class="starlink-stat-item">
+                <strong>Avg Altitude</strong>
+                <span>550 km</span>
+            </div>
+            <div class="starlink-stat-item">
+                <strong>Orbital Speed</strong>
+                <span>27,000 km/h</span>
+            </div>
+            <div class="starlink-stat-item">
+                <strong>Coverage</strong>
+                <span>60+ Countries</span>
+            </div>
+        `;
+    }
+}
+
+function handleSpaceXResize() {
+    window.addEventListener('resize', () => {
+        if (rocketCamera && rocketRenderer) {
+            const container = document.getElementById('rocket-3d-container');
+            if (container) {
+                rocketCamera.aspect = container.clientWidth / container.clientHeight;
+                rocketCamera.updateProjectionMatrix();
+                rocketRenderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        }
+        
+        if (starlinkCamera && starlinkRenderer) {
+            const container = document.getElementById('starlink-viz-container');
+            if (container) {
+                starlinkCamera.aspect = container.clientWidth / container.clientHeight;
+                starlinkCamera.updateProjectionMatrix();
+                starlinkRenderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        }
+    });
+}
 
 function init() {
     setTimeout(() => {
@@ -825,6 +1355,15 @@ function init() {
     loadGallerySlideshow();
     loadBlogPosts();
     
+    loadSpaceXStats();
+    loadLatestLaunch();
+    loadUpcomingLaunches();
+    init3DRocket();
+    setupRocketControls();
+    initStarlinkVisualization();
+    loadStarlinkStats();
+    handleSpaceXResize();
+
     setTimeout(() => {
         setupIntersectionObserver();
     }, 2000);
