@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
-const bcrypt = require('bcryptjs');
 
 const dbPath = path.join(__dirname, 'database.sqlite');
 const schemaPath = path.join(__dirname, 'models', 'schema.sql');
@@ -25,39 +24,25 @@ if (!fs.existsSync(schemaPath)) {
 
 const schema = fs.readFileSync(schemaPath, 'utf8');
 
-db.exec(schema, async (err) => {
+db.exec(schema, (err) => {
   if (err) {
     console.error('❌ Error creating schema:', err);
     process.exit(1);
   }
 
   console.log('✅ Database schema created');
+  console.log('✅ Admin user created via schema');
+  console.log('   Username: admin');
+  console.log('   Password: admin123');
+  console.log('   ⚠️  Change password after first login!\n');
 
-  // Create admin user with proper hash
-  const adminPassword = await bcrypt.hash('admin123', 10);
-  
-  db.run(
-    'INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)',
-    ['admin', adminPassword, 'admin'],
-    (err) => {
-      if (err) {
-        console.error('❌ Error creating admin user:', err);
-      } else {
-        console.log('✅ Admin user created');
-        console.log('   Username: admin');
-        console.log('   Password: admin123');
-        console.log('   ⚠️  Change password after first login!\n');
-      }
-
-      db.close((err) => {
-        if (err) {
-          console.error('❌ Error closing database:', err);
-        } else {
-          console.log('✅ Database initialization complete\n');
-          console.log('🎉 You can now run: npm start\n');
-        }
-        process.exit(err ? 1 : 0);
-      });
+  db.close((err) => {
+    if (err) {
+      console.error('❌ Error closing database:', err);
+    } else {
+      console.log('✅ Database initialization complete\n');
+      console.log('🎉 You can now run: npm start\n');
     }
-  );
+    process.exit(err ? 1 : 0);
+  });
 });
