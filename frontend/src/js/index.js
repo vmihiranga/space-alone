@@ -8,56 +8,20 @@ let previousMousePosition = { x: 0, y: 0 };
 let currentSlide = 0;
 let galleryInterval;
 let blogPosts = [];
+let rocketScene, rocketCamera, rocketRenderer, rocket, rocketParticles = [];
+let isLaunching = false;
+let starlinkScene, starlinkCamera, starlinkRenderer, starlinkSatellites = [];
+let particlesAnimationFrame = null;
 
 const planetsData = [
-    { 
-        name: 'Mercury', size: 0.4, distance: 4, color: 0x8c7853, speed: 0.04, 
-        info: 'Smallest planet, closest to Sun', diameter: '4,879 km',
-        mass: '3.3 × 10²³ kg', temp: '-173 to 427°C', moons: '0',
-        type: 'Terrestrial', orbitalPeriod: '88 days'
-    },
-    { 
-        name: 'Venus', size: 0.9, distance: 6, color: 0xffc649, speed: 0.03, 
-        info: 'Hottest planet with thick atmosphere', diameter: '12,104 km',
-        mass: '4.87 × 10²⁴ kg', temp: '462°C (avg)', moons: '0',
-        type: 'Terrestrial', orbitalPeriod: '225 days'
-    },
-    { 
-        name: 'Earth', size: 1, distance: 8, color: 0x4a90e2, speed: 0.02, 
-        info: 'Our home planet, the blue marble', diameter: '12,742 km',
-        mass: '5.97 × 10²⁴ kg', temp: '-89 to 58°C', moons: '1',
-        type: 'Terrestrial', orbitalPeriod: '365 days'
-    },
-    { 
-        name: 'Mars', size: 0.5, distance: 10, color: 0xe27b58, speed: 0.018, 
-        info: 'The Red Planet, future human habitat', diameter: '6,779 km',
-        mass: '6.42 × 10²³ kg', temp: '-195 to 20°C', moons: '2',
-        type: 'Terrestrial', orbitalPeriod: '687 days'
-    },
-    { 
-        name: 'Jupiter', size: 1.8, distance: 14, color: 0xc88b3a, speed: 0.013, 
-        info: 'Largest planet, gas giant', diameter: '139,820 km',
-        mass: '1.90 × 10²⁷ kg', temp: '-110°C', moons: '95',
-        type: 'Gas Giant', orbitalPeriod: '12 years'
-    },
-    { 
-        name: 'Saturn', size: 1.6, distance: 18, color: 0xfad5a5, speed: 0.009, 
-        info: 'Famous for its ring system', diameter: '116,460 km',
-        mass: '5.68 × 10²⁶ kg', temp: '-140°C', moons: '146',
-        type: 'Gas Giant', orbitalPeriod: '29 years'
-    },
-    { 
-        name: 'Uranus', size: 1.2, distance: 22, color: 0x4fd0e7, speed: 0.006, 
-        info: 'Ice giant tilted on its side', diameter: '50,724 km',
-        mass: '8.68 × 10²⁵ kg', temp: '-200°C', moons: '27',
-        type: 'Ice Giant', orbitalPeriod: '84 years'
-    },
-    { 
-        name: 'Neptune', size: 1.2, distance: 26, color: 0x4166f5, speed: 0.005, 
-        info: 'Farthest planet with strongest winds', diameter: '49,244 km',
-        mass: '1.02 × 10²⁶ kg', temp: '-200°C', moons: '14',
-        type: 'Ice Giant', orbitalPeriod: '165 years'
-    }
+    { name: 'Mercury', size: 0.4, distance: 4, color: 0x8c7853, speed: 0.04, info: 'Smallest planet, closest to Sun', diameter: '4,879 km', mass: '3.3 × 10²³ kg', temp: '-173 to 427°C', moons: '0', type: 'Terrestrial', orbitalPeriod: '88 days' },
+    { name: 'Venus', size: 0.9, distance: 6, color: 0xffc649, speed: 0.03, info: 'Hottest planet with thick atmosphere', diameter: '12,104 km', mass: '4.87 × 10²⁴ kg', temp: '462°C (avg)', moons: '0', type: 'Terrestrial', orbitalPeriod: '225 days' },
+    { name: 'Earth', size: 1, distance: 8, color: 0x4a90e2, speed: 0.02, info: 'Our home planet, the blue marble', diameter: '12,742 km', mass: '5.97 × 10²⁴ kg', temp: '-89 to 58°C', moons: '1', type: 'Terrestrial', orbitalPeriod: '365 days' },
+    { name: 'Mars', size: 0.5, distance: 10, color: 0xe27b58, speed: 0.018, info: 'The Red Planet, future human habitat', diameter: '6,779 km', mass: '6.42 × 10²³ kg', temp: '-195 to 20°C', moons: '2', type: 'Terrestrial', orbitalPeriod: '687 days' },
+    { name: 'Jupiter', size: 1.8, distance: 14, color: 0xc88b3a, speed: 0.013, info: 'Largest planet, gas giant', diameter: '139,820 km', mass: '1.90 × 10²⁷ kg', temp: '-110°C', moons: '95', type: 'Gas Giant', orbitalPeriod: '12 years' },
+    { name: 'Saturn', size: 1.6, distance: 18, color: 0xfad5a5, speed: 0.009, info: 'Famous for its ring system', diameter: '116,460 km', mass: '5.68 × 10²⁶ kg', temp: '-140°C', moons: '146', type: 'Gas Giant', orbitalPeriod: '29 years' },
+    { name: 'Uranus', size: 1.2, distance: 22, color: 0x4fd0e7, speed: 0.006, info: 'Ice giant tilted on its side', diameter: '50,724 km', mass: '8.68 × 10²⁵ kg', temp: '-200°C', moons: '27', type: 'Ice Giant', orbitalPeriod: '84 years' },
+    { name: 'Neptune', size: 1.2, distance: 26, color: 0x4166f5, speed: 0.005, info: 'Farthest planet with strongest winds', diameter: '49,244 km', mass: '1.02 × 10²⁶ kg', temp: '-200°C', moons: '14', type: 'Ice Giant', orbitalPeriod: '165 years' }
 ];
 
 const galaxyImages = [
@@ -74,7 +38,6 @@ function initParticles() {
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
-    let animationFrameId = null;
     let particles = [];
     
     function resizeCanvas() {
@@ -85,16 +48,16 @@ function initParticles() {
     
     function initParticleArray() {
         particles = [];
-        const particleCount = Math.min(150, Math.floor(window.innerWidth / 15));
+        const particleCount = Math.min(100, Math.floor(window.innerWidth / 20));
         
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                radius: Math.random() * 1.5 + 0.5,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                opacity: Math.random() * 0.5 + 0.3
+                radius: Math.random() * 1.2 + 0.3,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2,
+                opacity: Math.random() * 0.4 + 0.2
             });
         }
     }
@@ -117,12 +80,17 @@ function initParticles() {
             ctx.fill();
         });
         
-        animationFrameId = requestAnimationFrame(animateParticles);
+        particlesAnimationFrame = requestAnimationFrame(animateParticles);
     }
     
     resizeCanvas();
     animateParticles();
-    window.addEventListener('resize', resizeCanvas);
+    
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(resizeCanvas, 250);
+    });
 }
 
 function initSolarSystem() {
@@ -130,53 +98,35 @@ function initSolarSystem() {
     if (!container) return;
     
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
-        75,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        1000
-    );
+    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = false;
     container.appendChild(renderer.domElement);
     
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
     
     const sunLight = new THREE.PointLight(0xffffff, 2.5, 100);
-    sunLight.castShadow = true;
     scene.add(sunLight);
     
     const sunGeometry = new THREE.SphereGeometry(2, 32, 32);
-    const sunMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0xfdb813,
-        emissive: 0xfdb813,
-        emissiveIntensity: 0.7
-    });
+    const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xfdb813, emissive: 0xfdb813, emissiveIntensity: 0.7 });
     sun = new THREE.Mesh(sunGeometry, sunMaterial);
     scene.add(sun);
     
     const sunGlowGeometry = new THREE.SphereGeometry(2.5, 32, 32);
-    const sunGlowMaterial = new THREE.MeshBasicMaterial({
-        color: 0xfdb813,
-        transparent: true,
-        opacity: 0.2
-    });
+    const sunGlowMaterial = new THREE.MeshBasicMaterial({ color: 0xfdb813, transparent: true, opacity: 0.2 });
     const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
     sun.add(sunGlow);
     
     planetsData.forEach(data => {
-        const geometry = new THREE.SphereGeometry(data.size, 32, 32);
-        const material = new THREE.MeshPhongMaterial({ 
-            color: data.color,
-            shininess: 30
-        });
+        const geometry = new THREE.SphereGeometry(data.size, 24, 24);
+        const material = new THREE.MeshPhongMaterial({ color: data.color, shininess: 30 });
         const planet = new THREE.Mesh(geometry, material);
-        planet.castShadow = true;
-        planet.receiveShadow = true;
         planet.userData = data;
         planets.push(planet);
         scene.add(planet);
@@ -185,19 +135,11 @@ function initSolarSystem() {
         const orbitPoints = [];
         for (let i = 0; i <= 64; i++) {
             const angle = (i / 64) * Math.PI * 2;
-            orbitPoints.push(
-                Math.cos(angle) * data.distance,
-                0,
-                Math.sin(angle) * data.distance
-            );
+            orbitPoints.push(Math.cos(angle) * data.distance, 0, Math.sin(angle) * data.distance);
         }
         orbitGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(orbitPoints), 3));
         
-        const orbitMaterial = new THREE.LineBasicMaterial({
-            color: 0x00f3ff,
-            transparent: true,
-            opacity: 0.4
-        });
+        const orbitMaterial = new THREE.LineBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.4 });
         const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
         orbits.push(orbit);
         scene.add(orbit);
@@ -211,6 +153,8 @@ function initSolarSystem() {
 }
 
 function setupMouseControls(container) {
+    let touchStartX = 0;
+    
     container.addEventListener('mousedown', (e) => {
         isDragging = true;
         previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -228,11 +172,22 @@ function setupMouseControls(container) {
     container.addEventListener('mouseup', () => isDragging = false);
     container.addEventListener('mouseleave', () => isDragging = false);
     
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+    
+    container.addEventListener('touchmove', (e) => {
+        const deltaX = e.touches[0].clientX - touchStartX;
+        camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * 0.003);
+        camera.lookAt(0, 0, 0);
+        touchStartX = e.touches[0].clientX;
+    });
+    
     container.addEventListener('wheel', (e) => {
         e.preventDefault();
         camera.position.z += e.deltaY * 0.02;
         camera.position.z = Math.max(15, Math.min(60, camera.position.z));
-    });
+    }, { passive: false });
     
     container.addEventListener('click', (e) => {
         if (!isDragging) {
@@ -247,8 +202,7 @@ function setupMouseControls(container) {
             
             const intersects = raycaster.intersectObjects(planets);
             if (intersects.length > 0) {
-                const planet = intersects[0].object;
-                showPlanetPopup(planet.userData);
+                showPlanetPopup(intersects[0].object.userData);
             }
         }
     });
@@ -312,12 +266,7 @@ function setupSolarControls() {
     if (toggleSpeedBtn) {
         toggleSpeedBtn.addEventListener('click', () => {
             animationSpeed = animationSpeed === 1 ? 2 : animationSpeed === 2 ? 0.5 : 1;
-            toggleSpeedBtn.innerHTML = `
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
-                </svg>
-                Speed: ${animationSpeed}x
-            `;
+            toggleSpeedBtn.innerHTML = `<svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/></svg>Speed: ${animationSpeed}x`;
         });
     }
     
@@ -329,9 +278,7 @@ function setupSolarControls() {
     }
     
     if (popupClose) {
-        popupClose.addEventListener('click', () => {
-            popup.classList.remove('active');
-        });
+        popupClose.addEventListener('click', () => popup.classList.remove('active'));
     }
     
     if (popup) {
@@ -356,20 +303,13 @@ async function loadAPOD() {
                 <img src="${data.url}" alt="${escapeHtml(data.title)}" class="apod-image" onerror="this.src='https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop'">
                 <div class="apod-details">
                     <h3 class="apod-title">${escapeHtml(data.title)}</h3>
-                    <p class="apod-date">${new Date(data.date).toLocaleDateString('en-US', { 
-                        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-                    })}</p>
+                    <p class="apod-date">${new Date(data.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     <p class="apod-explanation">${escapeHtml(data.explanation)}</p>
                 </div>
             </div>
         `;
     } catch (error) {
-        console.error('APOD Error:', error);
-        document.getElementById('apod-container').innerHTML = `
-            <div class="loading-state">
-                <p style="color: var(--neon-blue);">Unable to load NASA APOD. Please try again later.</p>
-            </div>
-        `;
+        document.getElementById('apod-container').innerHTML = `<div class="loading-state"><p style="color: var(--neon-blue);">Unable to load NASA APOD. Please try again later.</p></div>`;
     }
 }
 
@@ -382,19 +322,9 @@ async function loadISSLocation() {
         const lat = parseFloat(data.iss_position.latitude).toFixed(4);
         const lon = parseFloat(data.iss_position.longitude).toFixed(4);
         
-        document.getElementById('iss-location').innerHTML = `
-            <p><strong>Latitude:</strong> ${lat}°</p>
-            <p><strong>Longitude:</strong> ${lon}°</p>
-            <p><strong>Speed:</strong> 7.66 km/s</p>
-            <p><strong>Altitude:</strong> ~408 km</p>
-        `;
+        document.getElementById('iss-location').innerHTML = `<p><strong>Latitude:</strong> ${lat}°</p><p><strong>Longitude:</strong> ${lon}°</p><p><strong>Speed:</strong> 7.66 km/s</p><p><strong>Altitude:</strong> ~408 km</p>`;
     } catch (error) {
-        document.getElementById('iss-location').innerHTML = `
-            <p><strong>Latitude:</strong> 41.52°</p>
-            <p><strong>Longitude:</strong> -72.30°</p>
-            <p><strong>Speed:</strong> 7.66 km/s</p>
-            <p><strong>Altitude:</strong> ~408 km</p>
-        `;
+        document.getElementById('iss-location').innerHTML = `<p><strong>Latitude:</strong> 41.52°</p><p><strong>Longitude:</strong> -72.30°</p><p><strong>Speed:</strong> 7.66 km/s</p><p><strong>Altitude:</strong> ~408 km</p>`;
     }
 }
 
@@ -406,19 +336,9 @@ async function loadMarsPhotos() {
         const data = await response.json();
         const photos = data.photos || [];
         
-        document.getElementById('mars-photos').innerHTML = `
-            <p><strong>Sol (Day):</strong> ${photos[0]?.sol || 1000}</p>
-            <p><strong>Total Photos:</strong> ${photos.length}</p>
-            <p><strong>Rover:</strong> Curiosity</p>
-            <p><strong>Status:</strong> <span style="color: #28a745;">Active</span></p>
-        `;
+        document.getElementById('mars-photos').innerHTML = `<p><strong>Sol (Day):</strong> ${photos[0]?.sol || 1000}</p><p><strong>Total Photos:</strong> ${photos.length}</p><p><strong>Rover:</strong> Curiosity</p><p><strong>Status:</strong> <span style="color: #28a745;">Active</span></p>`;
     } catch (error) {
-        document.getElementById('mars-photos').innerHTML = `
-            <p><strong>Sol:</strong> 3842</p>
-            <p><strong>Total Photos:</strong> 1,234</p>
-            <p><strong>Rover:</strong> Curiosity</p>
-            <p><strong>Status:</strong> <span style="color: #28a745;">Active</span></p>
-        `;
+        document.getElementById('mars-photos').innerHTML = `<p><strong>Sol:</strong> 3842</p><p><strong>Total Photos:</strong> 1,234</p><p><strong>Rover:</strong> Curiosity</p><p><strong>Status:</strong> <span style="color: #28a745;">Active</span></p>`;
     }
 }
 
@@ -432,17 +352,9 @@ async function loadNEO() {
         const today = new Date().toISOString().split('T')[0];
         const todayObjects = nearObjects[today] || [];
         
-        document.getElementById('neo-data').innerHTML = `
-            <p><strong>Objects Today:</strong> ${todayObjects.length}</p>
-            <p><strong>Total Tracked:</strong> ${data.element_count || '28,500'}</p>
-            <p><strong>Closest:</strong> ${todayObjects[0]?.close_approach_data?.[0]?.miss_distance?.astronomical || 'N/A'} AU</p>
-        `;
+        document.getElementById('neo-data').innerHTML = `<p><strong>Objects Today:</strong> ${todayObjects.length}</p><p><strong>Total Tracked:</strong> ${data.element_count || '28,500'}</p><p><strong>Closest:</strong> ${todayObjects[0]?.close_approach_data?.[0]?.miss_distance?.astronomical || 'N/A'} AU</p>`;
     } catch (error) {
-        document.getElementById('neo-data').innerHTML = `
-            <p><strong>Objects Today:</strong> 15</p>
-            <p><strong>Total Tracked:</strong> 28,500+</p>
-            <p><strong>Closest:</strong> 0.032 AU</p>
-        `;
+        document.getElementById('neo-data').innerHTML = `<p><strong>Objects Today:</strong> 15</p><p><strong>Total Tracked:</strong> 28,500+</p><p><strong>Closest:</strong> 0.032 AU</p>`;
     }
 }
 
@@ -453,17 +365,9 @@ async function loadSolarFlares() {
         
         const data = await response.json() || [];
         
-        document.getElementById('solar-flares').innerHTML = `
-            <p><strong>Recent Flares:</strong> ${data.length || 3}</p>
-            <p><strong>Latest Class:</strong> <span style="color: #ff6b6b;">${data[0]?.classType || 'M1.2'}</span></p>
-            <p><strong>Source:</strong> DONKI NASA</p>
-        `;
+        document.getElementById('solar-flares').innerHTML = `<p><strong>Recent Flares:</strong> ${data.length || 3}</p><p><strong>Latest Class:</strong> <span style="color: #ff6b6b;">${data[0]?.classType || 'M1.2'}</span></p><p><strong>Source:</strong> DONKI NASA</p>`;
     } catch (error) {
-        document.getElementById('solar-flares').innerHTML = `
-            <p><strong>Recent Flares:</strong> 3</p>
-            <p><strong>Latest:</strong> <span style="color: #ff6b6b;">M1.2</span></p>
-            <p><strong>Source:</strong> DONKI</p>
-        `;
+        document.getElementById('solar-flares').innerHTML = `<p><strong>Recent Flares:</strong> 3</p><p><strong>Latest:</strong> <span style="color: #ff6b6b;">M1.2</span></p><p><strong>Source:</strong> DONKI</p>`;
     }
 }
 
@@ -474,17 +378,9 @@ async function loadExoplanets() {
         
         const data = await response.json() || [];
         
-        document.getElementById('exoplanets').innerHTML = `
-            <p><strong>Confirmed:</strong> ${data.length || 5502}+</p>
-            <p><strong>Data Source:</strong> NASA Archive</p>
-            <p><strong>Habitable Zone:</strong> ~300+</p>
-        `;
+        document.getElementById('exoplanets').innerHTML = `<p><strong>Confirmed:</strong> ${data.length || 5502}+</p><p><strong>Data Source:</strong> NASA Archive</p><p><strong>Habitable Zone:</strong> ~300+</p>`;
     } catch (error) {
-        document.getElementById('exoplanets').innerHTML = `
-            <p><strong>Confirmed:</strong> 5,502+</p>
-            <p><strong>Candidates:</strong> 8,709</p>
-            <p><strong>Habitable:</strong> ~300+</p>
-        `;
+        document.getElementById('exoplanets').innerHTML = `<p><strong>Confirmed:</strong> 5,502+</p><p><strong>Candidates:</strong> 8,709</p><p><strong>Habitable:</strong> ~300+</p>`;
     }
 }
 
@@ -493,19 +389,9 @@ async function loadMarsWeather() {
         const response = await fetch(`${API_BASE}/api/nasa/mars-weather`);
         if (!response.ok) throw new Error('Mars weather fetch failed');
         
-        document.getElementById('mars-weather').innerHTML = `
-            <p><strong>Temperature:</strong> -63°C</p>
-            <p><strong>Pressure:</strong> 750 Pa</p>
-            <p><strong>Season:</strong> Month 6</p>
-            <p><strong>Condition:</strong> Clear</p>
-        `;
+        document.getElementById('mars-weather').innerHTML = `<p><strong>Temperature:</strong> -63°C</p><p><strong>Pressure:</strong> 750 Pa</p><p><strong>Season:</strong> Month 6</p><p><strong>Condition:</strong> Clear</p>`;
     } catch (error) {
-        document.getElementById('mars-weather').innerHTML = `
-            <p><strong>Temp:</strong> -63°C</p>
-            <p><strong>Pressure:</strong> 750 Pa</p>
-            <p><strong>Season:</strong> 6</p>
-            <p><strong>Clear</strong></p>
-        `;
+        document.getElementById('mars-weather').innerHTML = `<p><strong>Temp:</strong> -63°C</p><p><strong>Pressure:</strong> 750 Pa</p><p><strong>Season:</strong> 6</p><p><strong>Clear</strong></p>`;
     }
 }
 
@@ -515,10 +401,7 @@ function loadGallerySlideshow() {
     
     container.innerHTML = galaxyImages.map((img, index) => `
         <div class="gallery-slide ${index === 0 ? 'active' : ''}" data-slide="${index}">
-            <img src="${img.url}" 
-                 alt="${img.title}" 
-                 loading="lazy"
-                 onerror="this.src='https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop'">
+            <img src="${img.url}" alt="${img.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop'">
             <div class="gallery-slide-overlay">
                 <h4 class="gallery-slide-title">${img.title}</h4>
                 <p class="gallery-slide-desc">${img.desc}</p>
@@ -526,9 +409,7 @@ function loadGallerySlideshow() {
         </div>
     `).join('');
     
-    indicatorsContainer.innerHTML = galaxyImages.map((_, index) => 
-        `<div class="indicator-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></div>`
-    ).join('');
+    indicatorsContainer.innerHTML = galaxyImages.map((_, index) => `<div class="indicator-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></div>`).join('');
     
     setupGalleryControls();
     startGalleryAutoplay();
@@ -578,9 +459,7 @@ function changeSlide(newIndex) {
 
 function startGalleryAutoplay() {
     clearInterval(galleryInterval);
-    galleryInterval = setInterval(() => {
-        changeSlide(currentSlide + 1);
-    }, 5000);
+    galleryInterval = setInterval(() => changeSlide(currentSlide + 1), 5000);
 }
 
 function resetGalleryAutoplay() {
@@ -595,7 +474,6 @@ async function loadBlogPosts() {
         blogPosts = await response.json();
         displayBlogPosts(blogPosts);
     } catch (error) {
-        console.error('Blog Error:', error);
         displayFallbackBlogPosts();
     }
 }
@@ -608,7 +486,7 @@ function displayBlogPosts(posts) {
         return;
     }
     
-    container.innerHTML = posts.map(post => `
+    container.innerHTML = posts.slice(0, 3).map(post => `
         <div class="blog-card">
             <h3>${escapeHtml(post.title)}</h3>
             <div class="blog-meta">
@@ -619,9 +497,7 @@ function displayBlogPosts(posts) {
                         <line x1="8" y1="2" x2="8" y2="6"></line>
                         <line x1="3" y1="10" x2="21" y2="10"></line>
                     </svg>
-                    ${new Date(post.created_at).toLocaleDateString('en-US', { 
-                        year: 'numeric', month: 'short', day: 'numeric' 
-                    })}
+                    ${new Date(post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                 </span>
             </div>
             <p class="blog-excerpt">${escapeHtml(post.content.substring(0, 150))}${post.content.length > 150 ? '...' : ''}</p>
@@ -638,24 +514,9 @@ function displayBlogPosts(posts) {
 
 function displayFallbackBlogPosts() {
     const fallbackPosts = [
-        {
-            id: 1,
-            title: 'The Search for Extraterrestrial Life',
-            content: 'Scientists continue their quest to find signs of life beyond Earth. With advanced telescopes and space missions, we are exploring distant planets and moons that might harbor the conditions necessary for life. From Europa\'s subsurface ocean to the methane lakes of Titan, the possibilities are endless. Recent discoveries of exoplanets in the habitable zone have renewed hope in finding our cosmic neighbors.',
-            created_at: '2025-01-15T10:00:00Z'
-        },
-        {
-            id: 2,
-            title: 'Understanding Black Holes',
-            content: 'Black holes remain one of the universe\'s greatest mysteries. These regions of spacetime exhibit such strong gravitational effects that nothing, not even light, can escape. Recent observations using the Event Horizon Telescope have given us unprecedented views of these cosmic phenomena. Scientists are now studying how black holes influence galaxy formation and evolution across cosmic time.',
-            created_at: '2025-01-10T14:30:00Z'
-        },
-        {
-            id: 3,
-            title: 'Journey to Mars: The Next Frontier',
-            content: 'Mars exploration has entered an exciting new phase with multiple rovers exploring the Red Planet. NASA\'s Perseverance rover is collecting samples that could reveal ancient microbial life. Plans for human missions to Mars are progressing, with various space agencies working on the technology needed for this ambitious journey. The dream of becoming a multi-planetary species is closer than ever.',
-            created_at: '2025-01-05T09:15:00Z'
-        }
+        { id: 1, title: 'The Search for Extraterrestrial Life', content: 'Scientists continue their quest to find signs of life beyond Earth. With advanced telescopes and space missions, we are exploring distant planets and moons that might harbor the conditions necessary for life. From Europa\'s subsurface ocean to the methane lakes of Titan, the possibilities are endless. Recent discoveries of exoplanets in the habitable zone have renewed hope in finding our cosmic neighbors.', created_at: '2025-01-15T10:00:00Z' },
+        { id: 2, title: 'Understanding Black Holes', content: 'Black holes remain one of the universe\'s greatest mysteries. These regions of spacetime exhibit such strong gravitational effects that nothing, not even light, can escape. Recent observations using the Event Horizon Telescope have given us unprecedented views of these cosmic phenomena. Scientists are now studying how black holes influence galaxy formation and evolution across cosmic time.', created_at: '2025-01-10T14:30:00Z' },
+        { id: 3, title: 'Journey to Mars: The Next Frontier', content: 'Mars exploration has entered an exciting new phase with multiple rovers exploring the Red Planet. NASA\'s Perseverance rover is collecting samples that could reveal ancient microbial life. Plans for human missions to Mars are progressing, with various space agencies working on the technology needed for this ambitious journey. The dream of becoming a multi-planetary species is closer than ever.', created_at: '2025-01-05T09:15:00Z' }
     ];
     
     displayBlogPosts(fallbackPosts);
@@ -678,9 +539,7 @@ function showBlogPost(postId) {
                     <line x1="8" y1="2" x2="8" y2="6"></line>
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                ${new Date(post.created_at).toLocaleDateString('en-US', { 
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-                })}
+                ${new Date(post.created_at).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </span>
         </div>
         <p style="color: var(--text-gray); line-height: 1.8; font-size: 1rem;">${escapeHtml(post.content)}</p>
@@ -695,29 +554,54 @@ function setupAudioControl() {
     
     if (!audioToggle || !spaceAudio) return;
     
-    audioToggle.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        
+    spaceAudio.volume = 0.3;
+    let audioPlaying = false;
+
+    const togglePlayback = async () => {
         try {
             if (audioPlaying) {
-                spaceAudio.pause();
+                await spaceAudio.pause();
                 audioToggle.classList.remove('playing');
-                audioPlaying = false;
+                audioToggle.setAttribute('aria-pressed', 'false');
             } else {
                 await spaceAudio.play();
                 audioToggle.classList.add('playing');
-                audioPlaying = true;
+                audioToggle.setAttribute('aria-pressed', 'true');
             }
+            audioPlaying = !audioPlaying;
         } catch (error) {
-            console.log('Audio play error:', error);
+            console.log('Audio playback error:', error);
             audioToggle.classList.remove('playing');
+            audioToggle.setAttribute('aria-pressed', 'false');
             audioPlaying = false;
         }
+    };
+
+    audioToggle.addEventListener('click', togglePlayback);
+    audioToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            togglePlayback();
+        }
     });
+
+    // Set initial state
+    audioToggle.setAttribute('aria-pressed', 'false');
+    audioToggle.setAttribute('role', 'button');
+    audioToggle.setAttribute('tabindex', '0');
 }
 
 function setupNavigation() {
     const navLinks = document.querySelectorAll('.nav-link-space');
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const navLinksContainer = document.getElementById('nav-links');
+    
+    if (mobileToggle && navLinksContainer) {
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            navLinksContainer.classList.toggle('active');
+        });
+    }
     
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -727,47 +611,87 @@ function setupNavigation() {
                 scrollToSection(href.substring(1));
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
+                
+                if (navLinksContainer) {
+                    navLinksContainer.classList.remove('active');
+                }
+                if (mobileToggle) {
+                    mobileToggle.classList.remove('active');
+                }
             }
         });
     });
     
+    let scrollTimeout;
     window.addEventListener('scroll', () => {
-        const sections = document.querySelectorAll('section[id]');
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
     });
 }
 
 function scrollToSection(id) {
     const element = document.getElementById(id);
     if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const headerOffset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
     }
 }
 
 function handleResize() {
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        if (camera && renderer) {
-            const container = document.getElementById('solar-system-container');
-            if (container) {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            if (camera && renderer) {
+                const container = document.getElementById('solar-system-container');
+                if (container) {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                }
             }
-        }
+            
+            if (rocketCamera && rocketRenderer) {
+                const rocketContainer = document.getElementById('rocket-3d-container');
+                if (rocketContainer) {
+                    rocketCamera.aspect = rocketContainer.clientWidth / rocketContainer.clientHeight;
+                    rocketCamera.updateProjectionMatrix();
+                    rocketRenderer.setSize(rocketContainer.clientWidth, rocketContainer.clientHeight);
+                }
+            }
+            
+            if (starlinkCamera && starlinkRenderer) {
+                const starlinkContainer = document.getElementById('starlink-viz-container');
+                if (starlinkContainer) {
+                    starlinkCamera.aspect = starlinkContainer.clientWidth / starlinkContainer.clientHeight;
+                    starlinkCamera.updateProjectionMatrix();
+                    starlinkRenderer.setSize(starlinkContainer.clientWidth, starlinkContainer.clientHeight);
+                }
+            }
+        }, 250);
     });
 }
 
@@ -786,7 +710,7 @@ function setupIntersectionObserver() {
         });
     }, observerOptions);
     
-    document.querySelectorAll('.nasa-card, .blog-card, .mystery-card').forEach(item => {
+    document.querySelectorAll('.nasa-card, .blog-card, .mystery-card, .stat-card, .upcoming-launch-card').forEach(item => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(30px)';
         item.style.transition = 'all 0.6s ease';
@@ -799,12 +723,6 @@ function escapeHtml(text) {
     div.textContent = text;
     return div.innerHTML;
 }
-// Add these variables at the top with other global variables
-let rocketScene, rocketCamera, rocketRenderer, rocket, rocketParticles = [];
-let isLaunching = false;
-let starlinkScene, starlinkCamera, starlinkRenderer, starlinkSatellites = [];
-
-// SpaceX Functions
 
 async function loadSpaceXStats() {
     try {
@@ -813,20 +731,24 @@ async function loadSpaceXStats() {
         
         const data = await response.json();
         
-        document.getElementById('total-launches').textContent = data.totalLaunches || '0';
-        document.getElementById('upcoming-count').textContent = data.upcomingLaunches || '0';
-        document.getElementById('success-rate').textContent = data.successRate + '%' || '0%';
-        document.getElementById('successful-launches').textContent = data.successfulLaunches || '0';
+        document.getElementById('total-launches').textContent = '0';
+        document.getElementById('upcoming-count').textContent = '0';
+        document.getElementById('success-rate').textContent = '0%';
+        document.getElementById('successful-launches').textContent = '0';
         
-        animateCountUp('total-launches', data.totalLaunches);
-        animateCountUp('upcoming-count', data.upcomingLaunches);
-        animateCountUp('successful-launches', data.successfulLaunches);
+        setTimeout(() => {
+            animateCountUp('total-launches', data.totalLaunches || 187);
+            animateCountUp('upcoming-count', data.upcomingLaunches || 12);
+            animateCountUp('successful-launches', data.successfulLaunches || 181);
+            document.getElementById('success-rate').textContent = (data.successRate || 96.8) + '%';
+        }, 100);
     } catch (error) {
-        console.error('SpaceX Stats Error:', error);
-        document.getElementById('total-launches').textContent = '187';
-        document.getElementById('upcoming-count').textContent = '12';
-        document.getElementById('success-rate').textContent = '96.8%';
-        document.getElementById('successful-launches').textContent = '181';
+        setTimeout(() => {
+            animateCountUp('total-launches', 187);
+            animateCountUp('upcoming-count', 12);
+            animateCountUp('successful-launches', 181);
+            document.getElementById('success-rate').textContent = '96.8%';
+        }, 100);
     }
 }
 
@@ -838,7 +760,6 @@ async function loadLatestLaunch() {
         const launch = await response.json();
         displayLatestLaunch(launch);
     } catch (error) {
-        console.error('Latest Launch Error:', error);
         displayFallbackLatestLaunch();
     }
 }
@@ -865,10 +786,7 @@ function displayLatestLaunch(launch) {
                         <circle cx="12" cy="12" r="10"/>
                         <polyline points="12 6 12 12 16 14"/>
                     </svg>
-                    ${launchDate.toLocaleDateString('en-US', { 
-                        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
-                        hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
-                    })}
+                    ${launchDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })}
                 </div>
                 <p class="launch-description">
                     ${escapeHtml(launch.details || 'This mission represents another milestone in SpaceX\'s journey to make space more accessible and advance humanity\'s reach beyond Earth.')}
@@ -898,11 +816,7 @@ function displayLatestLaunch(launch) {
 
 function displayFallbackLatestLaunch() {
     const container = document.getElementById('latest-launch-container');
-    container.innerHTML = `
-        <div class="loading-state">
-            <p style="color: var(--neon-blue);">Unable to load latest launch data.</p>
-        </div>
-    `;
+    container.innerHTML = `<div class="loading-state"><p style="color: var(--neon-blue);">Unable to load latest launch data.</p></div>`;
 }
 
 async function loadUpcomingLaunches() {
@@ -913,7 +827,6 @@ async function loadUpcomingLaunches() {
         const launches = await response.json();
         displayUpcomingLaunches(launches);
     } catch (error) {
-        console.error('Upcoming Launches Error:', error);
         displayFallbackUpcomingLaunches();
     }
 }
@@ -926,7 +839,7 @@ function displayUpcomingLaunches(launches) {
         return;
     }
     
-    container.innerHTML = launches.map(launch => {
+    container.innerHTML = launches.slice(0, 6).map(launch => {
         const launchDate = new Date(launch.date_utc);
         const countdown = getCountdown(launchDate);
         
@@ -938,10 +851,7 @@ function displayUpcomingLaunches(launches) {
                         <circle cx="12" cy="12" r="10"/>
                         <polyline points="12 6 12 12 16 14"/>
                     </svg>
-                    ${launchDate.toLocaleDateString('en-US', { 
-                        month: 'short', day: 'numeric', year: 'numeric', 
-                        hour: '2-digit', minute: '2-digit'
-                    })}
+                    ${launchDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 </div>
                 <p>${escapeHtml(launch.details?.substring(0, 120) || 'Upcoming SpaceX mission to deliver payloads to orbit.')}${launch.details?.length > 120 ? '...' : ''}</p>
                 <div class="countdown-timer">
@@ -955,11 +865,7 @@ function displayUpcomingLaunches(launches) {
 
 function displayFallbackUpcomingLaunches() {
     const container = document.getElementById('upcoming-launches-grid');
-    container.innerHTML = `
-        <div class="loading-state">
-            <p style="color: var(--neon-blue);">Unable to load upcoming launches.</p>
-        </div>
-    `;
+    container.innerHTML = `<div class="loading-state"><p style="color: var(--neon-blue);">Unable to load upcoming launches.</p></div>`;
 }
 
 function getCountdown(targetDate) {
@@ -998,218 +904,35 @@ function animateCountUp(elementId, targetValue) {
     }, 16);
 }
 
-// 3D Rocket Animation
-function init3DRocket() {
-    const container = document.getElementById('rocket-3d-container');
-    if (!container) return;
-    
-    rocketScene = new THREE.Scene();
-    rocketCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    rocketRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    rocketRenderer.setSize(container.clientWidth, container.clientHeight);
-    rocketRenderer.setClearColor(0x000000, 0);
-    container.appendChild(rocketRenderer.domElement);
-    
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    rocketScene.add(ambientLight);
-    
-    const pointLight = new THREE.PointLight(0x00f3ff, 2, 100);
-    pointLight.position.set(0, 10, 10);
-    rocketScene.add(pointLight);
-    
-    // Create rocket body
-    const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 4, 32);
-    const bodyMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xcccccc,
-        shininess: 100,
-        specular: 0x00f3ff
-    });
-    rocket = new THREE.Mesh(bodyGeometry, bodyMaterial);
-    
-    // Rocket nose cone
-    const noseGeometry = new THREE.ConeGeometry(0.5, 1.5, 32);
-    const noseMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xff0000,
-                shininess: 100,
-        emissive: 0xff0000,
-        emissiveIntensity: 0.3
-    });
-    const nose = new THREE.Mesh(noseGeometry, noseMaterial);
-    nose.position.y = 2.75;
-    rocket.add(nose);
-    
-    // Rocket fins
-    const finGeometry = new THREE.BoxGeometry(0.2, 1, 0.8);
-    const finMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0x333333,
-        shininess: 50
-    });
-    
-    for (let i = 0; i < 4; i++) {
-        const fin = new THREE.Mesh(finGeometry, finMaterial);
-        const angle = (i / 4) * Math.PI * 2;
-        fin.position.x = Math.cos(angle) * 0.6;
-        fin.position.z = Math.sin(angle) * 0.6;
-        fin.position.y = -1.5;
-        fin.rotation.y = angle;
-        rocket.add(fin);
-    }
-    
-    // Engine glow
-    const engineGlowGeometry = new THREE.CylinderGeometry(0.3, 0.4, 0.5, 32);
-    const engineGlowMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0xff6600,
-        transparent: true,
-        opacity: 0.8
-    });
-    const engineGlow = new THREE.Mesh(engineGlowGeometry, engineGlowMaterial);
-    engineGlow.position.y = -2.25;
-    rocket.add(engineGlow);
-    
-    rocketScene.add(rocket);
-    rocket.position.y = 0;
-    
-    // Create stars background
-    const starGeometry = new THREE.BufferGeometry();
-    const starVertices = [];
-    for (let i = 0; i < 1000; i++) {
-        const x = (Math.random() - 0.5) * 200;
-        const y = (Math.random() - 0.5) * 200;
-        const z = (Math.random() - 0.5) * 200;
-        starVertices.push(x, y, z);
-    }
-    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-    const starMaterial = new THREE.PointsMaterial({ color: 0x00f3ff, size: 0.5 });
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    rocketScene.add(stars);
-    
-    rocketCamera.position.set(5, 3, 10);
-    rocketCamera.lookAt(0, 0, 0);
-    
-    animate3DRocket();
-}
-
-function animate3DRocket() {
-    requestAnimationFrame(animate3DRocket);
-    
-    if (!isLaunching) {
-        rocket.rotation.y += 0.01;
-    } else {
-        rocket.position.y += 0.1;
-        rocket.rotation.y += 0.02;
-        
-        // Create exhaust particles
-        if (Math.random() > 0.7) {
-            const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
-            const particleMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0xff6600,
-                transparent: true,
-                opacity: 0.8
-            });
-            const particle = new THREE.Mesh(particleGeometry, particleMaterial);
-            particle.position.set(
-                rocket.position.x + (Math.random() - 0.5) * 0.5,
-                rocket.position.y - 2.5,
-                rocket.position.z + (Math.random() - 0.5) * 0.5
-            );
-            particle.velocity = { y: -0.1, opacity: 0.8 };
-            rocketParticles.push(particle);
-            rocketScene.add(particle);
-        }
-        
-        // Update particles
-        rocketParticles.forEach((particle, index) => {
-            particle.position.y += particle.velocity.y;
-            particle.velocity.opacity -= 0.02;
-            particle.material.opacity = particle.velocity.opacity;
-            
-            if (particle.velocity.opacity <= 0) {
-                rocketScene.remove(particle);
-                rocketParticles.splice(index, 1);
-            }
-        });
-        
-        if (rocket.position.y > 20) {
-            isLaunching = false;
-            rocket.position.y = 0;
-        }
-    }
-    
-    rocketRenderer.render(rocketScene, rocketCamera);
-}
-
-function setupRocketControls() {
-    const launchBtn = document.getElementById('launch-rocket');
-    const resetBtn = document.getElementById('reset-rocket');
-    
-    if (launchBtn) {
-        launchBtn.addEventListener('click', () => {
-            if (!isLaunching) {
-                isLaunching = true;
-                launchBtn.disabled = true;
-                setTimeout(() => {
-                    launchBtn.disabled = false;
-                }, 3000);
-            }
-        });
-    }
-    
-    if (resetBtn) {
-        resetBtn.addEventListener('click', () => {
-            isLaunching = false;
-            rocket.position.y = 0;
-            rocket.rotation.y = 0;
-            rocketParticles.forEach(p => rocketScene.remove(p));
-            rocketParticles = [];
-        });
-    }
-}
-
-// Starlink Visualization
 function initStarlinkVisualization() {
     const container = document.getElementById('starlink-viz-container');
     if (!container) return;
     
     starlinkScene = new THREE.Scene();
     starlinkCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    starlinkRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    starlinkRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     starlinkRenderer.setSize(container.clientWidth, container.clientHeight);
+    starlinkRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     starlinkRenderer.setClearColor(0x000000, 0);
     container.appendChild(starlinkRenderer.domElement);
     
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
     starlinkScene.add(ambientLight);
     
-    // Create Earth
     const earthGeometry = new THREE.SphereGeometry(2, 32, 32);
-    const earthMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0x4a90e2,
-        emissive: 0x1a3a5a,
-        emissiveIntensity: 0.5,
-        shininess: 30
-    });
+    const earthMaterial = new THREE.MeshPhongMaterial({ color: 0x4a90e2, emissive: 0x1a3a5a, emissiveIntensity: 0.5, shininess: 30 });
     const earth = new THREE.Mesh(earthGeometry, earthMaterial);
     starlinkScene.add(earth);
     
-    // Add Earth glow
     const glowGeometry = new THREE.SphereGeometry(2.3, 32, 32);
-    const glowMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0x00f3ff,
-        transparent: true,
-        opacity: 0.2
-    });
+    const glowMaterial = new THREE.MeshBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.2 });
     const glow = new THREE.Mesh(glowGeometry, glowMaterial);
     starlinkScene.add(glow);
     
-    // Create Starlink satellites
     const satelliteGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-    const satelliteMaterial = new THREE.MeshBasicMaterial({ 
-        color: 0x00f3ff,
-        emissive: 0x00f3ff,
-        emissiveIntensity: 0.5
-    });
+    const satelliteMaterial = new THREE.MeshBasicMaterial({ color: 0x00f3ff, emissive: 0x00f3ff, emissiveIntensity: 0.5 });
     
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 60; i++) {
         const satellite = new THREE.Mesh(satelliteGeometry, satelliteMaterial);
         const radius = 3 + Math.random() * 1.5;
         const theta = Math.random() * Math.PI * 2;
@@ -1239,13 +962,11 @@ function initStarlinkVisualization() {
 function animateStarlink() {
     requestAnimationFrame(animateStarlink);
     
-    // Rotate Earth
     const earth = starlinkScene.children.find(obj => obj.geometry?.type === 'SphereGeometry' && obj.geometry.parameters.radius === 2);
     if (earth) {
         earth.rotation.y += 0.002;
     }
     
-    // Orbit satellites
     starlinkSatellites.forEach(satellite => {
         satellite.userData.angle += satellite.userData.orbitSpeed;
         
@@ -1286,7 +1007,6 @@ async function loadStarlinkStats() {
             </div>
         `;
     } catch (error) {
-        console.error('Starlink Error:', error);
         document.getElementById('starlink-stats').innerHTML = `
             <div class="starlink-stat-item">
                 <strong>Active Satellites</strong>
@@ -1308,35 +1028,14 @@ async function loadStarlinkStats() {
     }
 }
 
-function handleSpaceXResize() {
-    window.addEventListener('resize', () => {
-        if (rocketCamera && rocketRenderer) {
-            const container = document.getElementById('rocket-3d-container');
-            if (container) {
-                rocketCamera.aspect = container.clientWidth / container.clientHeight;
-                rocketCamera.updateProjectionMatrix();
-                rocketRenderer.setSize(container.clientWidth, container.clientHeight);
-            }
-        }
-        
-        if (starlinkCamera && starlinkRenderer) {
-            const container = document.getElementById('starlink-viz-container');
-            if (container) {
-                starlinkCamera.aspect = container.clientWidth / container.clientHeight;
-                starlinkCamera.updateProjectionMatrix();
-                starlinkRenderer.setSize(container.clientWidth, container.clientHeight);
-            }
-        }
-    });
-}
-
 function init() {
+ 
     setTimeout(() => {
         const loadingScreen = document.getElementById('loading-screen');
         if (loadingScreen) {
             loadingScreen.classList.add('hidden');
         }
-    }, 2000);
+    }, 1800);
     
     initParticles();
     initSolarSystem();
@@ -1358,15 +1057,10 @@ function init() {
     loadSpaceXStats();
     loadLatestLaunch();
     loadUpcomingLaunches();
-    init3DRocket();
-    setupRocketControls();
     initStarlinkVisualization();
     loadStarlinkStats();
-    handleSpaceXResize();
 
-    setTimeout(() => {
-        setupIntersectionObserver();
-    }, 2000);
+    setupIntersectionObserver();
     
     setInterval(loadISSLocation, 10000);
 }
@@ -1379,5 +1073,3 @@ if (document.readyState === 'loading') {
 
 window.scrollToSection = scrollToSection;
 window.showBlogPost = showBlogPost;
-
-console.log('%c SPACE ALONE - Ready to Explore! ', 'background: #00f3ff; color: #000000; font-size: 16px; font-weight: bold; padding: 10px;');
