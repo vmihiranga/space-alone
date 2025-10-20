@@ -414,7 +414,12 @@
             }
 
             const response = await fetch(endpoint, options);
-            const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch (_) {
+                data = {};
+            }
 
             if (!response.ok) {
                 if (response.status === 401) {
@@ -440,12 +445,14 @@
                 const data = await apiCall('/api/posts');
                 const postsList = document.getElementById('posts-list');
                 
-                if (!data.posts || data.posts.length === 0) {
+                const posts = Array.isArray(data) ? data : (data.posts || []);
+                
+                if (!posts || posts.length === 0) {
                     postsList.innerHTML = '<p class="text-muted">No posts yet. Create your first post!</p>';
                     return;
                 }
 
-                postsList.innerHTML = data.posts.map(post => `
+                postsList.innerHTML = posts.map(post => `
                     <div class="post-item">
                         <div class="post-title">${escapeHtml(post.title)}</div>
                         <div class="post-meta">
@@ -486,7 +493,9 @@
         // Edit post
         async function editPost(id) {
             try {
-                const post = await apiCall(`/api/posts/${id}`);
+                const data = await apiCall(`/api/posts/${id}`);
+                const post = data.post || data;
+                
                 document.getElementById('postModalLabel').textContent = 'Edit Post';
                 document.getElementById('post-id').value = post.id;
                 document.getElementById('post-title').value = post.title;
@@ -517,7 +526,9 @@
                     showAlert('alert-posts', 'Post created successfully!');
                 }
 
-                bootstrap.Modal.getInstance(document.getElementById('postModal')).hide();
+                const modalEl = document.getElementById('postModal');
+                const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                instance.hide();
                 loadPosts();
             } catch (error) {
                 showAlert('alert-posts', error.message, 'error');
@@ -578,6 +589,10 @@
                 document.getElementById('orbit-color').value = config.solar_orbit_color || '#00f3ff';
             } catch (error) {
                 console.error('Failed to load solar config:', error);
+                document.getElementById('rotation-speed').value = 0.5;
+                document.getElementById('rotation-value').textContent = 0.5;
+                document.getElementById('planet-count').value = 8;
+                document.getElementById('orbit-color').value = '#00f3ff';
             }
         }
 
@@ -623,6 +638,13 @@
                 loadSolarConfig();
             }
         });
+
+        // Expose functions globally so inline onclick works reliably
+        window.showCreatePostModal = showCreatePostModal;
+        window.savePost = savePost;
+        window.editPost = editPost;
+        window.deletePost = deletePost;
+        window.logout = logout;
     </script>
 </body>
 </html>
