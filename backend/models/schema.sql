@@ -1,4 +1,4 @@
--- Users table
+
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Posts table with slug support
+
 CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
@@ -21,10 +21,10 @@ CREATE TABLE IF NOT EXISTS posts (
     FOREIGN KEY (author_id) REFERENCES users(id)
 );
 
--- Create index on slug for faster lookups
+
 CREATE INDEX IF NOT EXISTS idx_posts_slug ON posts(slug);
 
--- Solar system configuration table
+
 CREATE TABLE IF NOT EXISTS solar_config (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     planet_name TEXT UNIQUE NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS solar_config (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Uploads/Media table
+
 CREATE TABLE IF NOT EXISTS uploads (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     filename TEXT NOT NULL,
@@ -50,12 +50,10 @@ CREATE TABLE IF NOT EXISTS uploads (
     FOREIGN KEY (uploaded_by) REFERENCES users(id)
 );
 
--- Insert default admin user (password: admin123)
--- Password hash for 'admin123' using bcrypt
-INSERT OR IGNORE INTO users (username, password, email, role) 
-VALUES ('admin', '$2a$10$IAA0CFMbJ3MtYKwBEh8DTelSjuBLkrxaJdY07BMDbHCYdPqVPpI4C', 'admin@spacealone.com', 'admin');
 
--- Insert sample blog posts
+INSERT OR IGNORE INTO users (username, password, email, role) 
+VALUES ('admin', 'admin123', 'admin@spacealone.com', 'admin');
+
 INSERT OR IGNORE INTO posts (id, title, slug, content, author_name) VALUES 
 (1, 'The Search for Extraterrestrial Life', 'the-search-for-extraterrestrial-life', 
 'Scientists continue their quest to find signs of life beyond Earth. With advanced telescopes and space missions, we are exploring distant planets and moons that might harbor the conditions necessary for life. From Europa''s subsurface ocean to the methane lakes of Titan, the possibilities are endless.
@@ -80,7 +78,7 @@ The dream of becoming a multi-planetary species is closer than ever. SpaceX, NAS
 
 Yet with each passing year, the technologies mature and the plans become more concrete. The first humans to set foot on Mars may already be alive today, preparing for a journey that will forever change humanity''s relationship with the cosmos.',
 'Mars Explorer');
--- Post likes table
+
 CREATE TABLE IF NOT EXISTS post_likes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     post_id INTEGER NOT NULL,
@@ -90,7 +88,7 @@ CREATE TABLE IF NOT EXISTS post_likes (
     UNIQUE(post_id, user_identifier)
 );
 
--- Create index for faster like counting
+
 CREATE INDEX IF NOT EXISTS idx_post_likes_post_id ON post_likes(post_id);
 
 -- Post shares table
@@ -103,10 +101,10 @@ CREATE TABLE IF NOT EXISTS post_shares (
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 );
 
--- Create index for share tracking
+
 CREATE INDEX IF NOT EXISTS idx_post_shares_post_id ON post_shares(post_id);
 
--- User activity logs
+
 CREATE TABLE IF NOT EXISTS user_activity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
