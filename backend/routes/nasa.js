@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const fetch = global.fetch || ((...args) => import('node-fetch').then(({default: f}) => f(...args)));
 
-// NASA API Base URL
 const NASA_API_KEY = process.env.NASA_API_KEY || 'fcwxpTL3pvhkwWWF8naDPrIFd4vkw6nqi1IvQRdi';
 const NASA_BASE = 'https://api.nasa.gov';
 
-// Helper function to fetch from NASA with performance tracking
+
 async function fetchNASA(endpoint, resourceName) {
   const startTime = Date.now();
   
@@ -42,7 +42,6 @@ async function fetchNASA(endpoint, resourceName) {
   }
 }
 
-// Helper for non-NASA APIs
 async function fetchExternal(url, resourceName) {
   const startTime = Date.now();
   
@@ -74,7 +73,7 @@ async function fetchExternal(url, resourceName) {
   }
 }
 
-// 1. Astronomy Picture of the Day
+// APOD
 router.get('/apod', async (req, res) => {
   try {
     let date = req.query.date;
@@ -83,7 +82,6 @@ router.get('/apod', async (req, res) => {
       date = new Date().toISOString().split('T')[0];
     }
     
-    // Ensure date isn't in the future
     const today = new Date().toISOString().split('T')[0];
     if (date > today) {
       return res.status(400).json({ 
@@ -105,7 +103,7 @@ router.get('/apod', async (req, res) => {
   }
 });
 
-// 2. Mars Rover Photos (Curiosity)
+// Mars Rover Photos (Curiosity)
 router.get('/mars-photos', async (req, res) => {
   try {
     const sol = req.query.sol || 1000;
@@ -121,7 +119,7 @@ router.get('/mars-photos', async (req, res) => {
   }
 });
 
-// 3. Near Earth Objects (NEO)
+// Near Earth Objects (NEO)
 router.get('/neo', async (req, res) => {
   try {
     const startDate = req.query.start_date || new Date().toISOString().split('T')[0];
@@ -138,7 +136,7 @@ router.get('/neo', async (req, res) => {
   }
 });
 
-// 4. Earth Imagery
+// Earth Imagery
 router.get('/earth-imagery', async (req, res) => {
   try {
     const lat = req.query.lat || 29.78;
@@ -156,7 +154,7 @@ router.get('/earth-imagery', async (req, res) => {
   }
 });
 
-// 5. EPIC (Earth Polychromatic Imaging Camera)
+// EPIC 
 router.get('/epic', async (req, res) => {
   try {
     const result = await fetchNASA(`/EPIC/api/natural?api_key=${NASA_API_KEY}`, 'EPIC');
@@ -171,7 +169,7 @@ router.get('/epic', async (req, res) => {
   }
 });
 
-// 6. Asteroids - NeoWs
+// Asteroids NeoWs
 router.get('/asteroids', async (req, res) => {
   try {
     const result = await fetchNASA(`/neo/rest/v1/neo/browse?api_key=${NASA_API_KEY}`, 'Asteroids');
@@ -186,7 +184,7 @@ router.get('/asteroids', async (req, res) => {
   }
 });
 
-// 7. Exoplanet Archive
+
 router.get('/exoplanets', async (req, res) => {
   try {
     const result = await fetchExternal(
@@ -205,7 +203,7 @@ router.get('/exoplanets', async (req, res) => {
   }
 });
 
-// 8. Mars Weather (InSight)
+
 router.get('/mars-weather', async (req, res) => {
   try {
     const result = await fetchNASA(`/insight_weather/?api_key=${NASA_API_KEY}&feedtype=json&ver=1.0`, 'Mars Weather');
@@ -220,7 +218,7 @@ router.get('/mars-weather', async (req, res) => {
   }
 });
 
-// 9. Solar Flare Data (DONKI)
+
 router.get('/solar-flares', async (req, res) => {
   try {
     const startDate = req.query.start_date || new Date(Date.now() - 30*24*60*60*1000).toISOString().split('T')[0];
@@ -237,7 +235,7 @@ router.get('/solar-flares', async (req, res) => {
   }
 });
 
-// 10. ISS Current Location
+
 router.get('/iss-location', async (req, res) => {
   try {
     const result = await fetchExternal('http://api.open-notify.org/iss-now.json', 'Open Notify');
@@ -252,7 +250,7 @@ router.get('/iss-location', async (req, res) => {
   }
 });
 
-// 11. Space Weather
+
 router.get('/space-weather', async (req, res) => {
   try {
     const result = await fetchNASA(`/DONKI/notifications?api_key=${NASA_API_KEY}`, 'Space Weather');
@@ -267,7 +265,6 @@ router.get('/space-weather', async (req, res) => {
   }
 });
 
-// 12. API Status/Health Check
 router.get('/status', async (req, res) => {
   const endpoints = [
     { name: 'APOD', path: '/apod' },
