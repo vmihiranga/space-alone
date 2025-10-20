@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Documentation - Space Alone</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGradient' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3CradialGradient id='bgGradient' cx='50%25' cy='50%25'%3E%3Cstop offset='0%25' style='stop-color:%231a1f3a;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230a0e27;stop-opacity:1' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='95' fill='url(%23bgGradient)' stroke='%2300f3ff' stroke-width='2' opacity='0.9'/%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGradient)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGradient)' stroke-width='8' opacity='0.6' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E">
-    
+            <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E"
+        />
+              <link rel="stylesheet" href="./src/styles/main.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     
@@ -18,10 +22,10 @@
         }
 
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
             color: #ffffff;
-            font-family: 'Segoe UI', sans-serif;
-            min-height: 100vh;
+            line-height: 1.6;
         }
 
         .sidebar {
@@ -49,12 +53,6 @@
         .logo-icon {
             width: 50px;
             height: 50px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
         }
 
         .sidebar h3 {
@@ -108,6 +106,11 @@
             height: 70px;
         }
 
+        .page-header .lead {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
         .endpoint-card {
             background: rgba(26, 31, 58, 0.8);
             border: 1px solid rgba(0, 243, 255, 0.3);
@@ -145,6 +148,7 @@
         }
 
         .resource-nasa { background: rgba(184, 0, 255, 0.3); color: #b800ff; }
+        .resource-spacex { background: rgba(0, 136, 204, 0.3); color: #0088cc; }
         .resource-system { background: rgba(0, 243, 255, 0.3); color: #00f3ff; }
 
         .nav-link {
@@ -159,33 +163,10 @@
             margin-bottom: 0.5rem;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             background: rgba(0, 243, 255, 0.2);
             color: #00f3ff;
-        }
-
-        h1 {
-            background: linear-gradient(90deg, #00f3ff, #b800ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 900;
-            margin: 0;
-        }
-
-        h2 {
-            color: #00f3ff;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h5 {
-            color: #b800ff;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
         }
 
         .endpoint-url {
@@ -238,37 +219,10 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .copy-btn {
-            background: rgba(0, 243, 255, 0.2);
-            border: 1px solid #00f3ff;
+        h5 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
             color: #00f3ff;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            background: rgba(0, 243, 255, 0.3);
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a0e27;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #00f3ff;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b800ff;
         }
 
         @media (max-width: 768px) {
@@ -279,13 +233,15 @@
                 border-right: none;
                 border-bottom: 2px solid rgba(0, 243, 255, 0.3);
             }
+
             .content {
                 margin-left: 0;
                 padding: 1.5rem;
             }
-            .page-header .logo-icon {
-                width: 50px;
-                height: 50px;
+
+            .page-header {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -324,6 +280,7 @@
             <a href="#uploads-endpoints" class="nav-link"><span class="icon icon-upload"></span>Uploads Endpoints</a>
             <a href="#solar-endpoints" class="nav-link"><span class="icon icon-sun"></span>Solar Endpoints</a>
             <a href="#nasa-endpoints" class="nav-link"><span class="icon icon-satellite"></span>NASA Endpoints</a>
+            <a href="#spacex-endpoints" class="nav-link"><span class="icon icon-rocket"></span>SpaceX Endpoints</a>
             <a href="#errors" class="nav-link"><span class="icon icon-warning"></span>Error Codes</a>
         </div>
         <hr style="border-color: rgba(0, 243, 255, 0.3); margin: 2rem 0;">
@@ -353,28 +310,29 @@
             </svg>
             <div>
                 <h1>Space Alone API Documentation</h1>
-                <p class="lead" style="margin: 0; color: rgba(255,255,255,0.7);">Complete API reference for the Space Alone platform</p>
+                <p class="lead">Complete API reference for the Space Alone platform</p>
             </div>
         </div>
 
         <section id="overview" class="endpoint-card">
             <h2><span class="icon icon-info"></span> Overview</h2>
-            <p>Base URL: <code>http://localhost:3000/api</code></p>
-            <p>All responses are in JSON format. API uses JWT for authentication where required.</p>
+            <p>Base URL: <code>http://localhost:5000/api</code></p>
+            <p>All responses are in JSON format. API uses session-based authentication (no JWT).</p>
             <div class="endpoint-url">
                 <strong>API Version:</strong> 1.0.0<br>
+                <strong>Auth Method:</strong> Session-based (No JWT)<br>
                 <strong>Rate Limits:</strong><br>
-                • General: 100 requests per 15 minutes<br>
-                • Auth: 5 requests per 15 minutes<br>
-                • NASA: 30 requests per minute
+                • General: 10,000 requests per 15 minutes<br>
+                • Auth: 10 requests per 15 minutes<br>
+                • NASA & SpaceX: 30 requests per minute
             </div>
         </section>
 
         <section id="authentication" class="endpoint-card">
             <h2><span class="icon icon-lock"></span> Authentication</h2>
-            <p>Protected endpoints require JWT token in Authorization header:</p>
-            <pre><code>Authorization: Bearer YOUR_JWT_TOKEN</code></pre>
-            <p style="margin-top: 1rem;">Obtain token via <code>/api/auth/login</code> endpoint.</p>
+            <p>Protected endpoints use session-based authentication. After logging in, a session cookie is set automatically.</p>
+            <p style="margin-top: 1rem;">Login via <code>/api/auth/login</code> endpoint to establish a session.</p>
+            <p style="margin-top: 0.5rem; color: rgba(255,255,255,0.7);">Sessions are valid for 24 hours and stored in SQLite.</p>
         </section>
 
         <section id="system-endpoints">
@@ -402,7 +360,8 @@
     "total": "128MB"
   },
   "environment": "development",
-  "nodeVersion": "v18.17.0"
+  "nodeVersion": "v18.17.0",
+  "authMethod": "session"
 }</code></pre>
                 </div>
             </div>
@@ -414,27 +373,6 @@
                     <span class="resource-badge resource-system">System</span>
                 </div>
                 <p>API status and available resources</p>
-                
-                <h5>Response Example:</h5>
-                <div class="response-example">
-                    <pre><code>{
-  "service": "Space Alone API Gateway",
-  "version": "1.0.0",
-  "status": "operational",
-  "endpoints": {
-    "auth": "/api/auth",
-    "posts": "/api/posts",
-    "nasa": "/api/nasa"
-  },
-  "resources": [
-    {
-      "name": "NASA API",
-      "status": "active",
-      "rateLimit": "30 req/min"
-    }
-  ]
-}</code></pre>
-                </div>
             </div>
 
             <div class="endpoint-card">
@@ -455,7 +393,7 @@
                     <span class="method-badge method-post">POST</span>
                     <span class="ms-2">/api/auth/login</span>
                 </div>
-                <p>Admin login - Returns JWT token</p>
+                <p>Admin login - Creates a session</p>
                 
                 <h5>Request Body:</h5>
                 <table class="param-table">
@@ -482,35 +420,56 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <h5>Example Request:</h5>
-                <pre><code>fetch('/api/auth/login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    username: 'admin',
-    password: 'your_password'
-  })
-});</code></pre>
-
-                <h5>Response Example:</h5>
-                <div class="response-example">
-                    <pre><code>{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "id": 1,
-    "username": "admin"
-  }
-}</code></pre>
-                </div>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
                     <span class="method-badge method-post">POST</span>
-                    <span class="ms-2">/api/auth/register</span>
+                    <span class="ms-2">/api/auth/logout</span>
                 </div>
-                <p>Register new admin user</p>
+                <p>Logout and destroy session (requires authentication)</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/auth/verify</span>
+                </div>
+                <p>Verify current session status (requires authentication)</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-post">POST</span>
+                    <span class="ms-2">/api/auth/change-password</span>
+                </div>
+                <p>Change user password (requires authentication)</p>
+                
+                <h5>Request Body:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>currentPassword</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Current password</td>
+                        </tr>
+                        <tr>
+                            <td>newPassword</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>New password (min 6 chars)</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -522,19 +481,61 @@
                     <span class="method-badge method-get">GET</span>
                     <span class="ms-2">/api/posts</span>
                 </div>
-                <p>Get all blog posts</p>
+                <p>Get all blog posts with pagination</p>
                 
-                <h5>Response Example:</h5>
-                <div class="response-example">
-                    <pre><code>[
-  {
-    "id": 1,
-    "title": "My Space Journey",
-    "content": "Exploring the cosmos...",
-    "created_at": "2024-10-17T10:00:00Z"
-  }
-]</code></pre>
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>page</td>
+                            <td>integer</td>
+                            <td>1</td>
+                            <td>Page number</td>
+                        </tr>
+                        <tr>
+                            <td>limit</td>
+                            <td>integer</td>
+                            <td>100</td>
+                            <td>Posts per page</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/posts/search/query</span>
                 </div>
+                <p>Search posts by title or content</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>q</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Search query</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="endpoint-card">
@@ -542,7 +543,7 @@
                     <span class="method-badge method-get">GET</span>
                     <span class="ms-2">/api/posts/:id</span>
                 </div>
-                <p>Get single post by ID</p>
+                <p>Get single post by ID or slug</p>
             </div>
 
             <div class="endpoint-card">
@@ -550,7 +551,39 @@
                     <span class="method-badge method-post">POST</span>
                     <span class="ms-2">/api/posts</span>
                 </div>
-                <p>Create new blog post (requires authentication)</p>
+                <p>Create new blog post (requires admin authentication)</p>
+                
+                <h5>Request Body:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>title</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Post title</td>
+                        </tr>
+                        <tr>
+                            <td>content</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Post content</td>
+                        </tr>
+                        <tr>
+                            <td>image_url</td>
+                            <td>string</td>
+                            <td>No</td>
+                            <td>Featured image URL</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="endpoint-card">
@@ -558,7 +591,7 @@
                     <span class="method-badge method-put">PUT</span>
                     <span class="ms-2">/api/posts/:id</span>
                 </div>
-                <p>Update existing post (requires authentication)</p>
+                <p>Update existing post (requires admin authentication)</p>
             </div>
 
             <div class="endpoint-card">
@@ -566,7 +599,75 @@
                     <span class="method-badge method-delete">DELETE</span>
                     <span class="ms-2">/api/posts/:id</span>
                 </div>
-                <p>Delete post (requires authentication)</p>
+                <p>Delete post (requires admin authentication)</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/posts/:id/likes</span>
+                </div>
+                <p>Get like count for a post</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-post">POST</span>
+                    <span class="ms-2">/api/posts/:id/like</span>
+                </div>
+                <p>Like a post (uses session or IP for identification)</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-delete">DELETE</span>
+                    <span class="ms-2">/api/posts/:id/like</span>
+                </div>
+                <p>Unlike a post</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/posts/:id/liked</span>
+                </div>
+                <p>Check if current user liked a post</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-post">POST</span>
+                    <span class="ms-2">/api/posts/:id/share</span>
+                </div>
+                <p>Track post share</p>
+                
+                <h5>Request Body:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>platform</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Social platform (twitter, facebook, etc.)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/posts/:id/shares</span>
+                </div>
+                <p>Get share count for a post</p>
             </div>
         </section>
 
@@ -582,15 +683,6 @@
                 
                 <h5>Request:</h5>
                 <p>Multipart form data with file field</p>
-                
-                <h5>Response Example:</h5>
-                <div class="response-example">
-                    <pre><code>{
-  "success": true,
-  "filename": "image_123456.jpg",
-  "url": "/uploads/image_123456.jpg"
-}</code></pre>
-                </div>
             </div>
 
             <div class="endpoint-card">
@@ -610,7 +702,7 @@
                     <span class="method-badge method-get">GET</span>
                     <span class="ms-2">/api/solar-config</span>
                 </div>
-                <p>Get solar system configuration</p>
+                <p>Get all solar system configurations</p>
             </div>
 
             <div class="endpoint-card">
@@ -618,7 +710,57 @@
                     <span class="method-badge method-post">POST</span>
                     <span class="ms-2">/api/solar-config</span>
                 </div>
-                <p>Create solar system configuration</p>
+                <p>Create solar system configuration (requires admin authentication)</p>
+                
+                <h5>Request Body:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>planet_name</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Planet name</td>
+                        </tr>
+                        <tr>
+                            <td>size</td>
+                            <td>number</td>
+                            <td>No</td>
+                            <td>Planet size (default: 1)</td>
+                        </tr>
+                        <tr>
+                            <td>distance</td>
+                            <td>number</td>
+                            <td>No</td>
+                            <td>Distance from sun (default: 1)</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>string</td>
+                            <td>No</td>
+                            <td>Planet color (default: #ffffff)</td>
+                        </tr>
+                        <tr>
+                            <td>speed</td>
+                            <td>number</td>
+                            <td>No</td>
+                            <td>Orbit speed (default: 1)</td>
+                        </tr>
+                        <tr>
+                            <td>info</td>
+                            <td>string</td>
+                            <td>No</td>
+                            <td>Planet information</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="endpoint-card">
@@ -626,7 +768,7 @@
                     <span class="method-badge method-put">PUT</span>
                     <span class="ms-2">/api/solar-config/:id</span>
                 </div>
-                <p>Update solar system configuration</p>
+                <p>Update solar system configuration (requires admin authentication)</p>
             </div>
 
             <div class="endpoint-card">
@@ -634,7 +776,7 @@
                     <span class="method-badge method-delete">DELETE</span>
                     <span class="ms-2">/api/solar-config/:id</span>
                 </div>
-                <p>Delete solar system configuration</p>
+                <p>Delete solar system configuration (requires admin authentication)</p>
             </div>
         </section>
 
@@ -643,103 +785,353 @@
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/apod</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/apod</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
                 <p>Astronomy Picture of the Day</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>date</td>
+                            <td>string</td>
+                            <td>today</td>
+                            <td>Date in YYYY-MM-DD format</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/mars-photos</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/mars-photos</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
                 <p>Mars Rover Photos from Curiosity</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>sol</td>
+                            <td>integer</td>
+                            <td>1000</td>
+                            <td>Martian sol (day)</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/neo</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/neo</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
                 <p>Near Earth Objects</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>start_date</td>
+                            <td>string</td>
+                            <td>today</td>
+                            <td>Start date (YYYY-MM-DD)</td>
+                        </tr>
+                        <tr>
+                            <td>end_date</td>
+                            <td>string</td>
+                            <td>start_date</td>
+                            <td>End date (YYYY-MM-DD)</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/iss-location</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/earth-imagery</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
-                <p>Current ISS Location</p>
+                <p>Earth Imagery</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>lat</td>
+                            <td>number</td>
+                            <td>29.78</td>
+                            <td>Latitude</td>
+                        </tr>
+                        <tr>
+                            <td>lon</td>
+                            <td>number</td>
+                            <td>-95.33</td>
+                            <td>Longitude</td>
+                        </tr>
+                        <tr>
+                            <td>date</td>
+                            <td>string</td>
+                            <td>2018-01-01</td>
+                            <td>Image date</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/asteroids</span>
-                    </div>
-                </div>
-                <p>Browse Asteroids Database</p>
-            </div>
-
-            <div class="endpoint-card">
-                <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/epic</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/epic</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
                 <p>Earth Polychromatic Imaging Camera</p>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/exoplanets</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/asteroids</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
-                <p>Exoplanet Archive Data</p>
+                <p>Browse Asteroids Database (NeoWs)</p>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/solar-flares</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/exoplanets</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
-                <p>Solar Flare Data (DONKI)</p>
+                <p>Exoplanet Archive Data (limited to 100 results)</p>
             </div>
 
             <div class="endpoint-card">
                 <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/space-weather</span>
-                    </div>
-                </div>
-                <p>Space Weather Notifications</p>
-            </div>
-
-            <div class="endpoint-card">
-                <div class="mb-3">
-                    <div>
-                        <span class="method-badge method-get">GET</span>
-                        <span class="ms-2">/api/nasa/mars-weather</span>
-                    </div>
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/mars-weather</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
                 </div>
                 <p>Mars Weather from InSight</p>
-                <div id="response-marsWeather" class="response-box" style="display: none;"></div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/solar-flares</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
+                </div>
+                <p>Solar Flare Data (DONKI)</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>start_date</td>
+                            <td>string</td>
+                            <td>30 days ago</td>
+                            <td>Start date (YYYY-MM-DD)</td>
+                        </tr>
+                        <tr>
+                            <td>end_date</td>
+                            <td>string</td>
+                            <td>today</td>
+                            <td>End date (YYYY-MM-DD)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/iss-location</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
+                </div>
+                <p>Current International Space Station Location</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/space-weather</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
+                </div>
+                <p>Space Weather Notifications (DONKI)</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/nasa/status</span>
+                    <span class="resource-badge resource-nasa">NASA</span>
+                </div>
+                <p>NASA API Gateway Status</p>
+            </div>
+        </section>
+
+        <section id="spacex-endpoints">
+            <h2><span class="icon icon-rocket"></span> SpaceX Data Endpoints</h2>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/spacex/latest</span>
+                    <span class="resource-badge resource-spacex">SpaceX</span>
+                </div>
+                <p>Get the latest SpaceX launch</p>
+                
+                <h5>Response Example:</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "id": "5eb87d47ffd86e000604b38a",
+  "name": "Starlink-15 (v1.0)",
+  "date_utc": "2024-10-15T10:30:00.000Z",
+  "success": true,
+  "details": "This mission launched...",
+  "rocket": "5e9d0d95eda69973a809d1ec",
+  "launchpad": "5e9e4502f509094188566f88"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/spacex/upcoming</span>
+                    <span class="resource-badge resource-spacex">SpaceX</span>
+                </div>
+                <p>Get next 5 upcoming SpaceX launches</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/spacex/past</span>
+                    <span class="resource-badge resource-spacex">SpaceX</span>
+                </div>
+                <p>Get past SpaceX launches with pagination</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>limit</td>
+                            <td>integer</td>
+                            <td>10</td>
+                            <td>Number of launches to return</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/spacex/starlink</span>
+                    <span class="resource-badge resource-spacex">SpaceX</span>
+                </div>
+                <p>Get Starlink satellites information</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>limit</td>
+                            <td>integer</td>
+                            <td>50</td>
+                            <td>Number of satellites to return</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/spacex/stats</span>
+                    <span class="resource-badge resource-spacex">SpaceX</span>
+                </div>
+                <p>Get SpaceX launch statistics and success rate</p>
+                
+                <h5>Response Example:</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "totalLaunches": 180,
+  "upcomingLaunches": 12,
+  "successfulLaunches": 165,
+  "failedLaunches": 8,
+  "latestLaunch": {
+    "name": "Starlink-15 (v1.0)",
+    "date": "2024-10-15T10:30:00.000Z",
+    "success": true,
+    "rocket": "5e9d0d95eda69973a809d1ec"
+  },
+  "successRate": "91.67"
+}</code></pre>
+                </div>
             </div>
         </section>
 
@@ -759,7 +1151,7 @@
                     </tr>
                     <tr>
                         <td>401</td>
-                        <td>Unauthorized - Invalid or missing token</td>
+                        <td>Unauthorized - Session expired or invalid</td>
                     </tr>
                     <tr>
                         <td>403</td>
@@ -779,89 +1171,24 @@
                     </tr>
                 </tbody>
             </table>
+
+            <h5>Error Response Format:</h5>
+            <div class="response-example">
+                <pre><code>{
+  "error": "Route not found",
+  "path": "/api/invalid",
+  "method": "GET",
+  "timestamp": "2024-10-20T12:00:00.000Z",
+  "suggestion": "Check /api for available endpoints"
+}</code></pre>
+            </div>
         </section>
     </div>
-
-    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
 
     <script>
-        function openTester() {
-            document.getElementById('testerModal').classList.add('active');
-            document.getElementById('testerOverlay').classList.add('active');
-        }
-
-        function closeTester() {
-            document.getElementById('testerModal').classList.remove('active');
-            document.getElementById('testerOverlay').classList.remove('active');
-        }
-
-        document.getElementById('testerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const method = document.getElementById('testerMethod').value;
-            const url = document.getElementById('testerUrl').value;
-            const token = document.getElementById('testerToken').value;
-            const bodyText = document.getElementById('testerBody').value;
-            
-            const responseDiv = document.getElementById('testerResponse');
-            responseDiv.innerHTML = '<div class="response-box loading"><div class="spinner"></div></div>';
-
-            try {
-                const options = {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' }
-                };
-
-                if (token) {
-                    options.headers['Authorization'] = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
-                }
-
-                if (bodyText && (method === 'POST' || method === 'PUT')) {
-                    try {
-                        JSON.parse(bodyText);
-                        options.body = bodyText;
-                    } catch (e) {
-                        throw new Error('Invalid JSON in request body');
-                    }
-                }
-
-                const startTime = Date.now();
-                const response = await fetch(url, options);
-                const data = await response.json();
-                const duration = Date.now() - startTime;
-
-                const statusClass = response.status < 300 ? 'status-200' : response.status < 500 ? 'status-400' : 'status-500';
-
-                responseDiv.innerHTML = `
-                    <h5 style="color: #00f3ff; margin-top: 1rem; display: flex; align-items: center; gap: 8px;"><span class="icon icon-check"></span> Response</h5>
-                    <div class="response-box">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="status-badge ${statusClass}">Status: ${response.status} ${response.statusText}</span>
-                            <small style="color: #00f3ff;"><span class="icon icon-clock"></span> ${duration}ms</small>
-                        </div>
-                        <h6 style="color: #b800ff;">Headers:</h6>
-                        <pre><code>${JSON.stringify({
-                            'Content-Type': response.headers.get('content-type'),
-                            'Content-Length': response.headers.get('content-length')
-                        }, null, 2)}</code></pre>
-                        <h6 style="color: #b800ff; margin-top: 1rem;">Body:</h6>
-                        <pre><code>${JSON.stringify(data, null, 2)}</code></pre>
-                    </div>
-                `;
-            } catch (error) {
-                responseDiv.innerHTML = `
-                    <div class="response-box">
-                        <div class="alert alert-danger">
-                            <span class="icon icon-error"></span> <strong>Error:</strong> ${error.message}
-                        </div>
-                    </div>
-                `;
-            }
-        });
-
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
@@ -916,23 +1243,11 @@
             block.title = 'Click to copy';
         });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeTester();
-            }
-            
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                openTester();
-            }
-        });
-
         if (typeof Prism !== 'undefined') {
             Prism.highlightAll();
         }
 
         console.log('%c🚀 Space Alone API', 'color: #00f3ff; font-size: 24px; font-weight: bold;');
-        console.log('%cPress Ctrl/Cmd + K to open API Tester', 'color: #b800ff; font-size: 14px;');
         console.log('%cClick any code block to copy', 'color: #28a745; font-size: 12px;');
     </script>
 </body>
