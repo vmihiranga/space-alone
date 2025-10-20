@@ -7,17 +7,15 @@ const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const path = require("path");
 const fs = require("fs");
-const sqlite3 = require("sqlite3").verbose();
 const bcrypt = require("bcryptjs");
+const sql = require("./db");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const HOST = "0.0.0.0";
 
-// Trust proxy for Replit environment (fixes rate limiting with X-Forwarded-For header)
 app.set("trust proxy", true);
 
-// Performance tracking middleware
 const performanceTracker = (req, res, next) => {
   const startTime = Date.now();
   const originalSend = res.send;
@@ -34,28 +32,12 @@ const performanceTracker = (req, res, next) => {
   next();
 };
 
-// Database initialization
-const dbPath = path.join(__dirname, "database.sqlite");
-const db = new sqlite3.Database(dbPath);
-
-// Initialize database schema
-const schemaPath = path.join(__dirname, "models", "schema.sql");
-if (fs.existsSync(schemaPath)) {
-  const schema = fs.readFileSync(schemaPath, "utf8");
-  db.exec(schema, (err) => {
-    if (err) console.error("❌ Database initialization error:", err);
-    else console.log("✅ Database initialized successfully");
-  });
-}
-
-// Ensure upload directory exists
 const uploadDir = process.env.UPLOAD_DIR || "./public/uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
   console.log("✅ Upload directory created:", uploadDir);
 }
 
-// Security middleware
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -83,7 +65,6 @@ app.use(
           "https://api.nasa.gov",
           "http://api.open-notify.org",
           "https://exoplanetarchive.ipac.caltech.edu",
-          "https://api.spacexdata.com",
         ],
         fontSrc: [
           "'self'",
@@ -106,12 +87,11 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session configuration (MUST be before routes)
 app.use(
   session({
     store: new SQLiteStore({
       db: "sessions.sqlite",
-      dir: ".",
+      dir: "./backend",
     }),
     secret:
       process.env.SESSION_SECRET ||
@@ -121,15 +101,13 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 24 * 60 * 60 * 1000,
     },
   }),
 );
 
-// Apply performance tracking
 app.use(performanceTracker);
 
-// Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10000,
@@ -156,7 +134,7 @@ const authLimiter = rateLimit({
 
 const apiLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 30,
+  max: 3000,
   message: {
     error: "API rate limit exceeded",
     retryAfter: "1 minute",
@@ -170,28 +148,22 @@ app.use("/api/", limiter);
 app.use("/api/auth/login", authLimiter);
 app.use("/api/nasa", apiLimiter);
 app.use("/api/spacex", apiLimiter);
-
-// Static files
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-// Import routes
-const authRoutes = require("./routes/auth")(db);
-const postsRoutes = require("./routes/posts")(db);
-const uploadsRoutes = require("./routes/uploads")(db);
-const solarRoutes = require("./routes/solar")(db);
+const authRoutes = require("./routes/auth")(sql);
+const postsRoutes = require("./routes/posts")(sql);
+const uploadsRoutes = require("./routes/uploads")(sql);
+const solarRoutes = require("./routes/solar")(sql);
 const nasaRoutes = require("./routes/nasa");
 const spacexRoutes = require("./routes/spacex");
 
-// API routes (BEFORE frontend routes)
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/solar-config", solarRoutes);
 app.use("/api/nasa", nasaRoutes);
 app.use("/api/spacex", spacexRoutes);
-
-// Health check with enhanced info
 app.get("/api/health", (req, res) => {
   const uptime = process.uptime();
   const memoryUsage = process.memoryUsage();
@@ -211,30 +183,30 @@ app.get("/api/health", (req, res) => {
     environment: process.env.NODE_ENV || "development",
     nodeVersion: process.version,
     authMethod: "session",
+    database: "PostgreSQL",
   });
 });
 
-// API Status endpoint
 app.get("/api/status", (req, res) => {
   res.json({
     service: "Space Alone API Gateway",
     version: "1.0.0",
     status: "operational",
     authMethod: "session-based",
+    database: "PostgreSQL",
     endpoints: {
       auth: "/api/auth",
       posts: "/api/posts",
       uploads: "/api/uploads",
       solar: "/api/solar-config",
       nasa: "/api/nasa",
-      spacex: "/api/spacex",
+       spacex: "/api/spacex",
       health: "/api/health",
       docs: "/api/docs",
     },
     resources: [
       { name: "NASA API", status: "active", rateLimit: "30 req/min" },
-      { name: "SpaceX API", status: "active", rateLimit: "30 req/min" },
-      { name: "Database", status: "connected", type: "SQLite" },
+      { name: "Database", status: "connected", type: "PostgreSQL" },
       { name: "File Storage", status: "active", path: uploadDir },
       { name: "Session Store", status: "active", type: "SQLite" },
     ],
@@ -242,12 +214,10 @@ app.get("/api/status", (req, res) => {
   });
 });
 
-// API Documentation
 app.get("/api/docs", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/api.html"));
 });
 
-// API Endpoints list (JSON format)
 app.get("/api", (req, res) => {
   res.json({
     message: "Space Alone API",
@@ -332,7 +302,6 @@ app.get("/api", (req, res) => {
   });
 });
 
-// Serve frontend pages
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
@@ -353,7 +322,6 @@ app.get("/post", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/post.html"));
 });
 
-// 404 handler (MUST be last)
 app.use((req, res) => {
   res.status(404).json({
     error: "Route not found",
@@ -364,7 +332,6 @@ app.use((req, res) => {
   });
 });
 
-// Error handler
 app.use((err, req, res, next) => {
   console.error("❌ Error:", err.stack);
   res.status(err.status || 500).json({
@@ -378,37 +345,72 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-const server = app.listen(PORT, HOST, () => {
-  console.log("\n🚀 ═══════════════════════════════════════════════════════");
-  console.log("   Space Alone Server Started Successfully");
-  console.log("   ═══════════════════════════════════════════════════════");
-  console.log(`   🌐 Frontend:    http://${HOST}:${PORT}`);
-  console.log(`   🔐 Admin:       http://${HOST}:${PORT}/admin`);
-  console.log(`   🔑 Login:       http://${HOST}:${PORT}/login`);
-  console.log(`   📡 API Docs:    http://${HOST}:${PORT}/api/docs`);
-  console.log(`   🏥 Health:      http://${HOST}:${PORT}/api/health`);
-  console.log(`   📊 Status:      http://${HOST}:${PORT}/api/status`);
-  console.log(`   🔐 Auth Method: Session-based (No JWT)`);
-  console.log(`   🌍 Environment: ${process.env.NODE_ENV || "development"}`);
-  console.log(`   ⚡ Node:        ${process.version}`);
-  console.log("   ═══════════════════════════════════════════════════════\n");
+async function ensureDatabaseInitialized() {
+  try {
+    const schemaPath = path.join(__dirname, "models", "schema-postgres.sql");
+    if (fs.existsSync(schemaPath)) {
+      const schemaSql = fs.readFileSync(schemaPath, "utf8");
+      await sql.unsafe(schemaSql);
+      console.log("✅ PostgreSQL schema ensured");
+    } else {
+      console.warn("⚠️  PostgreSQL schema file not found at", schemaPath);
+    }
+
+    const adminUsers = await sql`SELECT id FROM users WHERE username = 'admin'`;
+    if (adminUsers.length === 0) {
+      const passwordHash = await bcrypt.hash("admin123", 10);
+      await sql`
+        INSERT INTO users (username, password, email, role)
+        VALUES ('admin', ${passwordHash}, 'admin@spacealone.com', 'admin')
+      `;
+      console.log("✅ Seeded default admin (admin / admin123)");
+    }
+  } catch (e) {
+    console.error("❌ Failed to initialize database:", e);
+    throw e;
+  }
+}
+
+let server;
+
+async function start() {
+  await ensureDatabaseInitialized();
+  server = app.listen(PORT, HOST, () => {
+    console.log("\n🚀 ═══════════════════════════════════════════════════════");
+    console.log("   Space Alone Server Started Successfully");
+    console.log("   ═══════════════════════════════════════════════════════");
+    console.log(`   🌐 Frontend:    http://${HOST}:${PORT}`);
+    console.log(`   🔐 Admin:       http://${HOST}:${PORT}/admin`);
+    console.log(`   🔑 Login:       http://${HOST}:${PORT}/login`);
+    console.log(`   📡 API Docs:    http://${HOST}:${PORT}/api/docs`);
+    console.log(`   🏥 Health:      http://${HOST}:${PORT}/api/health`);
+    console.log(`   📊 Status:      http://${HOST}:${PORT}/api/status`);
+    console.log(`   🔐 Auth Method: Session-based (No JWT)`);
+    console.log(`   💾 Database:    PostgreSQL (Koyeb)`);
+    console.log(`   🌍 Environment: ${process.env.NODE_ENV || "development"}`);
+    console.log(`   ⚡ Node:        ${process.version}`);
+    console.log("   ═══════════════════════════════════════════════════════\n");
+  });
+}
+
+start().catch((err) => {
+  console.error("❌ Server failed to start due to initialization error", err);
+  process.exit(1);
 });
 
-// Graceful shutdown
-const gracefulShutdown = (signal) => {
+const gracefulShutdown = async (signal) => {
   console.log(`\n${signal} signal received: closing HTTP server`);
-  server.close(() => {
+  server.close(async () => {
     console.log("✅ HTTP server closed");
-    db.close((err) => {
-      if (err) {
-        console.error("❌ Error closing database:", err);
-        process.exit(1);
-      }
+    try {
+      await sql.end();
       console.log("✅ Database connection closed");
       console.log("👋 Goodbye!\n");
       process.exit(0);
-    });
+    } catch (err) {
+      console.error("❌ Error closing database:", err);
+      process.exit(1);
+    }
   });
 
   setTimeout(() => {
