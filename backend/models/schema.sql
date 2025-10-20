@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS uploads (
 -- Insert default admin user (password: admin123)
 -- Password hash for 'admin123' using bcrypt
 INSERT OR IGNORE INTO users (username, password, email, role) 
-VALUES ('admin', 'admin123', 'admin@spacealone.com', 'admin');
+VALUES ('admin', '$2a$10$IAA0CFMbJ3MtYKwBEh8DTelSjuBLkrxaJdY07BMDbHCYdPqVPpI4C', 'admin@spacealone.com', 'admin');
 
 -- Insert sample blog posts
 INSERT OR IGNORE INTO posts (id, title, slug, content, author_name) VALUES 
@@ -80,3 +80,44 @@ The dream of becoming a multi-planetary species is closer than ever. SpaceX, NAS
 
 Yet with each passing year, the technologies mature and the plans become more concrete. The first humans to set foot on Mars may already be alive today, preparing for a journey that will forever change humanity''s relationship with the cosmos.',
 'Mars Explorer');
+-- Post likes table
+CREATE TABLE IF NOT EXISTS post_likes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    user_identifier TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    UNIQUE(post_id, user_identifier)
+);
+
+-- Create index for faster like counting
+CREATE INDEX IF NOT EXISTS idx_post_likes_post_id ON post_likes(post_id);
+
+-- Post shares table
+CREATE TABLE IF NOT EXISTS post_shares (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    platform TEXT NOT NULL,
+    user_identifier TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+);
+
+-- Create index for share tracking
+CREATE INDEX IF NOT EXISTS idx_post_shares_post_id ON post_shares(post_id);
+
+-- User activity logs
+CREATE TABLE IF NOT EXISTS user_activity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    username TEXT,
+    action TEXT NOT NULL,
+    details TEXT,
+    ip_address TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Create index for activity logs
+CREATE INDEX IF NOT EXISTS idx_user_activity_user_id ON user_activity(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_activity_created_at ON user_activity(created_at);
