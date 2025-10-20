@@ -15,17 +15,112 @@
         />
         <link rel="stylesheet" href="./src/styles/main.css" />
         <style>
-            .blog-hero {
-                min-height: 50vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                position: relative;
-                margin-top: 100px;
-                margin-bottom: 80px;
-                overflow: hidden;
-            }
+.blog-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 60px 20px;
+    margin-bottom: 50px; 
+    overflow: hidden;
+}
+
+.section-divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--neon-blue),
+        transparent
+    );
+    margin: 60px auto;
+    position: relative;
+    max-width: 1200px;
+}
+
+.section-divider::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--neon-blue);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+
+@media (max-width: 768px) {
+    .blog-hero {
+        min-height: 100vh;
+        margin-bottom: 30px;
+    }
+
+    .section-divider {
+        margin: 30px auto;
+    }
+
+    .blog-container {
+        margin-top: 30px;
+    }
+        .share-modal-content {
+        padding: 20px;
+    }
+    .share-modal-content .share-modal-header h3 {
+        font-size: 1.5rem;
+    }
+    .share-platform-btn {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+    }
+    .share-platform-btn svg {
+        width: 10px;
+        height: 10px;
+    }
+    .share-platforms {
+        grid-template-columns: 1fr;
+        gap:5 px;
+    }   
+    
+}
+
+@media (max-width: 480px) {
+    .blog-hero {
+        min-height: 100vh;
+        margin-bottom: 20px;
+    }
+
+    .section-divider {
+        margin: 20px auto;
+    }
+
+    .blog-container {
+        margin-top: 20px;
+    }
+    .share-modal-content {
+        padding: 20px;
+    }
+    .share-modal-content .share-modal-header h3 {
+        font-size: 1.5rem;
+    }
+    .share-platform-btn {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+    }
+    .share-platform-btn svg {
+        width: 10px;
+        height: 10px;
+    }
+    .share-platforms {
+        grid-template-columns: 1fr;
+        gap:5 px;
+    }   
+    
+}
 
             .blog-hero::before {
                 content: "";
@@ -59,12 +154,11 @@
                 max-width: 700px;
                 margin: 0 auto;
             }
-
-            .blog-container {
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 0 20px 100px;
-            }
+.blog-container {
+    max-width: 1400px;
+    margin: 40px auto 0; 
+    padding: 0 20px 100px;
+}
 
             .blog-grid-full {
                 display: grid;
@@ -226,7 +320,7 @@
                 cursor: not-allowed;
             }
 
-            /* Share Modal */
+     
             .share-modal {
                 display: none;
                 position: fixed;
@@ -343,81 +437,116 @@
                 color: #22c55e;
             }
 
-            @media (max-width: 768px) {
-                .blog-grid-full {
-                    grid-template-columns: 1fr;
-                }
 
-                .blog-hero {
-                    min-height: 35vh;
-                    margin-top: 120px;
-                }
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+  position: relative;
+}
 
-                .blog-hero::before {
-                    background-attachment: scroll;
-                }
+.mobile-menu-toggle span {
+  width: 28px;
+  height: 3px;
+  background: var(--neon-blue);
+  border-radius: 3px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: center;
+  box-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+}
 
-                .blog-hero .hero-title {
-                    font-size: 2rem;
-                }
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
 
-                .blog-hero .hero-subtitle {
-                    font-size: 1rem;
-                }
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
 
-                .share-platforms {
-                    grid-template-columns: 1fr;
-                }
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
 
-                .blog-actions {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 15px;
-                }
 
-                .blog-interaction {
-                    width: 100%;
-                    justify-content: flex-start;
-                }
-            }
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: flex;
+    margin-left: auto;
+  }
 
-            @media (max-width: 480px) {
-                .blog-hero {
-                    margin-top: 100px;
-                    min-height: 30vh;
-                }
-
-                .share-modal-content {
-                    padding: 30px 20px;
-                }
-
-                .interaction-btn {
-                    padding: 6px 10px;
-                    font-size: 0.85rem;
-                }
-
-                .interaction-btn svg {
-                    width: 16px;
-                    height: 16px;
-                }
-            }
+  #nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 1rem;
+    border-top: 2px solid var(--neon-blue);
+    box-shadow: 0 5px 20px rgba(0, 243, 255, 0.2);
+    
+   transform: translateY(-100%);
+    transition: transform 0.2s ease-out; 
+    pointer-events: none;
+  }
+  
+  #nav-links.active {
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .nav-link-space {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+    display: block;
+  }
+  
+  .nav-link-space:last-child {
+    border-bottom: none;
+  }
+}
         </style>
     </head>
     <body>
        
 
-        <nav class="glass-header">
-            <div class="nav-container">
-                <h3 class="logo">SPACE ALONE</h3>
-                <div class="nav-links">
-                    <a href="/" class="nav-link-space">Home</a>
-                    <a href="/#solar" class="nav-link-space">Solar System</a>
-                    <a href="/#nasa" class="nav-link-space">NASA Data</a>
-                    <a href="/#apod" class="nav-link-space">APOD</a>
-                    <a href="/blog.html" class="nav-link-space active">Blog</a>
-                </div>
+
+    <nav class="glass-header" id="main-header">
+        <div class="nav-container">
+            <h3 class="logo">SPACE ALONE</h3>
+            
+      
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+     
+            <div class="nav-links" id="nav-links">
+                <a href="/#home" class="nav-link-space active">Home</a>
+                <a href="/#mysteries" class="nav-link-space">Mysteries</a>
+                <a href="/#solar" class="nav-link-space">Solar System</a>
+                <a href="/#nasa" class="nav-link-space">NASA Data</a>
+                <a href="/#apod" class="nav-link-space">APOD</a>
+                <a href="/#spacex" class="nav-link-space">SpaceX</a>
+                <a href="/blog" class="nav-link-space">Blog</a>
             </div>
-        </nav>
+        </div>
+    </nav>
 
         <section class="blog-hero">
             <div class="hero-content">
@@ -441,7 +570,7 @@
             </div>
         </div>
 
-        <!-- Share Modal -->
+    
         <div class="share-modal" id="share-modal">
             <div class="share-modal-content">
                 <div class="share-modal-header">
@@ -589,8 +718,61 @@
                     Math.floor(Math.random() * blogImages.length)
                 ];
             }
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link-space');
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const navLinksContainer = document.getElementById('nav-links');
+    
+    if (mobileToggle && navLinksContainer) {
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            navLinksContainer.classList.toggle('active');
+        });
+    }
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                scrollToSection(href.substring(1));
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                if (navLinksContainer) {
+                    navLinksContainer.classList.remove('active');
+                }
+                if (mobileToggle) {
+                    mobileToggle.classList.remove('active');
+                }
+            }
+        });
+    });
+    
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    });
+}
 
-            // Share Modal Functions
             function openShareModal(postId, postTitle) {
                 currentSharePostId = postId;
                 const modal = document.getElementById("share-modal");
@@ -635,7 +817,7 @@
                 document.body.style.overflow = "";
                 currentSharePostId = null;
 
-                // Reset copy button
+           
                 const copyBtn = document.getElementById("copy-link-btn");
                 const copyText = copyBtn.querySelector(".copy-text");
                 if (copyBtn && copyText) {
@@ -649,7 +831,7 @@
                 const copyBtn = document.getElementById("copy-link-btn");
                 const copyText = copyBtn.querySelector(".copy-text");
 
-                // Try modern clipboard API first
+        
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard
                         .writeText(url)
@@ -676,7 +858,7 @@
             }
 
             function fallbackCopyToClipboard(text, copyBtn, copyText) {
-                // Fallback for older browsers
+    
                 const textArea = document.createElement("textarea");
                 textArea.value = text;
                 textArea.style.position = "fixed";
@@ -707,7 +889,7 @@
                 document.body.removeChild(textArea);
             }
 
-            // Close modal event listeners
+        
             document
                 .getElementById("close-modal-btn")
                 .addEventListener("click", (e) => {
@@ -716,7 +898,7 @@
                     closeShareModal();
                 });
 
-            // Copy link button
+    
             document
                 .getElementById("copy-link-btn")
                 .addEventListener("click", (e) => {
@@ -725,7 +907,7 @@
                     copyToClipboard();
                 });
 
-            // Close modal on background click
+ 
             document
                 .getElementById("share-modal")
                 .addEventListener("click", (e) => {
@@ -734,14 +916,14 @@
                     }
                 });
 
-            // Close modal on Escape key
+          
             document.addEventListener("keydown", (e) => {
                 if (e.key === "Escape") {
                     closeShareModal();
                 }
             });
 
-            // Like/Share API Functions
+       
             async function toggleLike(postId, button) {
                 try {
                     const isLiked = button.classList.contains("liked");
@@ -931,7 +1113,7 @@
                 </div>
             `;
 
-                // Add event listeners after card is created
+      
                 setTimeout(() => {
                     const likeBtn = card.querySelector(".like-btn");
                     const shareBtn = card.querySelector(".share-btn");
@@ -952,7 +1134,7 @@
                     }
                 }, 0);
 
-                // Card click to navigate
+ 
                 card.addEventListener("click", () => {
                     window.location.href = `/post?id=${post.id}`;
                 });
@@ -1034,8 +1216,10 @@
                     displayPosts();
                 });
 
-            // Initialize
+
             loadBlogPosts();
+            setupNavigation();
         </script>
+    
     </body>
 </html>
