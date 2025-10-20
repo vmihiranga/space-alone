@@ -1,9 +1,8 @@
 const express = require('express');
 
-module.exports = (db) => {
+module.exports = (sql) => {
   const router = express.Router();
 
-  // Middleware to verify session (local to this router)
   const authMiddleware = (req, res, next) => {
     if (!req.session || !req.session.user) {
       return res.status(401).json({ error: 'Not authenticated' });
@@ -19,85 +18,39 @@ module.exports = (db) => {
     next();
   };
 
-  // Get solar system configuration (public)
-  router.get('/', (req, res) => {
-    db.get(
-      'SELECT * FROM solar_config WHERE id = 1',
-      [],
-      (err, row) => {
-        if (err) {
-          console.error('Error fetching solar config:', err);
-          return res.status(500).json({ error: 'Database error' });
-        }
-        
-        if (!row) {
-          return res.json({
-            solar_rotation_speed: 0.5,
-            solar_planet_count: 8,
-            solar_orbit_color: '#00f3ff'
-          });
-        }
-
-        res.json(row);
-      }
-    );
+  router.get('/', async (req, res) => {
+    try {
+      const settings = await sql`SELECT * FROM app_settings WHERE id = 1`;
+      res.json(settings[0] || {});
+    } catch (error) {
+      console.error('Error fetching solar settings:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
-  // Update solar system configuration (requires authentication)
-  router.put('/', authMiddleware, adminMiddleware, (req, res) => {
+  // Update solar settings
+  router.put('/', authMiddleware, adminMiddleware, async (req, res) => {
     const { rotation_speed, planet_count, orbit_color } = req.body;
+    try {
+      const result = await sql`
+        UPDATE app_settings
+        SET 
+          solar_rotation_speed = ${rotation_speed ?? 0.5},
+          solar_planet_count = ${planet_count ?? 8},
+          solar_orbit_color = ${orbit_color ?? '#00f3ff'},
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = 1
+        RETURNING *
+      `;
 
-    if (rotation_speed !== undefined && (rotation_speed < 0.1 || rotation_speed > 5)) {
-      return res.status(400).json({ error: 'Rotation speed must be between 0.1 and 5' });
-    }
-
-    if (planet_count !== undefined && ![3, 5, 8].includes(parseInt(planet_count))) {
-      return res.status(400).json({ error: 'Planet count must be 3, 5, or 8' });
-    }
-
-    if (orbit_color !== undefined && !/^#[0-9A-Fa-f]{6}$/.test(orbit_color)) {
-      return res.status(400).json({ error: 'Invalid color format' });
-    }
-
-    const updates = [];
-    const params = [];
-
-    if (rotation_speed !== undefined) {
-      updates.push('solar_rotation_speed = ?');
-      params.push(parseFloat(rotation_speed));
-    }
-
-    if (planet_count !== undefined) {
-      updates.push('solar_planet_count = ?');
-      params.push(parseInt(planet_count));
-    }
-
-    if (orbit_color !== undefined) {
-      updates.push('solar_orbit_color = ?');
-      params.push(orbit_color);
-    }
-
-    if (updates.length === 0) {
-      return res.status(400).json({ error: 'No valid fields to update' });
-    }
-
-    updates.push('updated_at = CURRENT_TIMESTAMP');
-
-    const query = `UPDATE solar_config SET ${updates.join(', ')} WHERE id = 1`;
-
-    db.run(query, params, function(err) {
-      if (err) {
-        console.error('Error updating solar config:', err);
-        return res.status(500).json({ error: 'Database error' });
-      }
-
-      console.log(`✅ Solar config updated by ${req.user.username}`);
-
-      res.json({ 
-        message: 'Solar system configuration updated successfully',
-        changes: this.changes
+      res.json({
+        message: 'Solar settings updated successfully',
+        settings: result[0]
       });
-    });
+    } catch (error) {
+      console.error('Error updating solar settings:', error);
+      res.status(500).json({ error: 'Database error' });
+    }
   });
 
   return router;
