@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const fetch = global.fetch || ((...args) => import('node-fetch').then(({default: f}) => f(...args)));
 
-// Base URL for SpaceX API
+
 const SPACEX_API_BASE = 'https://api.spacexdata.com/v5';
 
-// Helper function to fetch from SpaceX API
 async function fetchSpaceX(endpoint) {
     try {
         const response = await fetch(`${SPACEX_API_BASE}${endpoint}`);
@@ -35,7 +35,7 @@ router.get('/latest', async (req, res) => {
 router.get('/upcoming', async (req, res) => {
     try {
         const data = await fetchSpaceX('/launches/upcoming');
-        // Return only next 5 launches
+   
         res.json(data.slice(0, 5));
     } catch (error) {
         res.status(500).json({ 
@@ -45,7 +45,7 @@ router.get('/upcoming', async (req, res) => {
     }
 });
 
-// Get past launches with pagination
+// Get past launches 
 router.get('/past', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 10;
@@ -59,7 +59,7 @@ router.get('/past', async (req, res) => {
     }
 });
 
-// Get Starlink satellites info
+// Get Starlink
 router.get('/starlink', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 50;
@@ -74,7 +74,7 @@ router.get('/starlink', async (req, res) => {
     }
 });
 
-// Get launch statistics
+// Get launch 
 router.get('/stats', async (req, res) => {
     try {
         const [latest, upcoming, past] = await Promise.all([
