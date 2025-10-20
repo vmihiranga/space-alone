@@ -83,6 +83,7 @@ app.use(
           "https://api.nasa.gov",
           "http://api.open-notify.org",
           "https://exoplanetarchive.ipac.caltech.edu",
+          "https://api.spacexdata.com",
         ],
         fontSrc: [
           "'self'",
@@ -168,6 +169,7 @@ const apiLimiter = rateLimit({
 app.use("/api/", limiter);
 app.use("/api/auth/login", authLimiter);
 app.use("/api/nasa", apiLimiter);
+app.use("/api/spacex", apiLimiter);
 
 // Static files
 app.use(express.static(path.join(__dirname, "../public")));
@@ -179,6 +181,7 @@ const postsRoutes = require("./routes/posts")(db);
 const uploadsRoutes = require("./routes/uploads")(db);
 const solarRoutes = require("./routes/solar")(db);
 const nasaRoutes = require("./routes/nasa");
+const spacexRoutes = require("./routes/spacex");
 
 // API routes (BEFORE frontend routes)
 app.use("/api/auth", authRoutes);
@@ -186,6 +189,7 @@ app.use("/api/posts", postsRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/solar-config", solarRoutes);
 app.use("/api/nasa", nasaRoutes);
+app.use("/api/spacex", spacexRoutes);
 
 // Health check with enhanced info
 app.get("/api/health", (req, res) => {
@@ -223,11 +227,13 @@ app.get("/api/status", (req, res) => {
       uploads: "/api/uploads",
       solar: "/api/solar-config",
       nasa: "/api/nasa",
+      spacex: "/api/spacex",
       health: "/api/health",
       docs: "/api/docs",
     },
     resources: [
       { name: "NASA API", status: "active", rateLimit: "30 req/min" },
+      { name: "SpaceX API", status: "active", rateLimit: "30 req/min" },
       { name: "Database", status: "connected", type: "SQLite" },
       { name: "File Storage", status: "active", path: uploadDir },
       { name: "Session Store", status: "active", type: "SQLite" },
@@ -298,6 +304,12 @@ app.get("/api", (req, res) => {
         resource: "NASA",
       },
       {
+        path: "/api/spacex/*",
+        method: "GET",
+        description: "SpaceX API endpoints",
+        resource: "SpaceX",
+      },
+      {
         path: "/api/solar-config",
         method: "GET/PUT",
         description: "Solar system configuration",
@@ -314,6 +326,7 @@ app.get("/api", (req, res) => {
       general: "10000 requests per 15 minutes",
       auth: "10 requests per 15 minutes",
       nasa: "30 requests per minute",
+      spacex: "30 requests per minute",
     },
     timestamp: new Date().toISOString(),
   });
@@ -331,9 +344,11 @@ app.get("/admin", (req, res) => {
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/login.html"));
 });
+
 app.get("/blog", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/blog.html"));
 });
+
 app.get("/post", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/post.html"));
 });
