@@ -11,7 +11,11 @@ const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
+const HOST = '0.0.0.0';
+
+// Trust proxy for Replit environment (fixes rate limiting with X-Forwarded-For header)
+app.set('trust proxy', true);
 
 // Performance tracking middleware
 const performanceTracker = (req, res, next) => {
@@ -57,6 +61,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:", "http:"],
+      mediaSrc: ["'self'", "https://cdn.pixabay.com", "data:", "blob:"],
       connectSrc: ["'self'", "https://images.unsplash.com", "https://api.pexels.com", "https://api.nasa.gov", "http://api.open-notify.org", "https://exoplanetarchive.ipac.caltech.edu"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"],
       workerSrc: ["'self'", "blob:"],
@@ -76,7 +81,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   store: new SQLiteStore({
     db: 'sessions.sqlite',
-    dir: './backend'
+    dir: '.'
   }),
   secret: process.env.SESSION_SECRET || 'space-alone-secret-key-change-in-production',
   resave: false,
@@ -101,6 +106,7 @@ const limiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: false
 });
 
 const authLimiter = rateLimit({
@@ -112,6 +118,7 @@ const authLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: false
 });
 
 const apiLimiter = rateLimit({
@@ -123,6 +130,7 @@ const apiLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: false
 });
 
 app.use('/api/', limiter);
@@ -130,8 +138,8 @@ app.use('/api/auth/login', authLimiter);
 app.use('/api/nasa', apiLimiter);
 
 // Static files
-app.use(express.static('public'));
-app.use(express.static('frontend'));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Import routes
 const authRoutes = require('./routes/auth')(db);
@@ -315,16 +323,16 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log('\n🚀 ═══════════════════════════════════════════════════════');
   console.log('   Space Alone Server Started Successfully');
   console.log('   ═══════════════════════════════════════════════════════');
-  console.log(`   🌐 Frontend:    http://localhost:${PORT}`);
-  console.log(`   🔐 Admin:       http://localhost:${PORT}/admin`);
-  console.log(`   🔑 Login:       http://localhost:${PORT}/login`);
-  console.log(`   📡 API Docs:    http://localhost:${PORT}/api/docs`);
-  console.log(`   🏥 Health:      http://localhost:${PORT}/api/health`);
-  console.log(`   📊 Status:      http://localhost:${PORT}/api/status`);
+  console.log(`   🌐 Frontend:    http://${HOST}:${PORT}`);
+  console.log(`   🔐 Admin:       http://${HOST}:${PORT}/admin`);
+  console.log(`   🔑 Login:       http://${HOST}:${PORT}/login`);
+  console.log(`   📡 API Docs:    http://${HOST}:${PORT}/api/docs`);
+  console.log(`   🏥 Health:      http://${HOST}:${PORT}/api/health`);
+  console.log(`   📊 Status:      http://${HOST}:${PORT}/api/status`);
   console.log(`   🔐 Auth Method: Session-based (No JWT)`);
   console.log(`   🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`   ⚡ Node:        ${process.version}`);
