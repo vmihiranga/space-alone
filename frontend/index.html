@@ -1,45 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Alone - Journey Through the Cosmos</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="./src/styles/main.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* CRITICAL: Custom Fonts with proper fallbacks */
+        @font-face {
+            font-family: 'ROBOCustom';
+            src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/ROBO__.TTF') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'SFOldRepublicCustom';
+            src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/SF%20OLD%20REPUBLIC%20BOLD.TTF') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'StarcraftCustom';
+            src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/StarJediRounded-jW3R.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Override font declarations with fallbacks */
+        body {
+            font-family: 'SFOldRepublicCustom', 'Rajdhani', Arial, sans-serif !important;
+        }
+
+        h1,
+        h2 {
+            font-family: 'ROBOCustom', 'Orbitron', Arial, sans-serif !important;
+        }
+
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'SFOldRepublicCustom', 'Rajdhani', Arial, sans-serif !important;
+        }
+
+        .logo,
+        .hero-title,
+        .footer-title {
+            font-family: 'StarcraftCustom', 'Space Grotesk', 'Orbitron', Arial, sans-serif !important;
+            font-weight: 700;
+        }
+    </style>
 </head>
+
 <body>
-<div class="loading-screen" id="loading-screen">
-    <div class="loading-content">
-        <svg class="site-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <radialGradient id="planetGrad" cx="40%" cy="40%">
-                    <stop offset="0%" style="stop-color: #00f3ff; stop-opacity: 1"/>
-                    <stop offset="50%" style="stop-color: #0088cc; stop-opacity: 1"/>
-                    <stop offset="100%" style="stop-color: #004466; stop-opacity: 1"/>
-                </radialGradient>
-                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color: #b800ff; stop-opacity: 0.9"/>
-                    <stop offset="50%" style="stop-color: #8800cc; stop-opacity: 0.7"/>
-                    <stop offset="100%" style="stop-color: #6600aa; stop-opacity: 0.5"/>
-                </linearGradient>
-            </defs>
-            <circle cx="100" cy="100" r="45" fill="url(#planetGrad)"/>
-            <ellipse cx="100" cy="100" rx="75" ry="20" fill="none" stroke="url(#ringGrad)" 
-                     stroke-width="8" opacity="0.8" transform="rotate(-15 100 100)">
-                <animateTransform attributeName="transform" type="rotate" 
-                                from="-15 100 100" to="345 100 100" 
-                                dur="4s" repeatCount="indefinite"/>
-            </ellipse>
-            <text x="100" y="108" font-family="Arial" font-size="32" 
-                  font-weight="bold" fill="#ffffff" text-anchor="middle" 
-                  opacity="0.9">SA</text>
-        </svg>
-        <div class="spinner-ring"></div>
-        <p class="loading-text"></p>
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <svg class="site-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="planetGrad" cx="40%" cy="40%">
+                        <stop offset="0%" style="stop-color: #00f3ff; stop-opacity: 1" />
+                        <stop offset="50%" style="stop-color: #0088cc; stop-opacity: 1" />
+                        <stop offset="100%" style="stop-color: #004466; stop-opacity: 1" />
+                    </radialGradient>
+                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color: #b800ff; stop-opacity: 0.9" />
+                        <stop offset="50%" style="stop-color: #8800cc; stop-opacity: 0.7" />
+                        <stop offset="100%" style="stop-color: #6600aa; stop-opacity: 0.5" />
+                    </linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
+                <ellipse cx="100" cy="100" rx="75" ry="20" fill="none" stroke="url(#ringGrad)" stroke-width="8"
+                    opacity="0.8" transform="rotate(-15 100 100)">
+                    <animateTransform attributeName="transform" type="rotate" from="-15 100 100" to="345 100 100"
+                        dur="4s" repeatCount="indefinite" />
+                </ellipse>
+                <text x="100" y="108" font-family="Arial" font-size="32" font-weight="bold" fill="#ffffff"
+                    text-anchor="middle" opacity="0.9">SA</text>
+            </svg>
+            <div class="spinner-ring"></div>
+            <p class="loading-text"></p>
+        </div>
     </div>
-</div>
     <canvas id="particles-canvas"></canvas>
     <nav class="glass-header" id="main-header">
         <div class="nav-container">
@@ -64,9 +123,10 @@
     <section id="home" class="hero-section">
         <div class="hero-content">
             <h1 class="hero-title text-gradient">SPACE ALONE</h1>
-   <p class="hero-subtitle typing-text"></p>
-            <p class="hero-description">Explore real-time NASA data, interactive 3D solar system, and stunning space imagery</p>
-               <br><br>  
+            <p class="hero-subtitle typing-text"></p>
+            <p class="hero-description">Explore real-time NASA data, interactive 3D solar system, and stunning space
+                imagery</p>
+            <br><br>
             <button class="btn-gradient" onclick="scrollToSection('mysteries')">
                 <span>DISCOVER MYSTERIES</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -75,60 +135,60 @@
                 </svg>
             </button>
         </div>
-     
+
         <div class="scroll-indicator">
             <svg width="30" height="50" viewBox="0 0 30 50">
-                <rect x="5" y="5" width="20" height="35" rx="10" fill="none" stroke="#00f3ff" stroke-width="2"/>
+                <rect x="5" y="5" width="20" height="35" rx="10" fill="none" stroke="#00f3ff" stroke-width="2" />
                 <circle cx="15" cy="15" r="3" fill="#00f3ff">
-                    <animate attributeName="cy" from="15" to="30" dur="1.5s" repeatCount="indefinite"/>
+                    <animate attributeName="cy" from="15" to="30" dur="1.5s" repeatCount="indefinite" />
                 </circle>
             </svg>
         </div>
     </section>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const texts = [
-        "Journey Through the Infinite Cosmos",
-        "Explore the Mysteries of Space",
-        "Discover the Unknown Universe",
-        "Experience Cosmic Wonders",
-        "Venture Beyond the Stars"
-    ];
-    
-    const typingText = document.querySelector('.typing-text');
-    let textIndex = 0;
-    
-    if (typingText) {
-        typingText.textContent = ''; 
-        
-        function typeWriter(text, index) {
-            if (index < text.length) {
-                typingText.textContent += text.charAt(index);
-                setTimeout(() => typeWriter(text, index + 1), 100);
-            } else {
-               
-                setTimeout(eraseText, 2000);
-            }
-        }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const texts = [
+                "Journey Through the Infinite Cosmos",
+                "Explore the Mysteries of Space",
+                "Discover the Unknown Universe",
+                "Experience Cosmic Wonders",
+                "Venture Beyond the Stars"
+            ];
 
-        function eraseText() {
-            const currentText = typingText.textContent;
-            if (currentText.length > 0) {
-                typingText.textContent = currentText.slice(0, -1);
-                setTimeout(eraseText, 50);
-            } else {
-              
-                textIndex = (textIndex + 1) % texts.length;
-                
-                setTimeout(() => typeWriter(texts[textIndex], 0), 500);
+            const typingText = document.querySelector('.typing-text');
+            let textIndex = 0;
+
+            if (typingText) {
+                typingText.textContent = '';
+
+                function typeWriter(text, index) {
+                    if (index < text.length) {
+                        typingText.textContent += text.charAt(index);
+                        setTimeout(() => typeWriter(text, index + 1), 100);
+                    } else {
+
+                        setTimeout(eraseText, 2000);
+                    }
+                }
+
+                function eraseText() {
+                    const currentText = typingText.textContent;
+                    if (currentText.length > 0) {
+                        typingText.textContent = currentText.slice(0, -1);
+                        setTimeout(eraseText, 50);
+                    } else {
+
+                        textIndex = (textIndex + 1) % texts.length;
+
+                        setTimeout(() => typeWriter(texts[textIndex], 0), 500);
+                    }
+                }
+
+
+                typeWriter(texts[textIndex], 0);
             }
-        }
-        
-    
-        typeWriter(texts[textIndex], 0);
-    }
-});
-</script>
+        });
+    </script>
     <div class="section-divider"></div>
 
     <!-- Mysteries Section -->
@@ -140,18 +200,25 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="mysteries-content">
                 <div class="mystery-intro">
-                    <p>Space is one of the greatest mysteries known to humanity. It stretches far beyond our imagination, filled with stars, planets, galaxies, and cosmic secrets we have yet to uncover. Despite decades of research, scientists have explored only a very small portion of this infinite universe.</p>
+                    <p>Space is one of the greatest mysteries known to humanity. It stretches far beyond our
+                        imagination, filled with stars, planets, galaxies, and cosmic secrets we have yet to uncover.
+                        Despite decades of research, scientists have explored only a very small portion of this infinite
+                        universe.</p>
                 </div>
 
                 <div class="mysteries-grid">
                     <div class="mystery-card">
                         <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <circle cx="12" cy="12" r="6" />
+                                <circle cx="12" cy="12" r="2" />
                             </svg>
                         </div>
                         <h3>Dark Matter & Energy</h3>
-                        <p class="mystery-desc">Making up about 95% of the universe, dark matter and dark energy remain invisible and mysterious.</p>
+                        <p class="mystery-desc">Making up about 95% of the universe, dark matter and dark energy remain
+                            invisible and mysterious.</p>
                         <div class="mystery-details">
                             <div class="detail-item">
                                 <span class="detail-label">Composition:</span>
@@ -166,12 +233,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="mystery-card">
                         <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/>
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 2v20M2 12h20" />
                             </svg>
                         </div>
                         <h3>Black Holes</h3>
-                        <p class="mystery-desc">Regions where gravity is so intense that nothing can escape — not even light.</p>
+                        <p class="mystery-desc">Regions where gravity is so intense that nothing can escape — not even
+                            light.</p>
                         <div class="mystery-details">
                             <div class="detail-item">
                                 <span class="detail-label">Event Horizon:</span>
@@ -186,12 +256,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="mystery-card">
                         <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
+                                stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
                             </svg>
                         </div>
                         <h3>Exoplanets & Life</h3>
-                        <p class="mystery-desc">Beyond our solar system lies an unimaginable number of planets that might harbor life.</p>
+                        <p class="mystery-desc">Beyond our solar system lies an unimaginable number of planets that
+                            might harbor life.</p>
                         <div class="mystery-details">
                             <div class="detail-item">
                                 <span class="detail-label">Confirmed:</span>
@@ -206,12 +279,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="mystery-card">
                         <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                                <path d="M3 12h4l3 9 4-18 3 9h4"/>
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
+                                stroke-width="2">
+                                <path d="M3 12h4l3 9 4-18 3 9h4" />
                             </svg>
                         </div>
                         <h3>Cosmic Signals</h3>
-                        <p class="mystery-desc">Space is filled with mysterious radiation, signals, and cosmic waves from distant events.</p>
+                        <p class="mystery-desc">Space is filled with mysterious radiation, signals, and cosmic waves
+                            from distant events.</p>
                         <div class="mystery-details">
                             <div class="detail-item">
                                 <span class="detail-label">Fast Radio Bursts:</span>
@@ -222,12 +297,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="mystery-card">
                         <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                                <circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6M1 12h6m6 0h6"/>
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="3" />
+                                <path d="M12 1v6m0 6v6M1 12h6m6 0h6" />
                             </svg>
                         </div>
                         <h3>Multiverse Theory</h3>
-                        <p class="mystery-desc">Our universe might be just one of infinitely many parallel universes.</p>
+                        <p class="mystery-desc">Our universe might be just one of infinitely many parallel universes.
+                        </p>
                         <div class="mystery-details">
                             <div class="detail-item">
                                 <span class="detail-label">Types:</span>
@@ -238,12 +316,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     <div class="mystery-card">
                         <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
+                                stroke-width="2">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                             </svg>
                         </div>
                         <h3>Time Dilation</h3>
-                        <p class="mystery-desc">Time moves differently depending on gravity and speed, proven by Einstein's relativity.</p>
+                        <p class="mystery-desc">Time moves differently depending on gravity and speed, proven by
+                            Einstein's relativity.</p>
                         <div class="mystery-details">
                             <div class="detail-item">
                                 <span class="detail-label">Effect:</span>
@@ -255,8 +336,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 <div class="mystery-conclusion">
                     <h3 class="text-gradient">The Quest Continues</h3>
-                    <p>Exploring space is not just about science — it's about curiosity and the human desire to go beyond limits.</p>
-                    <p class="highlight-text">The more we learn, the more we realize how little we truly know about the endless, mysterious universe that surrounds us.</p>
+                    <p>Exploring space is not just about science — it's about curiosity and the human desire to go
+                        beyond limits.</p>
+                    <p class="highlight-text">The more we learn, the more we realize how little we truly know about the
+                        endless, mysterious universe that surrounds us.</p>
                 </div>
             </div>
         </div>
@@ -269,25 +352,26 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-gradient">Interactive 3D Solar System</h2>
-                <p class="section-subtitle">Explore planets in real-time • Drag to rotate • Scroll to zoom • Click to learn</p>
+                <p class="section-subtitle">Explore planets in real-time • Drag to rotate • Scroll to zoom • Click to
+                    learn</p>
             </div>
             <div id="solar-system-container" class="solar-container"></div>
             <div class="controls-panel">
                 <button class="btn-neon" id="toggle-orbits">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                     </svg>
                     Toggle Orbits
                 </button>
                 <button class="btn-neon" id="toggle-speed">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
                     </svg>
                     Speed: 1x
                 </button>
                 <button class="btn-neon" id="reset-camera">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                        <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
                     </svg>
                     Reset View
                 </button>
@@ -375,13 +459,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="slideshow-container" id="slideshow-container"></div>
                 <div class="slideshow-controls">
                     <button class="slideshow-btn" id="prev-slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                     </button>
                     <div class="slideshow-indicators" id="slideshow-indicators"></div>
                     <button class="slideshow-btn" id="next-slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </button>
@@ -404,7 +490,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="stat-card">
                     <div class="stat-icon">
                         <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
                         </svg>
                     </div>
                     <div class="stat-value" id="total-launches">0</div>
@@ -413,7 +500,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="stat-card">
                     <div class="stat-icon">
                         <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
                         </svg>
                     </div>
                     <div class="stat-value" id="upcoming-count">0</div>
@@ -422,7 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="stat-card">
                     <div class="stat-icon">
                         <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                         </svg>
                     </div>
                     <div class="stat-value" id="success-rate">0%</div>
@@ -431,7 +519,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="stat-card">
                     <div class="stat-icon">
                         <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                         </svg>
                     </div>
                     <div class="stat-value" id="successful-launches">0</div>
@@ -486,23 +575,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>Loading blog posts...</p>
                 </div>
             </div>
-             <div style="text-align: center; margin-top: 40px">
-                    <a href="/blog" class="btn-gradient">
-                        View All Posts
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            style="margin-left: 8px"
-                        >
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </a>
-                </div>
+            <div style="text-align: center; margin-top: 40px">
+                <a href="/blog" class="btn-gradient">
+                    View All Posts
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="margin-left: 8px">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -517,7 +599,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Audio Toggle -->
     <div class="audio-toggle" id="audio-toggle" title="Toggle Space Soundtrack">
-        <svg class="audio-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
+        <svg class="audio-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
+            stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path class="audio-waves" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
         </svg>
@@ -533,21 +616,25 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="footer-grid">
                 <div class="footer-section">
                     <h4 class="text-gradient footer-title">SPACE ALONE</h4>
-                    <p class="footer-text">Exploring the universe through NASA's eyes. Real-time data and stunning visualizations of our cosmic neighborhood.</p>
+                    <p class="footer-text">Exploring the universe through NASA's eyes. Real-time data and stunning
+                        visualizations of our cosmic neighborhood.</p>
                     <div class="footer-social">
                         <a href="#" class="social-link" aria-label="Twitter">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                                <path
+                                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
                             </svg>
                         </a>
                         <a href="#" class="social-link" aria-label="GitHub">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                             </svg>
                         </a>
                         <a href="#" class="social-link" aria-label="YouTube">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                             </svg>
                         </a>
                     </div>
@@ -584,6 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
     </footer>
-        <script src="./src/js/index.js"></script>
-    </body>
+    <script src="./src/js/index.js"></script>
+</body>
+
 </html>
