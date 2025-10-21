@@ -16,6 +16,30 @@
   --shadow-glow: 0 0 30px rgba(0, 243, 255, 0.4);
 }
 
+@font-face {
+  font-family: 'ROBO Regular';
+  src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/ROBO__.TTF') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Old Republic Bold';
+  src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/SF%20OLD%20REPUBLIC%20BOLD.TTF') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Starcraft';
+  src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/StarJediRounded-jW3R.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -34,12 +58,16 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2{
+h1,
+h2 {
   font-family: 'ROBO Regular', sans-serif !important;
   font-weight: 400;
 }
 
- h3, h4, h5, h6 {
+h3,
+h4,
+h5,
+h6 {
   font-family: 'SF Old Republic Bold', sans-serif;
   font-weight: 700;
 }
@@ -78,19 +106,19 @@ a:hover {
 }
 
 .loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: all 0.5s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: all 0.5s ease-in-out;
 }
 
 .loading-screen.hidden {
@@ -126,7 +154,9 @@ a:hover {
 }
 
 @keyframes spin {
-  to { transform: translateX(-50%) rotate(360deg); }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
 }
 
 .loading-text {
@@ -137,19 +167,41 @@ a:hover {
   font-weight: 600;
   animation: pulse 2s ease-in-out infinite;
 }
+
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
+
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
 
 
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .glass-header {
@@ -230,7 +282,7 @@ a:hover {
     display: flex;
     margin-left: auto;
   }
-  
+
 
   #nav-links {
     position: fixed;
@@ -247,17 +299,17 @@ a:hover {
     padding: 2rem 1rem;
     border-top: 2px solid var(--neon-blue);
     box-shadow: 0 5px 20px rgba(0, 243, 255, 0.2);
-    
-   transform: translateY(-100%);
-    transition: transform 0.2s ease-out; 
+
+    transform: translateY(-100%);
+    transition: transform 0.2s ease-out;
     pointer-events: none;
   }
-  
+
   #nav-links.active {
     transform: translateY(0);
     pointer-events: auto;
   }
-  
+
   .nav-link-space {
     width: 100%;
     text-align: center;
@@ -265,11 +317,12 @@ a:hover {
     border-bottom: 1px solid rgba(0, 243, 255, 0.1);
     display: block;
   }
-  
+
   .nav-link-space:last-child {
     border-bottom: none;
   }
 }
+
 .nav-links {
   display: flex;
   gap: 10px;
@@ -366,37 +419,52 @@ a:hover {
     opacity: 0;
     transform: translateY(50px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 /* Add this to your CSS */
 .typing-text {
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid var(--neon-blue);
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-    margin: 0 auto;
-    max-width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--neon-blue);
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  margin: 0 auto;
+  max-width: fit-content;
 }
 
 @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--neon-blue) }
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: var(--neon-blue)
+  }
 }
 
 /* Add responsive adjustments */
 @media (max-width: 768px) {
-    .typing-text {
-        font-size: 1.2rem;
-    }
+  .typing-text {
+    font-size: 1.2rem;
+  }
 }
+
 .hero-title {
   font-family: 'Starcraft', sans-serif !important;
   font-size: clamp(3rem, 8vw, 6rem);
@@ -414,7 +482,9 @@ a:hover {
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 .hero-description {
@@ -435,34 +505,47 @@ a:hover {
   transform: translateX(-50%);
   animation: bounce 2s infinite;
   z-index: 3;
-  margin: 50px auto; /* Added margin */
-  padding: 10px; /* Added padding for better touch area */
+  margin: 50px auto;
+  /* Added margin */
+  padding: 10px;
+  /* Added padding for better touch area */
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { 
-    transform: translate(-50%, 0); 
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translate(-50%, 0);
   }
-  40% { 
-    transform: translate(-50%, -20px); 
+
+  40% {
+    transform: translate(-50%, -20px);
   }
-  60% { 
-    transform: translate(-50%, -10px); 
+
+  60% {
+    transform: translate(-50%, -10px);
   }
 }
 
 /* Add responsive adjustments */
 @media (max-width: 768px) {
   .scroll-indicator {
-    bottom: 30px; /* Reduced bottom spacing on mobile */
-    margin: 50px auto; /* Reduced margin on mobile */
+    bottom: 30px;
+    /* Reduced bottom spacing on mobile */
+    margin: 50px auto;
+    /* Reduced margin on mobile */
   }
 }
 
 @media (max-width: 480px) {
   .scroll-indicator {
-    bottom: 20px; /* Further reduced for smaller screens */
-    margin: 50px auto; /* Smaller margin for mobile */
+    bottom: 20px;
+    /* Further reduced for smaller screens */
+    margin: 50px auto;
+    /* Smaller margin for mobile */
   }
 }
 
@@ -660,8 +743,13 @@ a:hover {
 }
 
 @keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
 }
 
 .mystery-conclusion h3 {
@@ -768,10 +856,13 @@ a:hover {
 }
 
 @keyframes pulse-dot {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.5;
     transform: scale(1.2);
@@ -1092,6 +1183,7 @@ a:hover {
     opacity: 0;
     transform: translateY(-50px) scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1151,77 +1243,81 @@ a:hover {
 
 /* Audio Toggle Enhancements */
 .audio-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--neon-blue);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid var(--neon-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
 }
 
 .audio-toggle::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 2px solid var(--neon-blue);
-    opacity: 0;
-    transition: all 0.4s ease;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--neon-blue);
+  opacity: 0;
+  transition: all 0.4s ease;
 }
 
 .audio-toggle.playing::before {
-    animation: audio-pulse 2s infinite;
+  animation: audio-pulse 2s infinite;
 }
 
 @keyframes audio-pulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-    100% {
-        transform: scale(1.5);
-        opacity: 0;
-    }
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 .audio-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
 }
 
 .audio-toggle:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 243, 255, 0.3);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 243, 255, 0.3);
 }
 
 .audio-toggle .audio-waves {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .audio-toggle.playing .audio-waves {
-    opacity: 1;
-    animation: wave-pulse 1s ease-in-out infinite;
+  opacity: 1;
+  animation: wave-pulse 1s ease-in-out infinite;
 }
 
 @keyframes wave-pulse {
-    0%, 100% {
-        opacity: 1;
-        stroke-width: 2;
-    }
-    50% {
-        opacity: 0.5;
-        stroke-width: 3;
-    }
+
+  0%,
+  100% {
+    opacity: 1;
+    stroke-width: 2;
+  }
+
+  50% {
+    opacity: 0.5;
+    stroke-width: 3;
+  }
 }
 
 .footer {
@@ -1835,48 +1931,49 @@ a:hover {
     font-size: 1rem;
   }
 
-.hero-title {
-  font-size: clamp(2.5rem, 6vw, 5.5rem);
-  margin-bottom: 30px;
-  text-shadow: 0 0 20px var(--neon-blue),
-               0 0 40px var(--neon-blue),
-               0 0 60px var(--neon-blue);
-  letter-spacing: 3px;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-.hero-subtitle {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-  color: var(--white);
-  margin-bottom: 20px;
-  font-weight: 500;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.hero-description {
-  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-  color: var(--text-gray);
-  margin-bottom: 40px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.8;
-  text-align: center;
-  padding: 0 20px;
-}
-
-@keyframes glow {
-  from {
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    margin-bottom: 30px;
     text-shadow: 0 0 20px var(--neon-blue),
-                 0 0 40px var(--neon-blue),
-                 0 0 60px var(--neon-blue);
+      0 0 40px var(--neon-blue),
+      0 0 60px var(--neon-blue);
+    letter-spacing: 3px;
+    animation: glow 2s ease-in-out infinite alternate;
   }
-  to {
-    text-shadow: 0 0 30px var(--neon-blue),
-                 0 0 50px var(--neon-blue),
-                 0 0 70px var(--neon-blue);
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--white);
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
-}
+
+  .hero-description {
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    color: var(--text-gray);
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 20px var(--neon-blue),
+        0 0 40px var(--neon-blue),
+        0 0 60px var(--neon-blue);
+    }
+
+    to {
+      text-shadow: 0 0 30px var(--neon-blue),
+        0 0 50px var(--neon-blue),
+        0 0 70px var(--neon-blue);
+    }
+  }
 
   .btn-gradient {
     padding: 15px 30px;
@@ -2021,7 +2118,8 @@ a:hover {
   .upcoming-launches-grid {
     grid-template-columns: 1fr;
   }
-    .footer {
+
+  .footer {
     text-align: center;
   }
 
@@ -2079,46 +2177,47 @@ a:hover {
     font-size: 0.9rem;
   }
 
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  margin-bottom: 30px;
-  text-shadow: 0 0 20px var(--neon-blue),
-               0 0 40px var(--neon-blue),
-               0 0 60px var(--neon-blue);
-  letter-spacing: 2px;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-.hero-subtitle {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-  color: var(--white);
-  margin-bottom: 20px;
-  font-weight: 500;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.hero-description {
-  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-  color: var(--text-gray);
-  margin-bottom: 40px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.8;
-  text-align: center;
-  padding: 0 20px;
-}
-
-@keyframes glow {
-  from {
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    margin-bottom: 30px;
     text-shadow: 0 0 20px var(--neon-blue),
-                 0 0 60px var(--neon-blue);
+      0 0 40px var(--neon-blue),
+      0 0 60px var(--neon-blue);
+    letter-spacing: 2px;
+    animation: glow 2s ease-in-out infinite alternate;
   }
-  to {
-    text-shadow: 0 0 30px var(--neon-blue),
-                 0 0 70px var(--neon-blue);
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--white);
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
-}
+
+  .hero-description {
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    color: var(--text-gray);
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 20px var(--neon-blue),
+        0 0 60px var(--neon-blue);
+    }
+
+    to {
+      text-shadow: 0 0 30px var(--neon-blue),
+        0 0 70px var(--neon-blue);
+    }
+  }
 
   .btn-gradient {
     padding: 12px 25px;
@@ -2298,7 +2397,8 @@ a:hover {
   .starlink-viz-container {
     height: 300px;
   }
-    .footer {
+
+  .footer {
     text-align: center;
   }
 
@@ -2351,7 +2451,8 @@ a:hover {
   .blog-card {
     padding: 25px 20px;
   }
-    .footer {
+
+  .footer {
     text-align: center;
   }
 
