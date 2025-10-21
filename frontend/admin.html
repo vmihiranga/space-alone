@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Space Alone</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGradient' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGradient)'/%3E%3C/svg%3E">
-    
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGradient' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGradient)'/%3E%3C/svg%3E">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         body {
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2a1b4a 100%);
@@ -33,6 +35,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .admin-header h1 {
@@ -51,6 +55,7 @@
             border-radius: 20px;
             padding: 1rem;
             margin-bottom: 2rem;
+            overflow-x: auto;
         }
 
         .nav-tabs .nav-link {
@@ -60,6 +65,7 @@
             padding: 0.75rem 1.5rem;
             margin-right: 0.5rem;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .nav-tabs .nav-link.active {
@@ -88,6 +94,7 @@
             color: white;
             font-weight: 600;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .btn-primary-custom:hover {
@@ -103,6 +110,7 @@
             color: white;
             font-weight: 600;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .btn-warning-custom {
@@ -113,6 +121,7 @@
             color: white;
             font-weight: 600;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .form-control-custom {
@@ -128,6 +137,7 @@
             border-color: #00f3ff;
             box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
             color: #ffffff;
+            outline: none;
         }
 
         .form-control-custom::placeholder {
@@ -138,6 +148,7 @@
             color: #00f3ff;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            display: block;
         }
 
         .post-item {
@@ -183,7 +194,7 @@
         }
 
         .modal-content-custom {
-            background: rgba(26, 31, 58, 0.95);
+            background: rgba(26, 31, 58, 0.98);
             backdrop-filter: blur(20px);
             border: 2px solid rgba(0, 243, 255, 0.3);
             border-radius: 20px;
@@ -192,10 +203,12 @@
 
         .modal-header-custom {
             border-bottom: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 1.5rem;
         }
 
         .modal-footer-custom {
             border-top: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 1.5rem;
         }
 
         textarea.form-control-custom {
@@ -213,6 +226,7 @@
 
         input[type="range"] {
             width: 100%;
+            accent-color: #00f3ff;
         }
 
         input[type="color"] {
@@ -221,9 +235,57 @@
             border-radius: 10px;
             background: transparent;
             cursor: pointer;
+            width: 100%;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #00f3ff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        select.form-control-custom {
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        select.form-control-custom option {
+            background: #1a1f3a;
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .admin-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .nav-tabs {
+                padding: 0.5rem;
+            }
+
+            .nav-tabs .nav-link {
+                font-size: 0.875rem;
+                padding: 0.5rem 1rem;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="admin-container">
         <!-- Header -->
@@ -240,12 +302,14 @@
         <!-- Navigation Tabs -->
         <ul class="nav nav-tabs" id="adminTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button">
+                <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts"
+                    type="button">
                     📝 Posts Management
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button">
+                <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password"
+                    type="button">
                     🔐 Change Password
                 </button>
             </li>
@@ -261,15 +325,20 @@
             <!-- Posts Management Tab -->
             <div class="tab-pane fade show active" id="posts" role="tabpanel">
                 <div class="content-card">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2>Blog Posts</h2>
+                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                        <h2 class="mb-0">Blog Posts</h2>
                         <button class="btn btn-primary-custom" onclick="showCreatePostModal()">
                             ➕ Create New Post
                         </button>
                     </div>
-                    
+
                     <div id="alert-posts"></div>
-                    <div id="posts-list">Loading posts...</div>
+                    <div id="posts-list">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div class="loading-spinner" style="margin: 0 auto 1rem;"></div>
+                            <p>Loading posts...</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -277,25 +346,30 @@
             <div class="tab-pane fade" id="password" role="tabpanel">
                 <div class="content-card">
                     <h2 class="mb-4">Change Password</h2>
-                    
+
                     <div id="alert-password"></div>
-                    
+
                     <form id="password-form">
                         <div class="mb-3">
                             <label class="form-label-custom">Current Password</label>
-                            <input type="password" class="form-control-custom form-control" id="current-password" required>
+                            <input type="password" class="form-control-custom form-control" id="current-password"
+                                required>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label-custom">New Password</label>
-                            <input type="password" class="form-control-custom form-control" id="new-password" required minlength="6">
+                            <input type="password" class="form-control-custom form-control" id="new-password" required
+                                minlength="6">
+                            <small style="color: #888; display: block; margin-top: 0.25rem;">Minimum 6
+                                characters</small>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label-custom">Confirm New Password</label>
-                            <input type="password" class="form-control-custom form-control" id="confirm-password" required minlength="6">
+                            <input type="password" class="form-control-custom form-control" id="confirm-password"
+                                required minlength="6">
                         </div>
-                        
+
                         <button type="submit" class="btn btn-primary-custom">
                             🔐 Update Password
                         </button>
@@ -307,16 +381,19 @@
             <div class="tab-pane fade" id="solar" role="tabpanel">
                 <div class="content-card">
                     <h2 class="mb-4">Solar System Configuration</h2>
-                    
+
                     <div id="alert-solar"></div>
-                    
+
                     <form id="solar-form">
                         <div class="mb-4">
-                            <label class="form-label-custom">Rotation Speed: <span class="range-value" id="rotation-value">0.5</span></label>
-                            <input type="range" class="form-range" id="rotation-speed" min="0.1" max="5" step="0.1" value="0.5" oninput="document.getElementById('rotation-value').textContent = this.value">
-                            <small class="text-muted">Adjust how fast planets orbit (0.1 = slowest, 5 = fastest)</small>
+                            <label class="form-label-custom">Rotation Speed: <span class="range-value"
+                                    id="rotation-value">0.5</span></label>
+                            <input type="range" class="form-range" id="rotation-speed" min="0.1" max="5" step="0.1"
+                                value="0.5" oninput="updateRotationValue(this.value)">
+                            <small class="text-muted d-block mt-2">Adjust how fast planets orbit (0.1 = slowest, 5 =
+                                fastest)</small>
                         </div>
-                        
+
                         <div class="mb-4">
                             <label class="form-label-custom">Number of Planets</label>
                             <select class="form-control-custom form-select" id="planet-count">
@@ -325,13 +402,13 @@
                                 <option value="8" selected>8 Planets</option>
                             </select>
                         </div>
-                        
+
                         <div class="mb-4">
                             <label class="form-label-custom">Orbit Color</label>
                             <input type="color" class="form-control" id="orbit-color" value="#00f3ff">
-                            <small class="text-muted">Choose the color for planet orbits</small>
+                            <small class="text-muted d-block mt-2">Choose the color for planet orbits</small>
                         </div>
-                        
+
                         <button type="submit" class="btn btn-primary-custom">
                             💾 Save Configuration
                         </button>
@@ -342,22 +419,23 @@
     </div>
 
     <!-- Create/Edit Post Modal -->
-    <div class="modal fade" id="postModal" tabindex="-1">
+    <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content modal-content-custom">
                 <div class="modal-header modal-header-custom">
                     <h5 class="modal-title" id="postModalLabel">Create New Post</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="padding: 2rem;">
                     <form id="post-form">
                         <input type="hidden" id="post-id">
-                        
+
                         <div class="mb-3">
                             <label class="form-label-custom">Title</label>
                             <input type="text" class="form-control-custom form-control" id="post-title" required>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label-custom">Content</label>
                             <textarea class="form-control-custom form-control" id="post-content" required></textarea>
@@ -374,9 +452,40 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Check authentication using session
         let currentUser = null;
+        let currentModalInstance = null;
 
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Password form
+            const passwordForm = document.getElementById('password-form');
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', handlePasswordChange);
+            }
+
+            // Solar form
+            const solarForm = document.getElementById('solar-form');
+            if (solarForm) {
+                solarForm.addEventListener('submit', handleSolarConfigSave);
+            }
+
+            // Post form
+            const postForm = document.getElementById('post-form');
+            if (postForm) {
+                postForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    savePost();
+                });
+            }
+        }
+
+        // Check authentication
         async function checkAuth() {
             try {
                 const response = await fetch('/api/auth/verify', {
@@ -391,15 +500,23 @@
                 const data = await response.json();
                 currentUser = data.user;
                 document.getElementById('user-info').textContent = `Welcome, ${currentUser.username}`;
+
+                // Load initial data
+                loadPosts();
+                loadSolarConfig();
+
                 return true;
             } catch (error) {
                 console.error('Auth check failed:', error);
-                window.location.href = '/login';
+                showAlert('alert-posts', 'Authentication error. Please login again.', 'error');
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 2000);
                 return false;
             }
         }
 
-        // API helper function with session support
+        // API helper function
         async function apiCall(endpoint, method = 'GET', body = null) {
             const options = {
                 method,
@@ -415,9 +532,10 @@
 
             const response = await fetch(endpoint, options);
             let data;
+
             try {
                 data = await response.json();
-            } catch (_) {
+            } catch (e) {
                 data = {};
             }
 
@@ -425,7 +543,7 @@
                 if (response.status === 401) {
                     window.location.href = '/login';
                 }
-                throw new Error(data.error || 'Request failed');
+                throw new Error(data.error || `Request failed: ${response.status}`);
             }
 
             return data;
@@ -434,9 +552,21 @@
         // Alert helper
         function showAlert(containerId, message, type = 'success') {
             const container = document.getElementById(containerId);
+            if (!container) return;
+
             const alertClass = type === 'success' ? 'alert-custom' : 'alert-error alert-custom';
-            container.innerHTML = `<div class="${alertClass}">${message}</div>`;
-            setTimeout(() => container.innerHTML = '', 5000);
+            container.innerHTML = `<div class="${alertClass}">${escapeHtml(message)}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        // HTML escape function
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         // Load posts
@@ -444,11 +574,11 @@
             try {
                 const data = await apiCall('/api/posts');
                 const postsList = document.getElementById('posts-list');
-                
+
                 const posts = Array.isArray(data) ? data : (data.posts || []);
-                
+
                 if (!posts || posts.length === 0) {
-                    postsList.innerHTML = '<p class="text-muted">No posts yet. Create your first post!</p>';
+                    postsList.innerHTML = '<p class="text-center" style="color: #888; padding: 2rem;">No posts yet. Create your first post!</p>';
                     return;
                 }
 
@@ -456,11 +586,11 @@
                     <div class="post-item">
                         <div class="post-title">${escapeHtml(post.title)}</div>
                         <div class="post-meta">
-                            By ${escapeHtml(post.author_name || 'Unknown')} • ${new Date(post.created_at).toLocaleDateString()}
+                            By ${escapeHtml(post.author_name || 'Unknown')} • ${formatDate(post.created_at)}
                         </div>
-                        <div class="mb-3">${escapeHtml(post.content.substring(0, 200))}...</div>
-                        <div>
-                            <button class="btn btn-warning-custom btn-sm me-2" onclick="editPost(${post.id})">
+                        <div class="mb-3">${escapeHtml(post.content.substring(0, 200))}${post.content.length > 200 ? '...' : ''}</div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-warning-custom btn-sm" onclick="editPost(${post.id})">
                                 ✏️ Edit
                             </button>
                             <button class="btn btn-danger-custom btn-sm" onclick="deletePost(${post.id})">
@@ -470,15 +600,24 @@
                     </div>
                 `).join('');
             } catch (error) {
-                showAlert('alert-posts', error.message, 'error');
+                console.error('Error loading posts:', error);
+                showAlert('alert-posts', 'Error loading posts: ' + error.message, 'error');
             }
         }
 
-        // HTML escape function
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        // Format date
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown date';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch (e) {
+                return dateString;
+            }
         }
 
         // Show create post modal
@@ -487,7 +626,10 @@
             document.getElementById('post-id').value = '';
             document.getElementById('post-title').value = '';
             document.getElementById('post-content').value = '';
-            new bootstrap.Modal(document.getElementById('postModal')).show();
+
+            const modalEl = document.getElementById('postModal');
+            currentModalInstance = new bootstrap.Modal(modalEl);
+            currentModalInstance.show();
         }
 
         // Edit post
@@ -495,22 +637,26 @@
             try {
                 const data = await apiCall(`/api/posts/${id}`);
                 const post = data.post || data;
-                
+
                 document.getElementById('postModalLabel').textContent = 'Edit Post';
                 document.getElementById('post-id').value = post.id;
                 document.getElementById('post-title').value = post.title;
                 document.getElementById('post-content').value = post.content;
-                new bootstrap.Modal(document.getElementById('postModal')).show();
+
+                const modalEl = document.getElementById('postModal');
+                currentModalInstance = new bootstrap.Modal(modalEl);
+                currentModalInstance.show();
             } catch (error) {
-                showAlert('alert-posts', error.message, 'error');
+                console.error('Error loading post:', error);
+                showAlert('alert-posts', 'Error loading post: ' + error.message, 'error');
             }
         }
 
         // Save post
         async function savePost() {
             const id = document.getElementById('post-id').value;
-            const title = document.getElementById('post-title').value;
-            const content = document.getElementById('post-content').value;
+            const title = document.getElementById('post-title').value.trim();
+            const content = document.getElementById('post-content').value.trim();
 
             if (!title || !content) {
                 alert('Please fill in all fields');
@@ -519,19 +665,20 @@
 
             try {
                 if (id) {
-                    await apiCall(`/api/posts/${id}`, 'PUT', { title, content });
+                    await apiCall(`/api/posts/${id}`, 'PUT', {title, content});
                     showAlert('alert-posts', 'Post updated successfully!');
                 } else {
-                    await apiCall('/api/posts', 'POST', { title, content });
+                    await apiCall('/api/posts', 'POST', {title, content});
                     showAlert('alert-posts', 'Post created successfully!');
                 }
 
-                const modalEl = document.getElementById('postModal');
-                const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-                instance.hide();
+                if (currentModalInstance) {
+                    currentModalInstance.hide();
+                }
                 loadPosts();
             } catch (error) {
-                showAlert('alert-posts', error.message, 'error');
+                console.error('Error saving post:', error);
+                showAlert('alert-posts', 'Error saving post: ' + error.message, 'error');
             }
         }
 
@@ -544,12 +691,13 @@
                 showAlert('alert-posts', 'Post deleted successfully!');
                 loadPosts();
             } catch (error) {
-                showAlert('alert-posts', error.message, 'error');
+                console.error('Error deleting post:', error);
+                showAlert('alert-posts', 'Error deleting post: ' + error.message, 'error');
             }
         }
 
-        // Change password
-        document.getElementById('password-form').addEventListener('submit', async (e) => {
+        // Handle password change
+        async function handlePasswordChange(e) {
             e.preventDefault();
 
             const currentPassword = document.getElementById('current-password').value;
@@ -571,13 +719,14 @@
                     currentPassword,
                     newPassword
                 });
-                
+
                 showAlert('alert-password', 'Password changed successfully!');
                 document.getElementById('password-form').reset();
             } catch (error) {
-                showAlert('alert-password', error.message, 'error');
+                console.error('Error changing password:', error);
+                showAlert('alert-password', 'Error: ' + error.message, 'error');
             }
-        });
+        }
 
         // Load solar config
         async function loadSolarConfig() {
@@ -589,6 +738,7 @@
                 document.getElementById('orbit-color').value = config.solar_orbit_color || '#00f3ff';
             } catch (error) {
                 console.error('Failed to load solar config:', error);
+                // Set defaults if loading fails
                 document.getElementById('rotation-speed').value = 0.5;
                 document.getElementById('rotation-value').textContent = 0.5;
                 document.getElementById('planet-count').value = 8;
@@ -596,8 +746,13 @@
             }
         }
 
-        // Save solar config
-        document.getElementById('solar-form').addEventListener('submit', async (e) => {
+        // Update rotation value display
+        function updateRotationValue(value) {
+            document.getElementById('rotation-value').textContent = value;
+        }
+
+        // Handle solar config save
+        async function handleSolarConfigSave(e) {
             e.preventDefault();
 
             const rotationSpeed = parseFloat(document.getElementById('rotation-speed').value);
@@ -610,12 +765,13 @@
                     planet_count: planetCount,
                     orbit_color: orbitColor
                 });
-                
+
                 showAlert('alert-solar', 'Solar configuration updated successfully!');
             } catch (error) {
-                showAlert('alert-solar', error.message, 'error');
+                console.error('Error saving solar config:', error);
+                showAlert('alert-solar', 'Error: ' + error.message, 'error');
             }
-        });
+        }
 
         // Logout
         async function logout() {
@@ -626,25 +782,18 @@
                 window.location.href = '/login';
             } catch (error) {
                 console.error('Logout failed:', error);
-                // Force redirect even if API call fails
                 window.location.href = '/login';
             }
         }
 
-        // Initialize
-        checkAuth().then(authenticated => {
-            if (authenticated) {
-                loadPosts();
-                loadSolarConfig();
-            }
-        });
-
-        // Expose functions globally so inline onclick works reliably
+        // Export functions to window for inline onclick handlers
         window.showCreatePostModal = showCreatePostModal;
         window.savePost = savePost;
         window.editPost = editPost;
         window.deletePost = deletePost;
         window.logout = logout;
+        window.updateRotationValue = updateRotationValue;
     </script>
 </body>
+
 </html>
