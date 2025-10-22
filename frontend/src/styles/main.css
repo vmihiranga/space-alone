@@ -16,32 +16,8 @@
   --shadow-glow: 0 0 30px rgba(0, 243, 255, 0.4);
 }
 
-/* Disabled GitHub-hosted fonts to avoid CORS errors - using system fonts instead */
-/*
-@font-face {
-  font-family: 'ROBO Regular';
-  src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/ROBO__.TTF') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: 'SF Old Republic Bold';
-  src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/SF%20OLD%20REPUBLIC%20BOLD.TTF') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: 'Starcraft';
-  src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/StarJediRounded-jW3R.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-*/
 
 * {
   margin: 0;
@@ -209,7 +185,7 @@ a:hover {
 
 .glass-header {
   position: fixed;
-  top: 20px;
+  top: 15px;
   left: 50%;
   transform: translateX(-50%);
   width: 95%;
@@ -218,7 +194,7 @@ a:hover {
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-blue);
   border-radius: var(--radius-lg);
-  padding: 18px 35px;
+  padding: 12px 28px;
   z-index: 1000;
   transition: all var(--transition-base);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -231,16 +207,22 @@ a:hover {
   position: relative;
 }
 
-/* Group logo and text tighter */
+
 .nav-container svg.nav-logo-icon,
 .nav-container .logo {
-  display: inline-flex;
-  align-items: center;
-  vertical-align: middle;
+  font-family: 'Starcraft', sans-serif !important;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  margin: 0 20px 0 6px;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  z-index: 1001;
+  white-space: nowrap;
 }
 
 .nav-logo-icon {
-  width: clamp(45px, 5vw, 70px);
+  width: clamp(35px, 4vw, 55px);
   height: auto;
   cursor: pointer;
   transition: transform 0.4s ease, filter 0.4s ease;
@@ -248,7 +230,7 @@ a:hover {
   flex-shrink: 0;
 }
 
-/* Hover glow only, no float */
+
 .nav-logo-icon:hover {
   transform: scale(1.08) rotate(5deg);
   filter: drop-shadow(0 0 18px rgba(0, 243, 255, 0.8)) drop-shadow(0 0 35px rgba(184, 0, 255, 0.5)) brightness(1.2);
@@ -258,7 +240,7 @@ a:hover {
   font-family: 'Starcraft', sans-serif !important;
   font-size: clamp(1.4rem, 2vw, 1.8rem);
   margin: 0 20px 0 6px;
-  /* right margin added - 20px */
+  
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -267,7 +249,7 @@ a:hover {
   white-space: nowrap;
 }
 
-/* Mobile Menu Toggle */
+
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
@@ -303,7 +285,7 @@ a:hover {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* Nav Links */
+
 .nav-links {
   display: flex;
   gap: 10px;
@@ -324,7 +306,7 @@ a:hover {
   color: var(--neon-blue);
 }
 
-/* Responsive - Mobile Menu */
+
 @media (max-width: 768px) {
   .mobile-menu-toggle {
     display: flex;
@@ -372,7 +354,7 @@ a:hover {
 @media (min-width: 1025px) {
   .logo {
     margin-left: 0px;
-    /* No gap on large screens */
+    
   }
 }
 
@@ -459,7 +441,7 @@ a:hover {
   }
 }
 
-/* Add this to your CSS */
+
 .typing-text {
   overflow: hidden;
   white-space: nowrap;
@@ -491,7 +473,7 @@ a:hover {
   }
 }
 
-/* Add responsive adjustments */
+
 @media (max-width: 768px) {
   .typing-text {
     font-size: 1.2rem;
@@ -539,9 +521,9 @@ a:hover {
   animation: bounce 2s infinite;
   z-index: 3;
   margin: 50px auto;
-  /* Added margin */
+  
   padding: 10px;
-  /* Added padding for better touch area */
+  
 }
 
 @keyframes bounce {
@@ -563,22 +545,22 @@ a:hover {
   }
 }
 
-/* Add responsive adjustments */
+
 @media (max-width: 768px) {
   .scroll-indicator {
     bottom: 30px;
-    /* Reduced bottom spacing on mobile */
+    
     margin: 50px auto;
-    /* Reduced margin on mobile */
+    
   }
 }
 
 @media (max-width: 480px) {
   .scroll-indicator {
     bottom: 20px;
-    /* Further reduced for smaller screens */
+    
     margin: 50px auto;
-    /* Smaller margin for mobile */
+    
   }
 }
 
@@ -986,20 +968,20 @@ a:hover {
   padding-top: 0;
 }
 
-/* 🪐 Container full width, no borders */
+
 .slideshow-container {
   position: relative;
   width: 100%;
   height: 80vh;
-  /* Adjust height as you like (e.g., 100vh for full screen) */
+  
   border: none;
   border-radius: 0;
   overflow: hidden;
   background: black;
-  /* fallback background */
+  
 }
 
-/* 🎞️ Each slide */
+
 .gallery-slide {
   position: absolute;
   inset: 0;
@@ -1013,7 +995,7 @@ a:hover {
   z-index: 1;
 }
 
-/* 🖼️ Image covers entire container */
+
 .gallery-slide img {
   width: 100%;
   height: 100%;
@@ -1023,7 +1005,7 @@ a:hover {
   border-radius: 0;
 }
 
-/* ✨ Overlay text animation */
+
 .gallery-slide-overlay {
   position: absolute;
   bottom: 0;
@@ -1039,7 +1021,7 @@ a:hover {
   transform: translateY(0);
 }
 
-/* 🧠 Overlay text styles */
+
 .gallery-slide-title {
   color: var(--neon-blue);
   font-size: 1.8rem;
@@ -1051,7 +1033,7 @@ a:hover {
   font-size: 1rem;
 }
 
-/* 🎛️ Controls below slideshow */
+
 .slideshow-controls {
   display: flex;
   justify-content: center;
@@ -1080,7 +1062,7 @@ a:hover {
   box-shadow: 0 0 20px var(--neon-blue);
 }
 
-/* 🔵 Indicators */
+
 .slideshow-indicators {
   display: flex;
   justify-content: center;
@@ -1286,7 +1268,7 @@ a:hover {
   margin-top: 20px;
 }
 
-/* Audio Toggle Enhancements */
+
 .audio-toggle {
   position: fixed;
   bottom: 30px;
@@ -1898,7 +1880,7 @@ a:hover {
   font-weight: 700;
 }
 
-/* 🌐 Responsive News Preview Section */
+
 .news-preview-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1908,7 +1890,7 @@ a:hover {
   align-items: stretch;
 }
 
-/* 📰 Card Container */
+
 .news-preview-card {
   background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(13, 17, 23, 0.95));
   border: 1px solid var(--border-blue);
@@ -1922,7 +1904,7 @@ a:hover {
   height: 100%;
 }
 
-/* Hover glow effect */
+
 .news-preview-card::before {
   content: '';
   position: absolute;
@@ -1942,7 +1924,7 @@ a:hover {
   box-shadow: 0 15px 40px rgba(0, 243, 255, 0.25);
 }
 
-/* 🖼️ Image */
+
 .news-preview-image {
   width: 100%;
   height: 220px;
@@ -1954,7 +1936,7 @@ a:hover {
   transform: scale(1.05);
 }
 
-/* 📄 Content */
+
 .news-preview-content {
   padding: 20px;
   display: flex;
@@ -1962,7 +1944,7 @@ a:hover {
   flex-grow: 1;
 }
 
-/* 🔖 Category Badge */
+
 .news-preview-badge {
   display: inline-block;
   padding: 6px 14px;
@@ -1976,7 +1958,7 @@ a:hover {
   margin-bottom: 10px;
 }
 
-/* 🧾 Title */
+
 .news-preview-title {
   font-size: 1.25rem;
   color: var(--white);
@@ -1988,7 +1970,7 @@ a:hover {
   overflow: hidden;
 }
 
-/* 📝 Summary */
+
 .news-preview-summary {
   color: var(--text-gray);
   font-size: 0.9rem;
@@ -2001,7 +1983,7 @@ a:hover {
   overflow: hidden;
 }
 
-/* 📅 Footer Info */
+
 .news-preview-meta {
   display: flex;
   justify-content: space-between;
@@ -2022,9 +2004,9 @@ a:hover {
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* 📱 Responsive Breakpoints */
 
-/* Small Phones (320px - 480px) */
+
+
 @media (max-width: 480px) {
   .news-preview-grid {
     grid-template-columns: 1fr;
@@ -2053,7 +2035,7 @@ a:hover {
   }
 }
 
-/* Tablets (481px - 768px) */
+
 @media (max-width: 768px) {
   .news-preview-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -2073,7 +2055,7 @@ a:hover {
   }
 }
 
-/* Laptops (769px - 1200px) */
+
 @media (max-width: 1200px) {
   .news-preview-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -2085,7 +2067,7 @@ a:hover {
   }
 }
 
-/* Large Desktops (1201px and up) */
+
 @media (min-width: 1201px) {
   .news-preview-grid {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -2743,4 +2725,94 @@ a:hover {
     justify-content: center;
   }
 
+}
+
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+  
+  .nav-links {
+    gap: 5px;
+  }
+  
+  .nav-link-space {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .mysteries-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  .nasa-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  .section-space {
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-header {
+    padding: 10px 20px;
+    top: 10px;
+  }
+  
+  .hero-section {
+    padding-top: 80px;
+  }
+  
+  .section-space {
+    padding: 60px 0;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
+  }
+  
+  .apod-image {
+    height: 300px;
+  }
+  
+  .solar-container {
+    height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-header {
+    padding: 8px 15px;
+  }
+  
+  .nav-link-space {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .btn-gradient {
+    padding: 14px 30px;
+    font-size: 0.9rem;
+  }
+  
+  .mystery-card {
+    padding: 25px 20px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .solar-container {
+    height: 40vh;
+  }
+  
+  .apod-image {
+    height: 250px;
+  }
 }
