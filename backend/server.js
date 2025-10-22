@@ -1,1230 +1,156 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title id="page-title">Blog Post - Space Alone</title>
-        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet"/>
-        <link rel="stylesheet" href="./src/styles/main.css" />
-        <style>
-            .post-container {
-                max-width: 900px;
-                margin: 120px auto 80px;
-                padding: 0 20px;
-            }
-
-            .post-header {
-                text-align: center;
-                margin-bottom: 50px;
-                padding-bottom: 40px;
-                border-bottom: 2px solid rgba(0, 243, 255, 0.2);
-            }
-
-            .post-title {
-                font-size: clamp(2rem, 5vw, 3.5rem);
-                color: var(--neon-blue);
-                margin-bottom: 25px;
-                line-height: 1.2;
-                text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
-            }
-
-            .post-meta {
-                display: flex;
-                justify-content: center;
-                gap: 30px;
-                flex-wrap: wrap;
-                font-size: 1rem;
-                color: rgba(255, 255, 255, 0.6);
-            }
-
-            .post-meta-item {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-
-            .post-meta-item svg {
-                stroke: var(--neon-blue);
-            }
-
-            .post-featured-image {
-                width: 100%;
-                height: 400px;
-                object-fit: cover;
-                border-radius: var(--radius-md);
-                margin-bottom: 50px;
-                border: 2px solid var(--border-blue);
-                box-shadow: 0 10px 40px rgba(0, 243, 255, 0.2);
-            }
-
-            .post-content {
-                background: linear-gradient(
-                    135deg,
-                    rgba(10, 10, 10, 0.95) 0%,
-                    rgba(13, 17, 23, 0.95) 100%
-                );
-                border: 1px solid var(--border-blue);
-                border-radius: var(--radius-md);
-                padding: 50px;
-                line-height: 1.9;
-                font-size: 1.15rem;
-                color: var(--text-gray);
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-            }
-
-            .post-content p {
-                margin-bottom: 25px;
-                text-align: justify;
-            }
-
-            .post-content p:last-child {
-                margin-bottom: 0;
-            }
-
-            .post-interactions {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 30px;
-                margin-top: 40px;
-                padding: 25px;
-                background: linear-gradient(
-                    135deg,
-                    rgba(10, 10, 10, 0.95) 0%,
-                    rgba(13, 17, 23, 0.95) 100%
-                );
-                border: 1px solid var(--border-blue);
-                border-radius: var(--radius-md);
-                flex-wrap: wrap;
-            }
-
-            .interaction-btn-large {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                background: rgba(0, 243, 255, 0.05);
-                border: 2px solid var(--border-blue);
-                color: rgba(255, 255, 255, 0.7);
-                cursor: pointer;
-                transition: all var(--transition-base);
-                font-size: 1.1rem;
-                padding: 15px 30px;
-                border-radius: 50px;
-                font-weight: 600;
-            }
-
-            .interaction-btn-large:hover {
-                color: var(--neon-blue);
-                background: rgba(0, 243, 255, 0.15);
-                border-color: var(--neon-blue);
-                transform: translateY(-3px);
-                box-shadow: 0 10px 25px rgba(0, 243, 255, 0.3);
-            }
-
-            .interaction-btn-large.liked {
-                color: #ff006e;
-                border-color: #ff006e;
-                background: rgba(255, 0, 110, 0.1);
-            }
-
-            .interaction-btn-large svg {
-                width: 24px;
-                height: 24px;
-            }
-
-            .post-actions {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-                margin-top: 50px;
-                flex-wrap: wrap;
-            }
-
-            .btn-back {
-                background: transparent;
-                color: var(--neon-blue);
-                border: 2px solid var(--neon-blue);
-                padding: 15px 35px;
-                border-radius: 50px;
-                cursor: pointer;
-                transition: all var(--transition-base);
-                font-weight: 600;
-                text-decoration: none;
-                display: inline-flex;
-                align-items: center;
-                gap: 10px;
-                font-size: 1rem;
-            }
-
-            .btn-back:hover {
-                background: var(--neon-blue);
-                color: var(--space-black);
-                box-shadow: var(--shadow-glow);
-            }
-
-            .post-loading {
-                text-align: center;
-                padding: 100px 20px;
-            }
-
-            .post-error {
-                text-align: center;
-                padding: 100px 20px;
-            }
-
-            .post-error h2 {
-                color: #ff6b6b;
-                font-size: 2rem;
-                margin-bottom: 20px;
-            }
-
-            .related-posts {
-                margin-top: 80px;
-                padding-top: 50px;
-                border-top: 2px solid rgba(0, 243, 255, 0.2);
-            }
-
-            .related-posts h3 {
-                text-align: center;
-                font-size: 2rem;
-                color: var(--neon-blue);
-                margin-bottom: 40px;
-            }
-
-            .related-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 25px;
-            }
-
-            .related-card {
-                background: linear-gradient(
-                    135deg,
-                    rgba(10, 10, 10, 0.9) 0%,
-                    rgba(13, 17, 23, 0.9) 100%
-                );
-                border: 1px solid var(--border-blue);
-                border-radius: var(--radius-md);
-                padding: 25px;
-                transition: all var(--transition-base);
-                cursor: pointer;
-                text-decoration: none;
-                display: block;
-            }
-
-            .related-card:hover {
-                transform: translateY(-5px);
-                border-color: var(--neon-blue);
-                box-shadow: 0 15px 40px rgba(0, 243, 255, 0.3);
-            }
-
-            .related-card h4 {
-                color: var(--neon-blue);
-                font-size: 1.2rem;
-                margin-bottom: 10px;
-            }
-
-            .related-card p {
-                color: var(--text-gray);
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
-
-            .share-modal {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                backdrop-filter: blur(10px);
-                z-index: 2000;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .share-modal.active {
-                display: flex;
-            }
-
-            .share-modal-content {
-                background: linear-gradient(
-                    135deg,
-                    rgba(13, 17, 23, 0.98),
-                    rgba(10, 10, 10, 0.98)
-                );
-                border: 2px solid var(--border-blue);
-                border-radius: 20px;
-                padding: 40px;
-                max-width: 500px;
-                width: 90%;
-                position: relative;
-                animation: modalSlideIn 0.3s ease;
-            }
-
-            @keyframes modalSlideIn {
-                from {
-                    transform: translateY(-50px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
-            }
-
-            .share-modal-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 30px;
-            }
-
-            .share-modal-header h3 {
-                font-size: 1.8rem;
-                color: var(--neon-blue);
-            }
-
-            .close-modal {
-                background: transparent;
-                border: none;
-                color: white;
-                font-size: 2rem;
-                cursor: pointer;
-                transition: var(--transition-base);
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-            }
-
-            .close-modal:hover {
-                background: rgba(255, 255, 255, 0.1);
-                color: var(--neon-blue);
-            }
-
-            .share-platforms {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .share-platform-btn {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 15px 20px;
-                background: rgba(0, 243, 255, 0.05);
-                border: 1px solid var(--border-blue);
-                border-radius: 12px;
-                color: white;
-                text-decoration: none;
-                transition: all var(--transition-base);
-                cursor: pointer;
-                font-size: 1rem;
-            }
-
-            .share-platform-btn:hover {
-                background: rgba(0, 243, 255, 0.15);
-                border-color: var(--neon-blue);
-                transform: translateY(-3px);
-                box-shadow: 0 10px 25px rgba(0, 243, 255, 0.3);
-                color: var(--neon-blue);
-            }
-
-            .share-platform-btn.copied {
-                background: rgba(34, 197, 94, 0.15);
-                border-color: #22c55e;
-                color: #22c55e;
-            }
-
-            .share-platform-btn svg {
-                width: 24px;
-                height: 24px;
-            }
-
-            @media (max-width: 768px) {
-                .post-container {
-                    margin-top: 100px;
-                }
-
-                .post-content {
-                    padding: 30px 25px;
-                    font-size: 1rem;
-                }
-
-                .post-featured-image {
-                    height: 250px;
-                }
-
-                .post-meta {
-                    gap: 15px;
-                    font-size: 0.9rem;
-                }
-
-                .post-interactions {
-                    flex-direction: column;
-                }
-
-                .interaction-btn-large {
-                    width: 100%;
-                    justify-content: center;
-                }
-
-                .share-platforms {
-                    grid-template-columns: 1fr;
-                }
-            }
-            @media (max-width: 480px) {
-                .post-container {
-                    margin-top: 80px;
-                    padding: 0 15px;
-                }
-
-                .post-featured-image {
-                    height: 200px;
-                }
-                    .share-modal-content {
-        padding: 20px;
-    }
-    .share-modal-content .share-modal-header h3 {
-        font-size: 1.5rem;
-    }
-    .share-platform-btn {
-        font-size: 0.9rem;
-        padding: 5px 10px;
-    }
-    .share-platform-btn svg {
-        width: 10px;
-        height: 10px;
-    }
-    .share-platforms {
-        grid-template-columns: 1fr;
-        gap:5 px;
-    }   
-    
-                
-            }
-
-.mobile-menu-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  z-index: 1001;
-  position: relative;
-}
-
-.mobile-menu-toggle span {
-  width: 28px;
-  height: 3px;
-  background: var(--neon-blue);
-  border-radius: 3px;
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  transform-origin: center;
-  box-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
-}
-
-.mobile-menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
-
-.mobile-menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.mobile-menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
-}
-
-@media (max-width: 768px) {
-  .mobile-menu-toggle {
-    display: flex;
-    margin-left: auto;
-  }
-  
-  #nav-links {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 2rem 1rem;
-    border-top: 2px solid var(--neon-blue);
-    box-shadow: 0 5px 20px rgba(0, 243, 255, 0.2);
-    
-   transform: translateY(-100%);
-    transition: transform 0.2s ease-out; /* 0.4s -> 0.2s */
-    pointer-events: none;
-  }
-  
-  #nav-links.active {
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  
-  .nav-link-space {
-    width: 100%;
-    text-align: center;
-    padding: 1rem;
-    border-bottom: 1px solid rgba(0, 243, 255, 0.1);
-    display: block;
-  }
-  
-  .nav-link-space:last-child {
-    border-bottom: none;
-  }
-}
-        </style>
-    </head>
-    <body>
-        <canvas id="particles-canvas"></canvas>
-
-<!-- Navigation Header -->
-    <nav class="glass-header" id="main-header">
-        <div class="nav-container">
-            <h3 class="logo">SPACE ALONE</h3>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <!-- Navigation Links -->
-            <div class="nav-links" id="nav-links">
-                <a href="/#home" class="nav-link-space active">Home</a>
-                <a href="/#mysteries" class="nav-link-space">Mysteries</a>
-                <a href="/#solar" class="nav-link-space">Solar System</a>
-                <a href="/#nasa" class="nav-link-space">NASA Data</a>
-                <a href="/#apod" class="nav-link-space">APOD</a>
-                <a href="/#spacex" class="nav-link-space">SpaceX</a>
-                <a href="/blog" class="nav-link-space">Blog</a>
-            </div>
-        </div>
-    </nav>
-
-        <div class="post-container" id="post-container">
-            <div class="post-loading">
-                <div class="spinner"></div>
-                <p>Loading blog post...</p>
-            </div>
-        </div>
-
-        <!-- Share Modal -->
-        <div class="share-modal" id="share-modal">
-            <div class="share-modal-content">
-                <div class="share-modal-header">
-                    <h3>Share this post</h3>
-                    <button class="close-modal" id="close-modal-btn">
-                        &times;
-                    </button>
-                </div>
-                <div class="share-platforms">
-                    <a
-                        href="#"
-                        class="share-platform-btn"
-                        data-platform="twitter"
-                    >
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                            />
-                        </svg>
-                        Twitter
-                    </a>
-                    <a
-                        href="#"
-                        class="share-platform-btn"
-                        data-platform="facebook"
-                    >
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-                            />
-                        </svg>
-                        Facebook
-                    </a>
-                    <a
-                        href="#"
-                        class="share-platform-btn"
-                        data-platform="linkedin"
-                    >
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                            />
-                        </svg>
-                        LinkedIn
-                    </a>
-                    <a
-                        href="#"
-                        class="share-platform-btn"
-                        data-platform="reddit"
-                    >
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"
-                            />
-                        </svg>
-                        Reddit
-                    </a>
-                    <a
-                        href="#"
-                        class="share-platform-btn"
-                        data-platform="whatsapp"
-                    >
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
-                            />
-                        </svg>
-                        WhatsApp
-                    </a>
-                    <button class="share-platform-btn" id="copy-link-btn">
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <path
-                                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
-                            ></path>
-                            <path
-                                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
-                            ></path>
-                        </svg>
-                        <span class="copy-text">Copy Link</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-section">
-                        <h4 class="text-gradient footer-title">SPACE ALONE</h4>
-                        <p class="footer-text">
-                            Exploring the universe through NASA's eyes.
-                        </p>
-                    </div>
-
-                    <div class="footer-section">
-                        <h5 class="footer-heading">Quick Links</h5>
-                        <nav class="footer-links">
-                            <a href="/">Home</a>
-                            <a href="/#solar">Solar System</a>
-                            <a href="/blog.html">Blog</a>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="footer-bottom">
-                    <p>
-                        &copy; 2025 Space Alone. Exploring the Universe
-                        Together.
-                    </p>
-                </div>
-            </div>
-        </footer>
-
-        <script>
-            const API_BASE = window.location.origin;
-            let currentPostId = null;
-            let currentPostTitle = "";
-
-            const blogImages = [
-                "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=900&h=400&fit=crop",
-                "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900&h=400&fit=crop",
-                "https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=900&h=400&fit=crop",
-                "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=900&h=400&fit=crop",
-                "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=900&h=400&fit=crop",
-                "https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?w=900&h=400&fit=crop",
-            ];
-
-            function escapeHtml(text) {
-                const div = document.createElement("div");
-                div.textContent = text;
-                return div.innerHTML;
-            }
-
-            function getRandomImage() {
-                return blogImages[
-                    Math.floor(Math.random() * blogImages.length)
-                ];
-            }
-
-            function getPostIdFromUrl() {
-                const params = new URLSearchParams(window.location.search);
-                return params.get("id");
-            }
-
-   
-            function openShareModal() {
-                const modal = document.getElementById("share-modal");
-                modal.classList.add("active");
-                document.body.style.overflow = "hidden";
-
-                const url = encodeURIComponent(window.location.href);
-                const text = encodeURIComponent(currentPostTitle);
-
-                const platforms = {
-                    twitter: `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
-                    facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-                    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
-                    reddit: `https://reddit.com/submit?url=${url}&title=${text}`,
-                    whatsapp: `https://wa.me/?text=${text}%20${url}`,
-                };
-
-                document
-                    .querySelectorAll(".share-platform-btn[data-platform]")
-                    .forEach((btn) => {
-                        const platform = btn.getAttribute("data-platform");
-                        btn.onclick = async (e) => {
-                            e.preventDefault();
-                            await trackShare(currentPostId, platform);
-                            window.open(
-                                platforms[platform],
-                                "_blank",
-                                "width=600,height=400",
-                            );
-                            setTimeout(() => {
-                                updateShareCount(currentPostId);
-                            }, 500);
-                        };
-                    });
-            }
-
-            function closeShareModal() {
-                const modal = document.getElementById("share-modal");
-                modal.classList.remove("active");
-                document.body.style.overflow = "";
-
-                // Reset copy button
-                const copyBtn = document.getElementById("copy-link-btn");
-                const copyText = copyBtn.querySelector(".copy-text");
-                if (copyBtn && copyText) {
-                    copyBtn.classList.remove("copied");
-                    copyText.textContent = "Copy Link";
-                }
-            }
-
-            function copyToClipboard() {
-                const url = window.location.href;
-                const copyBtn = document.getElementById("copy-link-btn");
-                const copyText = copyBtn.querySelector(".copy-text");
-
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard
-                        .writeText(url)
-                        .then(() => {
-                            copyBtn.classList.add("copied");
-                            copyText.textContent = "Copied to clipboard!";
-                            trackShare(currentPostId, "copy_link");
-                            setTimeout(() => {
-                                updateShareCount(currentPostId);
-                            }, 500);
-
-                            setTimeout(() => {
-                                copyBtn.classList.remove("copied");
-                                copyText.textContent = "Copy Link";
-                            }, 3000);
-                        })
-                        .catch((err) => {
-                            console.error("Failed to copy:", err);
-                            fallbackCopyToClipboard(url, copyBtn, copyText);
-                        });
-                } else {
-                    fallbackCopyToClipboard(url, copyBtn, copyText);
-                }
-            }
-
-            function fallbackCopyToClipboard(text, copyBtn, copyText) {
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed";
-                textArea.style.left = "-999999px";
-                textArea.style.top = "-999999px";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-
-                try {
-                    document.execCommand("copy");
-                    copyBtn.classList.add("copied");
-                    copyText.textContent = "Copied to clipboard!";
-                    trackShare(currentPostId, "copy_link");
-                    setTimeout(() => {
-                        updateShareCount(currentPostId);
-                    }, 500);
-
-                    setTimeout(() => {
-                        copyBtn.classList.remove("copied");
-                        copyText.textContent = "Copy Link";
-                    }, 3000);
-                } catch (err) {
-                    console.error("Fallback copy failed:", err);
-                    alert("Failed to copy link. Please copy manually: " + text);
-                }
-
-                document.body.removeChild(textArea);
-            }
-
-            // Like/Share API Functions
-            async function toggleLike(postId, button) {
-                try {
-                    const isLiked = button.classList.contains("liked");
-                    const method = isLiked ? "DELETE" : "POST";
-
-                    const response = await fetch(
-                        `${API_BASE}/api/posts/${postId}/like`,
-                        {
-                            method: method,
-                            headers: { "Content-Type": "application/json" },
-                        },
-                    );
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        button.classList.toggle("liked");
-                        const countSpan = button.querySelector(".like-count");
-                        if (countSpan) {
-                            countSpan.textContent = data.likes || 0;
-                        }
-                    }
-                } catch (error) {
-                    console.error("Error toggling like:", error);
-                }
-            }
-
-            async function trackShare(postId, platform) {
-                try {
-                    await fetch(`${API_BASE}/api/posts/${postId}/share`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ platform }),
-                    });
-                } catch (error) {
-                    console.error("Error tracking share:", error);
-                }
-            }
-
-            async function updateShareCount(postId) {
-                try {
-                    const response = await fetch(
-                        `${API_BASE}/api/posts/${postId}/shares`,
-                    );
-                    if (response.ok) {
-                        const data = await response.json();
-                        const shareBtn =
-                            document.querySelector(".share-btn-large");
-                        if (shareBtn) {
-                            const countSpan =
-                                shareBtn.querySelector(".share-count");
-                            if (countSpan) {
-                                countSpan.textContent = data.count || 0;
-                            }
-                        }
-                    }
-                } catch (error) {
-                    console.error("Error updating share count:", error);
-                }
-            }
-
-            async function checkLikeStatus(postId, button) {
-                try {
-                    const response = await fetch(
-                        `${API_BASE}/api/posts/${postId}/liked`,
-                    );
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.liked) {
-                            button.classList.add("liked");
-                        }
-                    }
-                } catch (error) {
-                    console.error("Error checking like status:", error);
-                }
-            }
-
-            async function loadPost() {
-                const postId = getPostIdFromUrl();
-                const container = document.getElementById("post-container");
-
-                if (!postId) {
-                    displayError("No post ID provided");
-                    return;
-                }
-
-                currentPostId = postId;
-
-                try {
-                    const response = await fetch(
-                        `${API_BASE}/api/posts/${postId}`,
-                    );
-
-                    if (!response.ok) {
-                        throw new Error("Post not found");
-                    }
-
-                    const post = await response.json();
-                    currentPostTitle = post.title;
-                    displayPost(post);
-                    loadRelatedPosts(postId);
-                } catch (error) {
-                    console.error("Error loading post:", error);
-                    displayError("Post not found or failed to load");
-                }
-            }
-
-            function displayPost(post) {
-                const container = document.getElementById("post-container");
-
-    
-                document.getElementById("page-title").textContent =
-                    `${post.title} - Space Alone`;
-
-   
-                const postDate = new Date(post.created_at).toLocaleDateString(
-                    "en-US",
-                    {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                    },
-                );
-
-                const likesCount = post.likes || 0;
-                const sharesCount = post.shares || 0;
-
-                container.innerHTML = `
-                <article>
-                    <header class="post-header">
-                        <h1 class="post-title">${escapeHtml(post.title)}</h1>
-                        <div class="post-meta">
-                            <div class="post-meta-item">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                                ${postDate}
-                            </div>
-                            ${
-                                post.author_name
-                                    ? `
-                                <div class="post-meta-item">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                    ${escapeHtml(post.author_name)}
-                                </div>
-                            `
-                                    : ""
-                            }
-                        </div>
-                    </header>
-
-                    <img src="${getRandomImage()}" 
-                         alt="${escapeHtml(post.title)}" 
-                         class="post-featured-image"
-                         onerror="this.src='https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=900&h=400&fit=crop'">
-
-                    <div class="post-content">
-                        ${formatContent(post.content)}
-                    </div>
-
-                    <div class="post-interactions">
-                        <button class="interaction-btn-large like-btn-large" id="like-btn-large">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
-                            <span class="like-count">${likesCount}</span>
-                            <span>Likes</span>
-                        </button>
-                        <button class="interaction-btn-large share-btn-large" id="share-btn-large">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="18" cy="5" r="3"></circle>
-                                <circle cx="6" cy="12" r="3"></circle>
-                                <circle cx="18" cy="19" r="3"></circle>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                            </svg>
-                            <span class="share-count">${sharesCount}</span>
-                            <span>Shares</span>
-                        </button>
-                    </div>
-
-                    <div class="post-actions">
-                        <a href="/blog.html" class="btn-back">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="19" y1="12" x2="5" y2="12"></line>
-                                <polyline points="12 19 5 12 12 5"></polyline>
-                            </svg>
-                            Back to Blog
-                        </a>
-                    </div>
-
-                    <div class="related-posts" id="related-posts"></div>
-                </article>
-            `;
-
-       
-                setTimeout(() => {
-                    const likeBtn = document.getElementById("like-btn-large");
-                    const shareBtn = document.getElementById("share-btn-large");
-
-                    if (likeBtn) {
-                        checkLikeStatus(post.id, likeBtn);
-                        likeBtn.addEventListener("click", () => {
-                            toggleLike(post.id, likeBtn);
-                        });
-                    }
-
-                    if (shareBtn) {
-                        shareBtn.addEventListener("click", () => {
-                            openShareModal();
-                        });
-                    }
-                }, 0);
-            }
-
-            function formatContent(content) {
-
-                const paragraphs = content
-                    .split("\n\n")
-                    .filter((p) => p.trim());
-                return paragraphs
-                    .map((p) => `<p>${escapeHtml(p.trim())}</p>`)
-                    .join("");
-            }
-
-            async function loadRelatedPosts(currentPostId) {
-                try {
-                    const response = await fetch(`${API_BASE}/api/posts`);
-                    if (!response.ok) return;
-
-                    const data = await response.json();
-                    const allPosts = data.posts || data;
-                    const relatedPosts = allPosts
-                        .filter((post) => post.id !== parseInt(currentPostId))
-                        .slice(0, 3);
-
-                    if (relatedPosts.length > 0) {
-                        displayRelatedPosts(relatedPosts);
-                    }
-                } catch (error) {
-                    console.error("Error loading related posts:", error);
-                }
-            }
-function setupNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link-space');
-    const mobileToggle = document.getElementById('mobile-menu-toggle');
-    const navLinksContainer = document.getElementById('nav-links');
-    
-    if (mobileToggle && navLinksContainer) {
-        mobileToggle.addEventListener('click', () => {
-            mobileToggle.classList.toggle('active');
-            navLinksContainer.classList.toggle('active');
-        });
-    }
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                scrollToSection(href.substring(1));
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                
-                if (navLinksContainer) {
-                    navLinksContainer.classList.remove('active');
-                }
-                if (mobileToggle) {
-                    mobileToggle.classList.remove('active');
-                }
-            }
-        });
-    });
-    
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            const sections = document.querySelectorAll('section[id]');
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        }, 50);
-    });
-}
-            function displayRelatedPosts(posts) {
-                const container = document.getElementById("related-posts");
-
-                container.innerHTML = `
-                <h3>Related Articles</h3>
-                <div class="related-grid">
-                    ${posts
-                        .map(
-                            (post) => `
-                        <a href="/post?id=${post.id}" class="related-card">
-                            <h4>${escapeHtml(post.title)}</h4>
-                            <p>${escapeHtml(post.content.substring(0, 100))}...</p>
-                        </a>
-                    `,
-                        )
-                        .join("")}
-                </div>
-            `;
-            }
-
-            function displayError(message) {
-                const container = document.getElementById("post-container");
-                container.innerHTML = `
-                <div class="post-error">
-                    <h2>Oops!</h2>
-                    <p style="color: var(--text-gray); font-size: 1.2rem; margin-bottom: 30px;">${message}</p>
-                    <a href="/blog.html" class="btn-back">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                        Back to Blog
-                    </a>
-                </div>
-            `;
-            }
-
-      
-            document
-                .getElementById("close-modal-btn")
-                .addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeShareModal();
-                });
-
-            document
-                .getElementById("copy-link-btn")
-                .addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    copyToClipboard();
-                });
-
-            // Close modal on background click
-            document
-                .getElementById("share-modal")
-                .addEventListener("click", (e) => {
-                    if (e.target.id === "share-modal") {
-                        closeShareModal();
-                    }
-                });
-
-
-            document.addEventListener("keydown", (e) => {
-                if (e.key === "Escape") {
-                    closeShareModal();
-                }
-            });
-
-
-            function initParticles() {
-                const canvas = document.getElementById("particles-canvas");
-                if (!canvas) return;
-
-                const ctx = canvas.getContext("2d");
-                let particles = [];
-
-                function resizeCanvas() {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                    initParticleArray();
-                }
-
-                function initParticleArray() {
-                    particles = [];
-                    const particleCount = Math.min(
-                        100,
-                        Math.floor(window.innerWidth / 20),
-                    );
-
-                    for (let i = 0; i < particleCount; i++) {
-                        particles.push({
-                            x: Math.random() * canvas.width,
-                            y: Math.random() * canvas.height,
-                            radius: Math.random() * 1.5 + 0.5,
-                            vx: (Math.random() - 0.5) * 0.3,
-                            vy: (Math.random() - 0.5) * 0.3,
-                            opacity: Math.random() * 0.5 + 0.3,
-                        });
-                    }
-                }
-
-                function animate() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    particles.forEach((p) => {
-                        p.x += p.vx;
-                        p.y += p.vy;
-
-                        if (p.x < 0) p.x = canvas.width;
-                        if (p.x > canvas.width) p.x = 0;
-                        if (p.y < 0) p.y = canvas.height;
-                        if (p.y > canvas.height) p.y = 0;
-
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(0, 243, 255, ${p.opacity})`;
-                        ctx.fill();
-                    });
-
-                    requestAnimationFrame(animate);
-                }
-
-                resizeCanvas();
-                animate();
-                window.addEventListener("resize", resizeCanvas);
-            }
-
-            initParticles();
-            loadPost();
-            setupNavigation();
-        </script>
-         <script src="./src/js/index.js"></script>
-    </body>
-</html>
+const express = require('express');
+const path = require('path');
+const session = require('express-session');
+const SQLiteStore = require('connect-sqlite3')(session);
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+require('dotenv').config();
+
+const sql = require('./db');
+
+const app = express();
+const PORT = process.env.PORT || 8001;
+
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
+}));
+
+// CORS configuration
+app.use(cors({
+  origin: true,
+  credentials: true,
+}));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+});
+app.use('/api/', limiter);
+
+// Body parsing middleware
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Session configuration
+app.use(session({
+  store: new SQLiteStore({
+    db: 'sessions.sqlite',
+    dir: __dirname,
+  }),
+  secret: process.env.SESSION_SECRET || 'space-alone-secret-key-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // Set to true if using HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  },
+}));
+
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
+
+// API Routes
+const authRoutes = require('./routes/auth')(sql);
+const postsRoutes = require('./routes/posts')(sql);
+const solarRoutes = require('./routes/solar')(sql);
+const nasaRoutes = require('./routes/nasa');
+const spacexRoutes = require('./routes/spacex');
+const uploadsRoutes = require('./routes/uploads');
+
+app.use('/api/auth', authRoutes);
+app.use('/api/posts', postsRoutes);
+app.use('/api/solar-config', solarRoutes);
+app.use('/api/nasa', nasaRoutes);
+app.use('/api/spacex', spacexRoutes);
+app.use('/api/uploads', uploadsRoutes);
+
+// Serve static files from frontend directory
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Route handlers for HTML pages
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
+
+app.get('/blog', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/blog.html'));
+});
+
+app.get('/post', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/post.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/login.html'));
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/admin.html'));
+});
+
+app.get('/api', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/api.html'));
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    database: 'connected'
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err.stack);
+  res.status(500).json({ 
+    error: 'Internal server error',
+    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  await sql.end();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  console.log('\nSIGINT signal received: closing HTTP server');
+  await sql.end();
+  process.exit(0);
+});
+
+// Start server
+app.listen(PORT, '0.0.0.0', () => {
+  console.log("\n🚀 ═══════════════════════════════════════════════════════");
+    console.log("   Space Alone Server Started Successfully");
+    console.log("   ═══════════════════════════════════════════════════════");
+    console.log(`   🌐 Frontend:    http://localhost:${PORT}`);
+    console.log(`   🔐 Admin panel: http://localhost:${PORT}/admin`);
+    console.log(`   🔑 Login:       http://localhost:${PORT}/login`);
+    console.log(`   📡 API Docs:    http://localhost:${PORT}/api/docs`);
+    console.log(`   🏥 Health:      http://localhost:${PORT}/api/health`);
+    console.log(`   📊 Status:      http://localhost:${PORT}/api/status`);
+    console.log(`   🔐 Auth Method: Session-based (No JWT)`);
+    console.log(`   💾 Database:    PostgreSQL (Koyeb)`);
+    console.log(`   🌍 Environment: ${process.env.NODE_ENV || "development"}`);
+    console.log(`   ⚡ Node:        ${process.version}`);
+    console.log("   ═══════════════════════════════════════════════════════\n");
+});
