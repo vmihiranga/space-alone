@@ -281,6 +281,7 @@
             <a href="#solar-endpoints" class="nav-link"><span class="icon icon-sun"></span>Solar Endpoints</a>
             <a href="#nasa-endpoints" class="nav-link"><span class="icon icon-satellite"></span>NASA Endpoints</a>
             <a href="#spacex-endpoints" class="nav-link"><span class="icon icon-rocket"></span>SpaceX Endpoints</a>
+            <a href="#news-endpoints" class="nav-link"><span class="icon">📰</span>News Endpoints</a>
             <a href="#errors" class="nav-link"><span class="icon icon-warning"></span>Error Codes</a>
         </div>
         <hr style="border-color: rgba(0, 243, 255, 0.3); margin: 2rem 0;">
@@ -1013,6 +1014,140 @@
                     <span class="resource-badge resource-nasa">NASA</span>
                 </div>
                 <p>NASA API Gateway Status</p>
+            </div>
+        </section>
+
+        
+        <section id="news-endpoints">
+            <h2><span class="icon">📰</span> News Endpoints</h2>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/news/latest</span>
+                    <span class="resource-badge resource-system">News</span>
+                </div>
+                <p>Get latest space news from all sources (articles, blogs, reports)</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>limit</td>
+                            <td>integer</td>
+                            <td>10</td>
+                            <td>Number of news items (max 30)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/news/articles</span>
+                    <span class="resource-badge resource-system">News</span>
+                </div>
+                <p>Get space articles with pagination</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>limit</td>
+                            <td>integer</td>
+                            <td>10</td>
+                            <td>Items per page (max 100)</td>
+                        </tr>
+                        <tr>
+                            <td>offset</td>
+                            <td>integer</td>
+                            <td>0</td>
+                            <td>Pagination offset</td>
+                        </tr>
+                        <tr>
+                            <td>search</td>
+                            <td>string</td>
+                            <td>-</td>
+                            <td>Search term</td>
+                        </tr>
+                        <tr>
+                            <td>news_site</td>
+                            <td>string</td>
+                            <td>-</td>
+                            <td>Filter by news source</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/news/blogs</span>
+                    <span class="resource-badge resource-system">News</span>
+                </div>
+                <p>Get space blogs with pagination (same parameters as articles)</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/news/reports</span>
+                    <span class="resource-badge resource-system">News</span>
+                </div>
+                <p>Get space reports with pagination (same parameters as articles)</p>
+            </div>
+
+            <div class="endpoint-card">
+                <div class="mb-3">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="ms-2">/api/news/search</span>
+                    <span class="resource-badge resource-system">News</span>
+                </div>
+                <p>Search across all news types</p>
+                
+                <h5>Query Parameters:</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>query</td>
+                            <td>string</td>
+                            <td>Yes</td>
+                            <td>Search query</td>
+                        </tr>
+                        <tr>
+                            <td>limit</td>
+                            <td>integer</td>
+                            <td>No</td>
+                            <td>Results limit (max 30)</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
