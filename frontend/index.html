@@ -1,662 +1,1090 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Space Alone - Journey Through the Cosmos</title>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <link rel="stylesheet" href="./src/styles/main.css" />
+        <link rel="stylesheet" href="./src/styles/font-fix.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Alone - Journey Through the Cosmos</title>
-    <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap"
-        rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="./src/styles/main.css">
-    <style>
-        @font-face {
-            font-family: 'ROBO Regular';
-            src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/ROBO__.TTF') format('truetype');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'SF Old Republic Bold';
-            src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/SF%20OLD%20REPUBLIC%20BOLD.TTF') format('truetype');
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Starcraft';
-            src: url('https://github.com/vmihiranga/REPO-PUBLIC/raw/refs/heads/main/font/StarJediRounded-jW3R.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="loading-screen" id="loading-screen">
-        <div class="loading-content">
-            <svg class="site-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="planetGrad" cx="40%" cy="40%">
-                        <stop offset="0%" style="stop-color:#00f3ff;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#0088cc;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#004466;stop-opacity:1" />
-                    </radialGradient>
-                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#b800ff;stop-opacity:0.9" />
-                        <stop offset="50%" style="stop-color:#8800cc;stop-opacity:0.7" />
-                        <stop offset="100%" style="stop-color:#6600aa;stop-opacity:0.5" />
-                    </linearGradient>
-                </defs>
-                <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
-                <ellipse cx="100" cy="100" rx="75" ry="20" fill="none" stroke="url(#ringGrad)" stroke-width="8"
-                    opacity="0.8" transform="rotate(-15 100 100)" />
-                <text x="100" y="108" font-family="Arial" font-size="32" font-weight="bold" fill="#ffffff"
-                    text-anchor="middle" opacity="0.9">SA</text>
-            </svg>
-            <div class="spinner-ring"></div>
-            <p class="loading-text"></p>
-        </div>
-    </div>
-    <canvas id="particles-canvas"></canvas>
-    <nav class="glass-header" id="main-header">
-        <div class="nav-container">
-            <svg class="nav-logo-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="planetGrad" cx="40%" cy="40%">
-                        <stop offset="0%" style="stop-color:#00f3ff;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#0088cc;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#004466;stop-opacity:1" />
-                    </radialGradient>
-                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#b800ff;stop-opacity:0.9" />
-                        <stop offset="50%" style="stop-color:#8800cc;stop-opacity:0.7" />
-                        <stop offset="100%" style="stop-color:#6600aa;stop-opacity:0.5" />
-                    </linearGradient>
-                </defs>
-                <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
-                <ellipse cx="100" cy="100" rx="75" ry="20" fill="none" stroke="url(#ringGrad)" stroke-width="8"
-                    opacity="0.8" transform="rotate(-15 100 100)" />
-                <text x="100" y="108" font-family="Arial" font-size="32" font-weight="bold" fill="#ffffff"
-                    text-anchor="middle" opacity="0.9">SA</text>
-            </svg>
-            <h3 class="logo">SPACE ALONE</h3>
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-links" id="nav-links">
-                <a href="#home" class="nav-link-space active">Home</a>
-                <a href="#mysteries" class="nav-link-space">Mysteries</a>
-                <a href="#solar" class="nav-link-space">Solar System</a>
-                <a href="#nasa" class="nav-link-space">NASA Data</a>
-                <a href="#apod" class="nav-link-space">APOD</a>
-                <a href="#spacex" class="nav-link-space">SpaceX</a>
-                <a href="#blog" class="nav-link-space">Blog</a>
-            </div>
-        </div>
-    </nav>
-
-    <section id="home" class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title text-gradient">SPACE ALONE</h1>
-            <p class="hero-subtitle typing-text"></p>
-            <p class="hero-description">Explore real-time NASA data, interactive 3D solar system, and stunning space
-                imagery</p>
-            <br><br>
-            <button class="btn-gradient" onclick="scrollToSection('mysteries')">
-                <span>DISCOVER MYSTERIES</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <polyline points="19 12 12 19 5 12"></polyline>
+    <body>
+        <div class="loading-screen" id="loading-screen">
+            <div class="loading-content">
+                <svg
+                    class="site-icon"
+                    viewBox="0 0 200 200"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <radialGradient id="planetGrad" cx="40%" cy="40%">
+                            <stop
+                                offset="0%"
+                                style="stop-color: #00f3ff; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #0088cc; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #004466; stop-opacity: 1"
+                            />
+                        </radialGradient>
+                        <linearGradient
+                            id="ringGrad"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                        >
+                            <stop
+                                offset="0%"
+                                style="stop-color: #b800ff; stop-opacity: 0.9"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #8800cc; stop-opacity: 0.7"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #6600aa; stop-opacity: 0.5"
+                            />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
+                    <ellipse
+                        cx="100"
+                        cy="100"
+                        rx="75"
+                        ry="20"
+                        fill="none"
+                        stroke="url(#ringGrad)"
+                        stroke-width="8"
+                        opacity="0.8"
+                        transform="rotate(-15 100 100)"
+                    />
+                    <text
+                        x="100"
+                        y="108"
+                        font-family="Arial"
+                        font-size="32"
+                        font-weight="bold"
+                        fill="#ffffff"
+                        text-anchor="middle"
+                        opacity="0.9"
+                    >
+                        SA
+                    </text>
                 </svg>
-            </button>
-        </div>
-
-        <div class="scroll-indicator">
-            <svg width="30" height="50" viewBox="0 0 30 50">
-                <rect x="5" y="5" width="20" height="35" rx="10" fill="none" stroke="#00f3ff" stroke-width="2" />
-                <circle cx="15" cy="15" r="3" fill="#00f3ff">
-                    <animate attributeName="cy" from="15" to="30" dur="1.5s" repeatCount="indefinite" />
-                </circle>
-            </svg>
-        </div>
-    </section>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const texts = [
-                "Journey Through the Infinite Cosmos",
-                "Explore the Mysteries of Space",
-                "Discover the Unknown Universe",
-                "Experience Cosmic Wonders",
-                "Venture Beyond the Stars"
-            ];
-
-            const typingText = document.querySelector('.typing-text');
-            let textIndex = 0;
-
-            if (typingText) {
-                typingText.textContent = '';
-
-                function typeWriter(text, index) {
-                    if (index < text.length) {
-                        typingText.textContent += text.charAt(index);
-                        setTimeout(() => typeWriter(text, index + 1), 100);
-                    } else {
-
-                        setTimeout(eraseText, 2000);
-                    }
-                }
-
-                function eraseText() {
-                    const currentText = typingText.textContent;
-                    if (currentText.length > 0) {
-                        typingText.textContent = currentText.slice(0, -1);
-                        setTimeout(eraseText, 50);
-                    } else {
-
-                        textIndex = (textIndex + 1) % texts.length;
-
-                        setTimeout(() => typeWriter(texts[textIndex], 0), 500);
-                    }
-                }
-
-
-                typeWriter(texts[textIndex], 0);
-            }
-        });
-    </script>
-    <div class="section-divider"></div>
-
-    <!-- Mysteries Section -->
-    <section id="mysteries" class="section-space">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-gradient">Unknown Wonders of Space</h2>
-                <p class="section-subtitle">Unveiling the mysteries of the infinite universe</p>
+                <div class="spinner-ring"></div>
+                <p class="loading-text"></p>
             </div>
-            <div class="mysteries-content">
-                <div class="mystery-intro">
-                    <p>Space is one of the greatest mysteries known to humanity. It stretches far beyond our
-                        imagination, filled with stars, planets, galaxies, and cosmic secrets we have yet to uncover.
-                        Despite decades of research, scientists have explored only a very small portion of this infinite
-                        universe.</p>
+        </div>
+        <canvas id="particles-canvas"></canvas>
+        <nav class="glass-header" id="main-header">
+            <div class="nav-container">
+                <svg
+                    class="nav-logo-icon"
+                    viewBox="0 0 200 200"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <radialGradient id="planetGrad" cx="40%" cy="40%">
+                            <stop
+                                offset="0%"
+                                style="stop-color: #00f3ff; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #0088cc; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #004466; stop-opacity: 1"
+                            />
+                        </radialGradient>
+                        <linearGradient
+                            id="ringGrad"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                        >
+                            <stop
+                                offset="0%"
+                                style="stop-color: #b800ff; stop-opacity: 0.9"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #8800cc; stop-opacity: 0.7"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #6600aa; stop-opacity: 0.5"
+                            />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
+                    <ellipse
+                        cx="100"
+                        cy="100"
+                        rx="75"
+                        ry="20"
+                        fill="none"
+                        stroke="url(#ringGrad)"
+                        stroke-width="8"
+                        opacity="0.8"
+                        transform="rotate(-15 100 100)"
+                    />
+                    <text
+                        x="100"
+                        y="108"
+                        font-family="Arial"
+                        font-size="32"
+                        font-weight="bold"
+                        fill="#ffffff"
+                        text-anchor="middle"
+                        opacity="0.9"
+                    >
+                        SA
+                    </text>
+                </svg>
+                <h3 class="logo">SPACE ALONE</h3>
+                <button
+                    class="mobile-menu-toggle"
+                    id="mobile-menu-toggle"
+                    aria-label="Toggle Menu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links" id="nav-links">
+                    <a href="#home" class="nav-link-space active">Home</a>
+                    <a href="#mysteries" class="nav-link-space">Mysteries</a>
+                    <a href="#solar" class="nav-link-space">Solar System</a>
+                    <a href="#nasa" class="nav-link-space">NASA Data</a>
+                    <a href="#news" class="nav-link-space">News</a>
+                    <a href="#spacex" class="nav-link-space">SpaceX</a>
+                    <a href="#blog" class="nav-link-space">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title text-gradient">SPACE ALONE</h1>
+                <p class="hero-subtitle typing-text"></p>
+                <p class="hero-description">
+                    Explore real-time NASA data, interactive 3D solar system,
+                    and stunning space imagery
+                </p>
+                <br /><br />
+                <button
+                    class="btn-gradient"
+                    onclick="scrollToSection('mysteries')"
+                >
+                    <span>DISCOVER MYSTERIES</span>
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="scroll-indicator">
+                <svg width="30" height="50" viewBox="0 0 30 50">
+                    <rect
+                        x="5"
+                        y="5"
+                        width="20"
+                        height="35"
+                        rx="10"
+                        fill="none"
+                        stroke="#00f3ff"
+                        stroke-width="2"
+                    />
+                    <circle cx="15" cy="15" r="3" fill="#00f3ff">
+                        <animate
+                            attributeName="cy"
+                            from="15"
+                            to="30"
+                            dur="1.5s"
+                            repeatCount="indefinite"
+                        />
+                    </circle>
+                </svg>
+            </div>
+        </section>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const texts = [
+                    "Journey Through the Infinite Cosmos",
+                    "Explore the Mysteries of Space",
+                    "Discover the Unknown Universe",
+                    "Experience Cosmic Wonders",
+                    "Venture Beyond the Stars",
+                ];
+
+                const typingText = document.querySelector(".typing-text");
+                let textIndex = 0;
+
+                if (typingText) {
+                    typingText.textContent = "";
+
+                    function typeWriter(text, index) {
+                        if (index < text.length) {
+                            typingText.textContent += text.charAt(index);
+                            setTimeout(() => typeWriter(text, index + 1), 100);
+                        } else {
+                            setTimeout(eraseText, 2000);
+                        }
+                    }
+
+                    function eraseText() {
+                        const currentText = typingText.textContent;
+                        if (currentText.length > 0) {
+                            typingText.textContent = currentText.slice(0, -1);
+                            setTimeout(eraseText, 50);
+                        } else {
+                            textIndex = (textIndex + 1) % texts.length;
+
+                            setTimeout(
+                                () => typeWriter(texts[textIndex], 0),
+                                500,
+                            );
+                        }
+                    }
+
+                    typeWriter(texts[textIndex], 0);
+                }
+            });
+        </script>
+        <div class="section-divider"></div>
+
+        <!-- Mysteries Section -->
+        <section id="mysteries" class="section-space">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title text-gradient">
+                        Unknown Wonders of Space
+                    </h2>
+                    <p class="section-subtitle">
+                        Unveiling the mysteries of the infinite universe
+                    </p>
+                </div>
+                <div class="mysteries-content">
+                    <div class="mystery-intro">
+                        <p>
+                            Space is one of the greatest mysteries known to
+                            humanity. It stretches far beyond our imagination,
+                            filled with stars, planets, galaxies, and cosmic
+                            secrets we have yet to uncover. Despite decades of
+                            research, scientists have explored only a very small
+                            portion of this infinite universe.
+                        </p>
+                    </div>
+
+                    <div class="mysteries-grid">
+                        <div class="mystery-card">
+                            <div class="mystery-icon">
+                                <svg
+                                    width="60"
+                                    height="60"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#00f3ff"
+                                    stroke-width="2"
+                                >
+                                    <circle cx="12" cy="12" r="10" />
+                                    <circle cx="12" cy="12" r="6" />
+                                    <circle cx="12" cy="12" r="2" />
+                                </svg>
+                            </div>
+                            <h3>Dark Matter & Energy</h3>
+                            <p class="mystery-desc">
+                                Making up about 95% of the universe, dark matter
+                                and dark energy remain invisible and mysterious.
+                            </p>
+                            <div class="mystery-details">
+                                <div class="detail-item">
+                                    <span class="detail-label"
+                                        >Composition:</span
+                                    >
+                                    <span class="detail-value"
+                                        >~68% Dark Energy, ~27% Dark
+                                        Matter</span
+                                    >
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Discovery:</span>
+                                    <span class="detail-value"
+                                        >1933 (Dark Matter), 1998 (Dark
+                                        Energy)</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mystery-card">
+                            <div class="mystery-icon">
+                                <svg
+                                    width="60"
+                                    height="60"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#00f3ff"
+                                    stroke-width="2"
+                                >
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 2v20M2 12h20" />
+                                </svg>
+                            </div>
+                            <h3>Black Holes</h3>
+                            <p class="mystery-desc">
+                                Regions where gravity is so intense that nothing
+                                can escape — not even light.
+                            </p>
+                            <div class="mystery-details">
+                                <div class="detail-item">
+                                    <span class="detail-label"
+                                        >Event Horizon:</span
+                                    >
+                                    <span class="detail-value"
+                                        >Point of no return</span
+                                    >
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label"
+                                        >First Image:</span
+                                    >
+                                    <span class="detail-value"
+                                        >M87* - April 2019</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mystery-card">
+                            <div class="mystery-icon">
+                                <svg
+                                    width="60"
+                                    height="60"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#00f3ff"
+                                    stroke-width="2"
+                                >
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                            </div>
+                            <h3>Exoplanets & Life</h3>
+                            <p class="mystery-desc">
+                                Beyond our solar system lies an unimaginable
+                                number of planets that might harbor life.
+                            </p>
+                            <div class="mystery-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Confirmed:</span>
+                                    <span class="detail-value"
+                                        >5,500+ exoplanets</span
+                                    >
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Closest:</span>
+                                    <span class="detail-value"
+                                        >Proxima Centauri b - 4.2 light
+                                        years</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mystery-card">
+                            <div class="mystery-icon">
+                                <svg
+                                    width="60"
+                                    height="60"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#00f3ff"
+                                    stroke-width="2"
+                                >
+                                    <path d="M3 12h4l3 9 4-18 3 9h4" />
+                                </svg>
+                            </div>
+                            <h3>Cosmic Signals</h3>
+                            <p class="mystery-desc">
+                                Space is filled with mysterious radiation,
+                                signals, and cosmic waves from distant events.
+                            </p>
+                            <div class="mystery-details">
+                                <div class="detail-item">
+                                    <span class="detail-label"
+                                        >Fast Radio Bursts:</span
+                                    >
+                                    <span class="detail-value"
+                                        >Millisecond energy blasts</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mystery-card">
+                            <div class="mystery-icon">
+                                <svg
+                                    width="60"
+                                    height="60"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#00f3ff"
+                                    stroke-width="2"
+                                >
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path d="M12 1v6m0 6v6M1 12h6m6 0h6" />
+                                </svg>
+                            </div>
+                            <h3>Multiverse Theory</h3>
+                            <p class="mystery-desc">
+                                Our universe might be just one of infinitely
+                                many parallel universes.
+                            </p>
+                            <div class="mystery-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Types:</span>
+                                    <span class="detail-value"
+                                        >Quantum, Bubble, Parallel</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mystery-card">
+                            <div class="mystery-icon">
+                                <svg
+                                    width="60"
+                                    height="60"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#00f3ff"
+                                    stroke-width="2"
+                                >
+                                    <path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                                    />
+                                </svg>
+                            </div>
+                            <h3>Time Dilation</h3>
+                            <p class="mystery-desc">
+                                Time moves differently depending on gravity and
+                                speed, proven by Einstein's relativity.
+                            </p>
+                            <div class="mystery-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Effect:</span>
+                                    <span class="detail-value"
+                                        >Time slows near massive objects</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mystery-conclusion">
+                        <h3 class="text-gradient">The Quest Continues</h3>
+                        <p>
+                            Exploring space is not just about science — it's
+                            about curiosity and the human desire to go beyond
+                            limits.
+                        </p>
+                        <p class="highlight-text">
+                            The more we learn, the more we realize how little we
+                            truly know about the endless, mysterious universe
+                            that surrounds us.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Solar System Section -->
+        <section id="solar" class="section-space">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title text-gradient">
+                        Interactive 3D Solar System
+                    </h2>
+                    <p class="section-subtitle">
+                        Explore planets in real-time • Drag to rotate • Scroll
+                        to zoom • Click to learn
+                    </p>
+                </div>
+                <div id="solar-system-container" class="solar-container"></div>
+                <div class="controls-panel">
+                    <button class="btn-neon" id="toggle-orbits">
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                            />
+                        </svg>
+                        Toggle Orbits
+                    </button>
+                    <button class="btn-neon" id="toggle-speed">
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"
+                            />
+                        </svg>
+                        Speed: 1x
+                    </button>
+                    <button class="btn-neon" id="reset-camera">
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+                            />
+                        </svg>
+                        Reset View
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- NASA Data Section -->
+        <section id="nasa" class="section-space">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title text-gradient">
+                        Live NASA Data Feed
+                    </h2>
+                    <p class="section-subtitle">
+                        Real-time space exploration data from NASA's APIs
+                    </p>
+                </div>
+                <div class="nasa-grid">
+                    <div class="nasa-card">
+                        <h4 class="card-title">Mars Rover Photos</h4>
+                        <p class="card-description">
+                            Latest images from Curiosity rover
+                        </p>
+                        <div id="mars-photos" class="data-content">
+                            <div class="spinner-small"></div>
+                        </div>
+                    </div>
+                    <div class="nasa-card">
+                        <h4 class="card-title">ISS Location</h4>
+                        <p class="card-description">Current position of ISS</p>
+                        <div id="iss-location" class="data-content">
+                            <div class="spinner-small"></div>
+                        </div>
+                    </div>
+                    <div class="nasa-card">
+                        <h4 class="card-title">Near Earth Objects</h4>
+                        <p class="card-description">
+                            Asteroids approaching Earth
+                        </p>
+                        <div id="neo-data" class="data-content">
+                            <div class="spinner-small"></div>
+                        </div>
+                    </div>
+                    <div class="nasa-card">
+                        <h4 class="card-title">Solar Flares</h4>
+                        <p class="card-description">Recent solar activity</p>
+                        <div id="solar-flares" class="data-content">
+                            <div class="spinner-small"></div>
+                        </div>
+                    </div>
+                    <div class="nasa-card">
+                        <h4 class="card-title">Exoplanets</h4>
+                        <p class="card-description">
+                            Discovered beyond our system
+                        </p>
+                        <div id="exoplanets" class="data-content">
+                            <div class="spinner-small"></div>
+                        </div>
+                    </div>
+                    <div class="nasa-card">
+                        <h4 class="card-title">Mars Weather</h4>
+                        <p class="card-description">
+                            Current Martian conditions
+                        </p>
+                        <div id="mars-weather" class="data-content">
+                            <div class="spinner-small"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- APOD Section -->
+        <section id="apod" class="section-space">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title text-gradient">
+                        Astronomy Picture of the Day
+                    </h2>
+                    <p class="section-subtitle">
+                        Today's featured image from NASA
+                    </p>
+                </div>
+                <div id="apod-container" class="apod-container">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading today's cosmic wonder...</p>
+                    </div>
                 </div>
 
-                <div class="mysteries-grid">
-                    <div class="mystery-card">
-                        <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="10" />
-                                <circle cx="12" cy="12" r="6" />
-                                <circle cx="12" cy="12" r="2" />
-                            </svg>
-                        </div>
-                        <h3>Dark Matter & Energy</h3>
-                        <p class="mystery-desc">Making up about 95% of the universe, dark matter and dark energy remain
-                            invisible and mysterious.</p>
-                        <div class="mystery-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Composition:</span>
-                                <span class="detail-value">~68% Dark Energy, ~27% Dark Matter</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Discovery:</span>
-                                <span class="detail-value">1933 (Dark Matter), 1998 (Dark Energy)</span>
-                            </div>
-                        </div>
+                <div class="gallery-slideshow">
+                    <div class="section-header">
+                        <h2 class="section-title text-gradient">
+                            Cosmic Gallery
+                        </h2>
+                        <p class="section-subtitle">
+                            Stunning space photography and visualizations
+                        </p>
                     </div>
-
-                    <div class="mystery-card">
-                        <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M12 2v20M2 12h20" />
+                    <div
+                        class="slideshow-container"
+                        id="slideshow-container"
+                    ></div>
+                    <div class="slideshow-controls">
+                        <button class="slideshow-btn" id="prev-slide">
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <polyline points="15 18 9 12 15 6"></polyline>
                             </svg>
-                        </div>
-                        <h3>Black Holes</h3>
-                        <p class="mystery-desc">Regions where gravity is so intense that nothing can escape — not even
-                            light.</p>
-                        <div class="mystery-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Event Horizon:</span>
-                                <span class="detail-value">Point of no return</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">First Image:</span>
-                                <span class="detail-value">M87* - April 2019</span>
-                            </div>
-                        </div>
+                        </button>
+                        <div
+                            class="slideshow-indicators"
+                            id="slideshow-indicators"
+                        ></div>
+                        <button class="slideshow-btn" id="next-slide">
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <div class="mystery-card">
-                        <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
-                                stroke-width="2">
+        <div class="section-divider"></div>
+        <!-- News Section -->
+        <section id="space-news" class="section-space">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title text-gradient">
+                        Latest Space News
+                    </h2>
+                    <p class="section-subtitle">
+                        Real-time updates from across the cosmos
+                    </p>
+                </div>
+                <div class="news-preview-grid" id="news-preview-grid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading latest news...</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px">
+                    <a href="/news" class="btn-gradient">
+                        View All News
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            style="margin-left: 8px"
+                        >
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+        <!-- SpaceX Section -->
+        <section id="spacex" class="section-space">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title text-gradient">
+                        SpaceX Mission Control
+                    </h2>
+                    <p class="section-subtitle">
+                        Live launch data • Mission stats • Starlink
+                        constellation
+                    </p>
+                </div>
+
+                <div class="spacex-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg
+                                width="50"
+                                height="50"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#00f3ff"
+                                stroke-width="2"
+                            >
                                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                                 <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
                             </svg>
                         </div>
-                        <h3>Exoplanets & Life</h3>
-                        <p class="mystery-desc">Beyond our solar system lies an unimaginable number of planets that
-                            might harbor life.</p>
-                        <div class="mystery-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Confirmed:</span>
-                                <span class="detail-value">5,500+ exoplanets</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Closest:</span>
-                                <span class="detail-value">Proxima Centauri b - 4.2 light years</span>
-                            </div>
-                        </div>
+                        <div class="stat-value" id="total-launches">0</div>
+                        <div class="stat-label">Total Launches</div>
                     </div>
-
-                    <div class="mystery-card">
-                        <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
-                                stroke-width="2">
-                                <path d="M3 12h4l3 9 4-18 3 9h4" />
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg
+                                width="50"
+                                height="50"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#00f3ff"
+                                stroke-width="2"
+                            >
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
                             </svg>
                         </div>
-                        <h3>Cosmic Signals</h3>
-                        <p class="mystery-desc">Space is filled with mysterious radiation, signals, and cosmic waves
-                            from distant events.</p>
-                        <div class="mystery-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Fast Radio Bursts:</span>
-                                <span class="detail-value">Millisecond energy blasts</span>
-                            </div>
-                        </div>
+                        <div class="stat-value" id="upcoming-count">0</div>
+                        <div class="stat-label">Upcoming Missions</div>
                     </div>
-
-                    <div class="mystery-card">
-                        <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="3" />
-                                <path d="M12 1v6m0 6v6M1 12h6m6 0h6" />
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg
+                                width="50"
+                                height="50"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#00f3ff"
+                                stroke-width="2"
+                            >
+                                <polyline
+                                    points="22 12 18 12 15 21 9 3 6 12 2 12"
+                                />
                             </svg>
                         </div>
-                        <h3>Multiverse Theory</h3>
-                        <p class="mystery-desc">Our universe might be just one of infinitely many parallel universes.
-                        </p>
-                        <div class="mystery-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Types:</span>
-                                <span class="detail-value">Quantum, Bubble, Parallel</span>
-                            </div>
-                        </div>
+                        <div class="stat-value" id="success-rate">0%</div>
+                        <div class="stat-label">Success Rate</div>
                     </div>
-
-                    <div class="mystery-card">
-                        <div class="mystery-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
-                                stroke-width="2">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg
+                                width="50"
+                                height="50"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#00f3ff"
+                                stroke-width="2"
+                            >
                                 <path
-                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                                />
                             </svg>
                         </div>
-                        <h3>Time Dilation</h3>
-                        <p class="mystery-desc">Time moves differently depending on gravity and speed, proven by
-                            Einstein's relativity.</p>
-                        <div class="mystery-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Effect:</span>
-                                <span class="detail-value">Time slows near massive objects</span>
-                            </div>
+                        <div class="stat-value" id="successful-launches">0</div>
+                        <div class="stat-label">Successful Missions</div>
+                    </div>
+                </div>
+
+                <div class="latest-launch-section">
+                    <h3 class="subsection-title text-gradient">
+                        Latest Launch
+                    </h3>
+                    <div
+                        id="latest-launch-container"
+                        class="latest-launch-container"
+                    >
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                            <p>Loading latest mission...</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="mystery-conclusion">
-                    <h3 class="text-gradient">The Quest Continues</h3>
-                    <p>Exploring space is not just about science — it's about curiosity and the human desire to go
-                        beyond limits.</p>
-                    <p class="highlight-text">The more we learn, the more we realize how little we truly know about the
-                        endless, mysterious universe that surrounds us.</p>
+                <div class="upcoming-launches-section">
+                    <h3 class="subsection-title text-gradient">
+                        Upcoming Missions
+                    </h3>
+                    <div
+                        id="upcoming-launches-grid"
+                        class="upcoming-launches-grid"
+                    >
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                            <p>Loading upcoming missions...</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <div class="section-divider"></div>
-
-    <!-- Solar System Section -->
-    <section id="solar" class="section-space">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-gradient">Interactive 3D Solar System</h2>
-                <p class="section-subtitle">Explore planets in real-time • Drag to rotate • Scroll to zoom • Click to
-                    learn</p>
-            </div>
-            <div id="solar-system-container" class="solar-container"></div>
-            <div class="controls-panel">
-                <button class="btn-neon" id="toggle-orbits">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                    </svg>
-                    Toggle Orbits
-                </button>
-                <button class="btn-neon" id="toggle-speed">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z" />
-                    </svg>
-                    Speed: 1x
-                </button>
-                <button class="btn-neon" id="reset-camera">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                    </svg>
-                    Reset View
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- NASA Data Section -->
-    <section id="nasa" class="section-space">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-gradient">Live NASA Data Feed</h2>
-                <p class="section-subtitle">Real-time space exploration data from NASA's APIs</p>
-            </div>
-            <div class="nasa-grid">
-                <div class="nasa-card">
-                    <h4 class="card-title">Mars Rover Photos</h4>
-                    <p class="card-description">Latest images from Curiosity rover</p>
-                    <div id="mars-photos" class="data-content">
-                        <div class="spinner-small"></div>
-                    </div>
-                </div>
-                <div class="nasa-card">
-                    <h4 class="card-title">ISS Location</h4>
-                    <p class="card-description">Current position of ISS</p>
-                    <div id="iss-location" class="data-content">
-                        <div class="spinner-small"></div>
-                    </div>
-                </div>
-                <div class="nasa-card">
-                    <h4 class="card-title">Near Earth Objects</h4>
-                    <p class="card-description">Asteroids approaching Earth</p>
-                    <div id="neo-data" class="data-content">
-                        <div class="spinner-small"></div>
-                    </div>
-                </div>
-                <div class="nasa-card">
-                    <h4 class="card-title">Solar Flares</h4>
-                    <p class="card-description">Recent solar activity</p>
-                    <div id="solar-flares" class="data-content">
-                        <div class="spinner-small"></div>
-                    </div>
-                </div>
-                <div class="nasa-card">
-                    <h4 class="card-title">Exoplanets</h4>
-                    <p class="card-description">Discovered beyond our system</p>
-                    <div id="exoplanets" class="data-content">
-                        <div class="spinner-small"></div>
-                    </div>
-                </div>
-                <div class="nasa-card">
-                    <h4 class="card-title">Mars Weather</h4>
-                    <p class="card-description">Current Martian conditions</p>
-                    <div id="mars-weather" class="data-content">
-                        <div class="spinner-small"></div>
+                <div class="starlink-section">
+                    <h3 class="subsection-title text-gradient">
+                        Starlink Constellation
+                    </h3>
+                    <div
+                        id="starlink-viz-container"
+                        class="starlink-viz-container"
+                    ></div>
+                    <div id="starlink-stats" class="starlink-stats">
+                        <div class="loading-state">
+                            <div class="spinner-small"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <div class="section-divider"></div>
+        <div class="section-divider"></div>
 
-    <!-- APOD Section -->
-    <section id="apod" class="section-space">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-gradient">Astronomy Picture of the Day</h2>
-                <p class="section-subtitle">Today's featured image from NASA</p>
-            </div>
-            <div id="apod-container" class="apod-container">
-                <div class="loading-state">
-                    <div class="spinner"></div>
-                    <p>Loading today's cosmic wonder...</p>
-                </div>
-            </div>
-
-            <div class="gallery-slideshow">
+        <!-- Blog Section -->
+        <section id="blog" class="section-space">
+            <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title text-gradient">Cosmic Gallery</h2>
-                    <p class="section-subtitle">Stunning space photography and visualizations</p>
+                    <h2 class="section-title text-gradient">
+                        Space Exploration Blog
+                    </h2>
+                    <p class="section-subtitle">
+                        Latest discoveries and cosmic insights
+                    </p>
                 </div>
-                <div class="slideshow-container" id="slideshow-container"></div>
-                <div class="slideshow-controls">
-                    <button class="slideshow-btn" id="prev-slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <div class="slideshow-indicators" id="slideshow-indicators"></div>
-                    <button class="slideshow-btn" id="next-slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- SpaceX Section -->
-    <section id="spacex" class="section-space">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-gradient">SpaceX Mission Control</h2>
-                <p class="section-subtitle">Live launch data • Mission stats • Starlink constellation</p>
-            </div>
-
-            <div class="spacex-stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
-                        </svg>
-                    </div>
-                    <div class="stat-value" id="total-launches">0</div>
-                    <div class="stat-label">Total Launches</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                    </div>
-                    <div class="stat-value" id="upcoming-count">0</div>
-                    <div class="stat-label">Upcoming Missions</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                        </svg>
-                    </div>
-                    <div class="stat-value" id="success-rate">0%</div>
-                    <div class="stat-label">Success Rate</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2">
-                            <path
-                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                        </svg>
-                    </div>
-                    <div class="stat-value" id="successful-launches">0</div>
-                    <div class="stat-label">Successful Missions</div>
-                </div>
-            </div>
-
-            <div class="latest-launch-section">
-                <h3 class="subsection-title text-gradient">Latest Launch</h3>
-                <div id="latest-launch-container" class="latest-launch-container">
+                <div class="blog-grid" id="blog-container">
                     <div class="loading-state">
                         <div class="spinner"></div>
-                        <p>Loading latest mission...</p>
+                        <p>Loading blog posts...</p>
                     </div>
                 </div>
+                <div style="text-align: center; margin-top: 40px">
+                    <a href="/blog" class="btn-gradient">
+                        View All Posts
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            style="margin-left: 8px"
+                        >
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
             </div>
+        </section>
 
-            <div class="upcoming-launches-section">
-                <h3 class="subsection-title text-gradient">Upcoming Missions</h3>
-                <div id="upcoming-launches-grid" class="upcoming-launches-grid">
-                    <div class="loading-state">
-                        <div class="spinner"></div>
-                        <p>Loading upcoming missions...</p>
+        <!-- Planet Popup -->
+        <div class="planet-popup" id="planet-popup">
+            <div class="popup-overlay"></div>
+            <div class="popup-content">
+                <button class="popup-close" id="popup-close">&times;</button>
+                <div id="popup-body"></div>
+            </div>
+        </div>
+
+        <!-- Audio Toggle -->
+        <div
+            class="audio-toggle"
+            id="audio-toggle"
+            title="Toggle Space Soundtrack"
+        >
+            <svg
+                class="audio-icon"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#00f3ff"
+                stroke-width="2"
+            >
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path
+                    class="audio-waves"
+                    d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+                ></path>
+            </svg>
+        </div>
+
+        <audio id="space-audio" loop preload="auto">
+            <source
+                src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_8fdf4b9b9e.mp3"
+                type="audio/mpeg"
+            />
+        </audio>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h4 class="text-gradient footer-title">SPACE ALONE</h4>
+                        <p class="footer-text">
+                            Exploring the universe through NASA's eyes.
+                            Real-time data and stunning visualizations of our
+                            cosmic neighborhood.
+                        </p>
+                        <div class="footer-social">
+                            <a
+                                href="#"
+                                class="social-link"
+                                aria-label="Twitter"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
+                                    />
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="GitHub">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                                    />
+                                </svg>
+                            </a>
+                            <a
+                                href="#"
+                                class="social-link"
+                                aria-label="YouTube"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                                    />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="footer-section">
+                        <h5 class="footer-heading">Quick Links</h5>
+                        <nav class="footer-links">
+                            <a href="#home">Home</a>
+                            <a href="#mysteries">Mysteries</a>
+                            <a href="#solar">Solar System</a>
+                            <a href="#nasa">NASA Data</a>
+                            <a href="#apod">APOD</a>
+                            <a href="#spacex">SpaceX</a>
+                            <a href="#blog">Blog</a>
+                        </nav>
+                    </div>
+
+                    <div class="footer-section">
+                        <h5 class="footer-heading">Resources</h5>
+                        <nav class="footer-links">
+                            <a
+                                href="https://api.nasa.gov"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >NASA API</a
+                            >
+                            <a
+                                href="https://www.nasa.gov"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >NASA Official</a
+                            >
+                            <a
+                                href="https://www.spacex.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >SpaceX</a
+                            >
+                            <a
+                                href="https://www.esa.int"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >ESA</a
+                            >
+                        </nav>
                     </div>
                 </div>
-            </div>
 
-            <div class="starlink-section">
-                <h3 class="subsection-title text-gradient">Starlink Constellation</h3>
-                <div id="starlink-viz-container" class="starlink-viz-container"></div>
-                <div id="starlink-stats" class="starlink-stats">
-                    <div class="loading-state">
-                        <div class="spinner-small"></div>
-                    </div>
+                <div class="footer-bottom">
+                    <p>
+                        &copy; 2025 Space Alone. Exploring the Universe
+                        Together.
+                    </p>
+                    <p>
+                        Made With Vishwa Mihiranga
+                        <span style="color: #00f3ff">❤</span>
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- Blog Section -->
-    <section id="blog" class="section-space">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title text-gradient">Space Exploration Blog</h2>
-                <p class="section-subtitle">Latest discoveries and cosmic insights</p>
-            </div>
-            <div class="blog-grid" id="blog-container">
-                <div class="loading-state">
-                    <div class="spinner"></div>
-                    <p>Loading blog posts...</p>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 40px">
-                <a href="/blog" class="btn-gradient">
-                    View All Posts
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        style="margin-left: 8px">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Planet Popup -->
-    <div class="planet-popup" id="planet-popup">
-        <div class="popup-overlay"></div>
-        <div class="popup-content">
-            <button class="popup-close" id="popup-close">&times;</button>
-            <div id="popup-body"></div>
-        </div>
-    </div>
-
-    <!-- Audio Toggle -->
-    <div class="audio-toggle" id="audio-toggle" title="Toggle Space Soundtrack">
-        <svg class="audio-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00f3ff"
-            stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path class="audio-waves" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        </svg>
-    </div>
-
-    <audio id="space-audio" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_8fdf4b9b9e.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4 class="text-gradient footer-title">SPACE ALONE</h4>
-                    <p class="footer-text">Exploring the universe through NASA's eyes. Real-time data and stunning
-                        visualizations of our cosmic neighborhood.</p>
-                    <div class="footer-social">
-                        <a href="#" class="social-link" aria-label="Twitter">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link" aria-label="GitHub">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link" aria-label="YouTube">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h5 class="footer-heading">Quick Links</h5>
-                    <nav class="footer-links">
-                        <a href="#home">Home</a>
-                        <a href="#mysteries">Mysteries</a>
-                        <a href="#solar">Solar System</a>
-                        <a href="#nasa">NASA Data</a>
-                        <a href="#apod">APOD</a>
-                        <a href="#spacex">SpaceX</a>
-                        <a href="#blog">Blog</a>
-                    </nav>
-                </div>
-
-                <div class="footer-section">
-                    <h5 class="footer-heading">Resources</h5>
-                    <nav class="footer-links">
-                        <a href="https://api.nasa.gov" target="_blank" rel="noopener noreferrer">NASA API</a>
-                        <a href="https://www.nasa.gov" target="_blank" rel="noopener noreferrer">NASA Official</a>
-                        <a href="https://www.spacex.com" target="_blank" rel="noopener noreferrer">SpaceX</a>
-                        <a href="https://www.esa.int" target="_blank" rel="noopener noreferrer">ESA</a>
-                    </nav>
-                </div>
-
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Space Alone. Exploring the Universe Together.</p>
-                <p>Made With Vishwa Mihiranga <span style="color: #00f3ff;">❤</span> </p>
-            </div>
-        </div>
-    </footer>
-    <script src="./src/js/index.js"></script>
-</body>
-
+        </footer>
+        <script src="./src/js/index.js"></script>
+    </body>
 </html>
