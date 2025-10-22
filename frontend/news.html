@@ -49,269 +49,7 @@
                 z-index: 2;
             }
 
-            .news-tabs {
-                display: flex;
-                gap: 15px;
-                justify-content: center;
-                margin-bottom: 50px;
-                flex-wrap: wrap;
-            }
-
-            .news-tab {
-                padding: 12px 30px;
-                background: transparent;
-                border: 2px solid var(--border-blue);
-                border-radius: 50px;
-                color: var(--text-gray);
-                cursor: pointer;
-                transition: all 0.3s ease;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            .news-tab.active {
-                background: var(--gradient-primary);
-                border-color: var(--neon-blue);
-                color: white;
-                box-shadow: 0 5px 25px rgba(0, 243, 255, 0.4);
-            }
-
-            .news-tab:hover {
-                border-color: var(--neon-blue);
-                color: var(--neon-blue);
-            }
-
-            .news-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-                gap: 30px;
-                margin-bottom: 40px;
-            }
-
-            .news-card {
-                background: linear-gradient(
-                    135deg,
-                    rgba(10, 10, 10, 0.95),
-                    rgba(13, 17, 23, 0.95)
-                );
-                border: 1px solid var(--border-blue);
-                border-radius: 20px;
-                overflow: hidden;
-                transition: all 0.4s ease;
-                cursor: pointer;
-                position: relative;
-            }
-
-            .news-card::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(
-                    135deg,
-                    rgba(0, 243, 255, 0.1),
-                    rgba(184, 0, 255, 0.1)
-                );
-                opacity: 0;
-                transition: opacity 0.4s ease;
-            }
-
-            .news-card:hover::before {
-                opacity: 1;
-            }
-
-            .news-card:hover {
-                transform: translateY(-10px);
-                border-color: var(--neon-blue);
-                box-shadow: 0 20px 50px rgba(0, 243, 255, 0.3);
-            }
-
-            .news-card-image {
-                width: 100%;
-                height: 250px;
-                object-fit: cover;
-                transition: transform 0.5s ease;
-            }
-
-            .news-card:hover .news-card-image {
-                transform: scale(1.05);
-            }
-
-            .news-card-content {
-                padding: 25px;
-            }
-
-            .news-card-badge {
-                display: inline-block;
-                padding: 6px 15px;
-                background: rgba(0, 243, 255, 0.2);
-                color: var(--neon-blue);
-                border-radius: 20px;
-                font-size: 0.75rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                margin-bottom: 15px;
-            }
-
-            .news-card-title {
-                font-size: 1.4rem;
-                color: var(--white);
-                margin-bottom: 12px;
-                line-height: 1.4;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-
-            .news-card-summary {
-                color: var(--text-gray);
-                font-size: 0.95rem;
-                line-height: 1.7;
-                margin-bottom: 20px;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-
-            .news-card-meta {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding-top: 15px;
-                border-top: 1px solid rgba(0, 243, 255, 0.2);
-            }
-
-            .news-card-source {
-                color: var(--neon-blue);
-                font-size: 0.85rem;
-                font-weight: 600;
-            }
-
-            .news-card-date {
-                color: rgba(255, 255, 255, 0.5);
-                font-size: 0.85rem;
-            }
-
-            .search-bar {
-                max-width: 600px;
-                margin: 0 auto 50px;
-                position: relative;
-            }
-
-            .search-input {
-                width: 100%;
-                padding: 18px 60px 18px 25px;
-                background: rgba(0, 0, 0, 0.8);
-                border: 2px solid var(--border-blue);
-                border-radius: 50px;
-                color: white;
-                font-size: 1rem;
-                transition: all 0.3s ease;
-            }
-
-            .search-input:focus {
-                outline: none;
-                border-color: var(--neon-blue);
-                box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
-            }
-
-            .search-btn {
-                position: absolute;
-                right: 8px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 45px;
-                height: 45px;
-                background: var(--gradient-primary);
-                border: none;
-                border-radius: 50%;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-            }
-
-            .search-btn:hover {
-                box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
-                transform: translateY(-50%) scale(1.1);
-            }
-
-            .load-more {
-                text-align: center;
-                margin: 50px 0;
-            }
-
-            .featured-news {
-                margin-bottom: 80px;
-            }
-
-            .featured-card {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 40px;
-                background: linear-gradient(
-                    135deg,
-                    rgba(0, 0, 0, 0.95),
-                    rgba(13, 17, 23, 0.95)
-                );
-                border: 2px solid var(--border-blue);
-                border-radius: 25px;
-                overflow: hidden;
-                padding: 40px;
-                transition: all 0.4s ease;
-            }
-
-            .featured-card:hover {
-                border-color: var(--neon-blue);
-                box-shadow: 0 30px 60px rgba(0, 243, 255, 0.4);
-            }
-
-            .featured-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 15px;
-            }
-
-            .featured-content h2 {
-                font-size: 2.5rem;
-                color: var(--neon-blue);
-                margin-bottom: 20px;
-                line-height: 1.2;
-            }
-
-            .featured-summary {
-                color: var(--text-gray);
-                font-size: 1.1rem;
-                line-height: 1.8;
-                margin-bottom: 25px;
-            }
-
-            @media (max-width: 768px) {
-                .news-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .featured-card {
-                    grid-template-columns: 1fr;
-                    padding: 25px;
-                }
-
-                .featured-content h2 {
-                    font-size: 1.8rem;
-                }
-
-                .news-hero {
-                    min-height: 50vh;
-                }
-            }
+        
         </style>
     </head>
 
@@ -399,11 +137,11 @@
                 </button>
 
                 <div class="nav-links" id="nav-links">
-                    <a href="/#home" class="nav-link-space active">Home</a>
+                    <a href="/#home" class="nav-link-space">Home</a>
                     <a href="/#mysteries" class="nav-link-space">Mysteries</a>
                     <a href="/#solar" class="nav-link-space">Solar System</a>
                     <a href="/#nasa" class="nav-link-space">NASA Data</a>
-                    <a href="/news" class="nav-link-space">News</a>
+                    <a href="/news" class="nav-link-space active">News</a>
                     <a href="/#spacex" class="nav-link-space">SpaceX</a>
                     <a href="/blog" class="nav-link-space">Blog</a>
                 </div>
@@ -421,72 +159,138 @@
             </div>
         </section>
 
-        <section class="section-space">
-            <div class="container">
-                <div class="search-bar">
-                    <input
-                        type="text"
-                        class="search-input"
-                        id="search-input"
-                        placeholder="Search space news..."
-                    />
-                    <button class="search-btn" id="search-btn">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="white"
-                            stroke-width="2"
-                        >
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                    </button>
-                </div>
+        <div
+            class="audio-toggle"
+            id="audio-toggle"
+            title="Toggle Space Soundtrack"
+        >
+            <svg
+                class="audio-icon"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#00f3ff"
+                stroke-width="1"
+            >
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path
+                    class="audio-waves"
+                    d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+                ></path>
+            </svg>
+        </div>
 
-                <div class="featured-news" id="featured-news"></div>
-
-                <div class="news-tabs">
-                    <button class="news-tab active" data-type="latest">
-                        Latest
-                    </button>
-                    <button class="news-tab" data-type="articles">
-                        Articles
-                    </button>
-                    <button class="news-tab" data-type="blogs">Blogs</button>
-                    <button class="news-tab" data-type="reports">
-                        Reports
-                    </button>
-                </div>
-
-                <div class="news-grid" id="news-grid">
-                    <div class="loading-state">
-                        <div class="spinner"></div>
-                        <p>Loading space news...</p>
-                    </div>
-                </div>
-
-                <div class="load-more">
-                    <button class="btn-gradient" id="load-more-btn">
-                        Load More
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <path d="M5 12h14M12 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </section>
+        <audio id="space-audio" loop preload="auto" autoplay muted>
+            <source
+                src="./ambient-space-arpeggio-350710.mp3"
+                type="audio/mpeg"
+            />
+        </audio>
 
         <footer class="footer">
             <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h4 class="text-gradient footer-title">SPACE ALONE</h4>
+                        <p class="footer-text">
+                            Exploring the universe through NASA's eyes.
+                            Real-time data and stunning visualizations of our
+                            cosmic neighborhood.
+                        </p>
+                        <div class="footer-social">
+                            <a
+                                href="#"
+                                class="social-link"
+                                aria-label="Twitter"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
+                                    />
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="GitHub">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                                    />
+                                </svg>
+                            </a>
+                            <a
+                                href="#"
+                                class="social-link"
+                                aria-label="YouTube"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                                    />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="footer-section">
+                        <h5 class="footer-heading">Quick Links</h5>
+                        <nav class="footer-links">
+                            <a href="#home">Home</a>
+                            <a href="#mysteries">Mysteries</a>
+                            <a href="#solar">Solar System</a>
+                            <a href="#nasa">NASA Data</a>
+                            <a href="#apod">APOD</a>
+                            <a href="/news">News</a>
+                            <a href="#spacex">SpaceX</a>
+                            <a href="/blog">Blog</a>
+                        </nav>
+                    </div>
+
+                    <div class="footer-section">
+                        <h5 class="footer-heading">Resources</h5>
+                        <nav class="footer-links">
+                            <a
+                                href="https://api.nasa.gov"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >NASA API</a
+                            >
+                            <a
+                                href="https://www.nasa.gov"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >NASA Official</a
+                            >
+                            <a
+                                href="https://www.spacex.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >SpaceX</a
+                            >
+                            <a
+                                href="https://www.esa.int"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >ESA</a
+                            >
+                        </nav>
+                    </div>
+                </div>
+
                 <div class="footer-bottom">
                     <p>
                         &copy; 2025 Space Alone. Exploring the Universe
@@ -500,195 +304,6 @@
             </div>
         </footer>
 
-        <script src="./src/js/index.js"></script>
-        <script>
-            const API_BASE = window.location.origin;
-            let currentType = "latest";
-            let currentOffset = 0;
-            const LIMIT = 12;
 
-            function escapeHtml(text) {
-                const div = document.createElement("div");
-                div.textContent = text;
-                return div.innerHTML;
-            }
-
-            async function loadNews(
-                type = "latest",
-                offset = 0,
-                isLoadMore = false,
-            ) {
-                try {
-                    let endpoint = "";
-                    if (type === "latest") {
-                        endpoint = `/api/news/latest?limit=${LIMIT}`;
-                    } else {
-                        endpoint = `/api/news/${type}?limit=${LIMIT}&offset=${offset}`;
-                    }
-
-                    const response = await fetch(`${API_BASE}${endpoint}`);
-                    if (!response.ok) throw new Error("Failed to fetch news");
-
-                    const data = await response.json();
-                    const newsItems = data.data.results || [];
-
-                    displayNews(newsItems, isLoadMore);
-                } catch (error) {
-                    console.error("Error loading news:", error);
-                    document.getElementById("news-grid").innerHTML =
-                        '<div class="loading-state"><p style="color: var(--neon-blue);">Unable to load news. Please try again later.</p></div>';
-                }
-            }
-
-            function displayNews(items, isLoadMore = false) {
-                const grid = document.getElementById("news-grid");
-
-                if (!isLoadMore) {
-                    grid.innerHTML = "";
-                }
-
-                if (items.length === 0) {
-                    grid.innerHTML =
-                        '<div class="loading-state"><p style="color: var(--text-gray);">No news found.</p></div>';
-                    return;
-                }
-
-                items.forEach((item) => {
-                    const card = document.createElement("div");
-                    card.className = "news-card";
-                    card.onclick = () => window.open(item.url, "_blank");
-
-                    const date = new Date(item.published_at);
-                    const formattedDate = date.toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                    });
-
-                    card.innerHTML = `
-                    <img src="${item.image_url || "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop"}" 
-                         alt="${escapeHtml(item.title)}" 
-                         class="news-card-image"
-                         onerror="this.src='https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop'">
-                    <div class="news-card-content">
-                        <span class="news-card-badge">${item.type || "article"}</span>
-                        <h3 class="news-card-title">${escapeHtml(item.title)}</h3>
-                        <p class="news-card-summary">${escapeHtml(item.summary)}</p>
-                        <div class="news-card-meta">
-                            <span class="news-card-source">${escapeHtml(item.news_site)}</span>
-                            <span class="news-card-date">${formattedDate}</span>
-                        </div>
-                    </div>
-                `;
-
-                    grid.appendChild(card);
-                });
-            }
-
-            async function loadFeaturedNews() {
-                try {
-                    const response = await fetch(
-                        `${API_BASE}/api/news/latest?limit=1`,
-                    );
-                    if (!response.ok)
-                        throw new Error("Failed to fetch featured news");
-
-                    const data = await response.json();
-                    const featured = data.data.results[0];
-
-                    if (!featured) return;
-
-                    const date = new Date(featured.published_at);
-                    const formattedDate = date.toLocaleDateString("en-US", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                    });
-
-                    document.getElementById("featured-news").innerHTML = `
-                    <div class="section-header">
-                        <h2 class="section-title text-gradient">Featured Story</h2>
-                    </div>
-                    <div class="featured-card" onclick="window.open('${featured.url}', '_blank')" style="cursor: pointer;">
-                        <img src="${featured.image_url || "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop"}" 
-                             alt="${escapeHtml(featured.title)}" 
-                             class="featured-image"
-                             onerror="this.src='https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop'">
-                        <div class="featured-content">
-                            <h2>${escapeHtml(featured.title)}</h2>
-                            <p class="featured-summary">${escapeHtml(featured.summary)}</p>
-                            <div class="blog-meta">
-                                <span class="news-card-source" style="font-size: 1rem;">${escapeHtml(featured.news_site)}</span>
-                                <span class="news-card-date" style="font-size: 1rem;">${formattedDate}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                } catch (error) {
-                    console.error("Error loading featured news:", error);
-                }
-            }
-
-            async function searchNews(query) {
-                try {
-                    const response = await fetch(
-                        `${API_BASE}/api/news/search?query=${encodeURIComponent(query)}&limit=12`,
-                    );
-                    if (!response.ok) throw new Error("Search failed");
-
-                    const data = await response.json();
-                    displayNews(data.data.results);
-                } catch (error) {
-                    console.error("Error searching news:", error);
-                    document.getElementById("news-grid").innerHTML =
-                        '<div class="loading-state"><p style="color: var(--neon-blue);">Search failed. Please try again.</p></div>';
-                }
-            }
-
-            document.querySelectorAll(".news-tab").forEach((tab) => {
-                tab.addEventListener("click", () => {
-                    document
-                        .querySelectorAll(".news-tab")
-                        .forEach((t) => t.classList.remove("active"));
-                    tab.classList.add("active");
-                    currentType = tab.dataset.type;
-                    currentOffset = 0;
-                    loadNews(currentType, currentOffset);
-                });
-            });
-
-            document
-                .getElementById("load-more-btn")
-                .addEventListener("click", () => {
-                    currentOffset += LIMIT;
-                    loadNews(currentType, currentOffset, true);
-                });
-
-            document
-                .getElementById("search-btn")
-                .addEventListener("click", () => {
-                    const query = document
-                        .getElementById("search-input")
-                        .value.trim();
-                    if (query) {
-                        searchNews(query);
-                    }
-                });
-
-            document
-                .getElementById("search-input")
-                .addEventListener("keypress", (e) => {
-                    if (e.key === "Enter") {
-                        const query = e.target.value.trim();
-                        if (query) {
-                            searchNews(query);
-                        }
-                    }
-                });
-
-            loadFeaturedNews();
-            loadNews("latest");
-        </script>
     </body>
 </html>
