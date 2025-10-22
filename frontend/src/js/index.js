@@ -812,8 +812,25 @@ function setupAudioControl() {
     if (!audioToggle || !spaceAudio) return;
 
     spaceAudio.volume = 0.3;
+    spaceAudio.loop = true;
     let audioPlaying = false;
 
+    // Auto-play when the site loads
+    const tryAutoPlay = async () => {
+        try {
+            spaceAudio.muted = false;
+            await spaceAudio.play();
+            audioPlaying = true;
+            audioToggle.classList.add("playing");
+            audioToggle.setAttribute("aria-pressed", "true");
+        } catch (error) {
+            console.log(
+                "Autoplay blocked by browser. Waiting for user interaction.",
+            );
+        }
+    };
+
+    // Toggle button to play/pause
     const togglePlayback = async () => {
         try {
             if (audioPlaying) {
@@ -821,6 +838,7 @@ function setupAudioControl() {
                 audioToggle.classList.remove("playing");
                 audioToggle.setAttribute("aria-pressed", "false");
             } else {
+                spaceAudio.muted = false;
                 await spaceAudio.play();
                 audioToggle.classList.add("playing");
                 audioToggle.setAttribute("aria-pressed", "true");
@@ -828,12 +846,10 @@ function setupAudioControl() {
             audioPlaying = !audioPlaying;
         } catch (error) {
             console.log("Audio playback error:", error);
-            audioToggle.classList.remove("playing");
-            audioToggle.setAttribute("aria-pressed", "false");
-            audioPlaying = false;
         }
     };
 
+    // Event listeners for click and keyboard
     audioToggle.addEventListener("click", togglePlayback);
     audioToggle.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -842,10 +858,15 @@ function setupAudioControl() {
         }
     });
 
-    // Set initial state
+    // Accessibility attributes
     audioToggle.setAttribute("aria-pressed", "false");
     audioToggle.setAttribute("role", "button");
     audioToggle.setAttribute("tabindex", "0");
+
+    // Try auto-play after a short delay (some browsers block instant autoplay)
+    window.addEventListener("load", () => {
+        setTimeout(tryAutoPlay, 500);
+    });
 }
 
 function setupNavigation() {
@@ -1451,12 +1472,11 @@ function init() {
             loadingScreen.classList.add("hidden");
         }
     }, 1800);
-
+    setupAudioControl();
     initParticles();
     initSolarSystem();
     setupSolarControls();
     setupNavigation();
-    setupAudioControl();
     handleResize();
     loadNewsPreview();
     loadAPOD();
