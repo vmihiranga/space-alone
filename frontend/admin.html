@@ -263,7 +263,77 @@
             background: #1a1f3a;
             color: #ffffff;
         }
+        .logout-Btn {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          width: 45px;
+          height: 45px;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition-duration: .3s;
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+          background-color: rgb(255, 65, 65);
+        }
 
+        /* logout icon container */
+        .sign {
+          width: 100%;
+          transition-duration: .3s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .sign svg {
+          width: 17px;
+        }
+
+        .sign svg path {
+          fill: white;
+        }
+
+        /* logout text */
+        .logout-text {
+          position: absolute;
+          right: 0%;
+          width: 0%;
+          opacity: 0;
+          color: white;
+          font-size: 1.2em;
+          font-weight: 600;
+          transition-duration: .3s;
+        }
+
+        /* hover effect expands button */
+        .logout-Btn:hover {
+          width: 125px;
+          border-radius: 40px;
+          transition-duration: .3s;
+        }
+
+        /* move icon left on hover */
+        .logout-Btn:hover .sign {
+          width: 30%;
+          transition-duration: .3s;
+          padding-left: 20px;
+        }
+
+        /* reveal text smoothly */
+        .logout-Btn:hover .logout-text {
+          opacity: 1;
+          width: 70%;
+          transition-duration: .3s;
+          padding-right: 10px;
+        }
+
+        /* click press effect */
+        .logout-Btn:active {
+          transform: translate(2px, 2px);
+        }
         @media (max-width: 768px) {
             .admin-header {
                 flex-direction: column;
@@ -284,6 +354,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="./src/styles/font-fix.css">
 </head>
 
 <body>
@@ -294,8 +365,22 @@
                 <h1>🚀 Admin Dashboard</h1>
                 <p class="mb-0" id="user-info">Loading...</p>
             </div>
-            <button class="btn btn-danger-custom" onclick="logout()">
-                🚪 Logout
+            <!-- Logout Button -->
+            <button class="logout-Btn" onclick="logout()">
+              <div class="sign">
+                <svg viewBox="0 0 512 512">
+                  <path
+                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9
+                    c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0
+                    0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96
+                    c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0
+                    c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0
+                    c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0
+                    c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                  </path>
+                </svg>
+              </div>
+              <div class="logout-text">Logout</div>
             </button>
         </div>
 
@@ -311,11 +396,6 @@
                 <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password"
                     type="button">
                     🔐 Change Password
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="solar-tab" data-bs-toggle="tab" data-bs-target="#solar" type="button">
-                    🌌 Solar Configuration
                 </button>
             </li>
         </ul>
@@ -377,46 +457,7 @@
                 </div>
             </div>
 
-            <!-- Solar Configuration Tab -->
-            <div class="tab-pane fade" id="solar" role="tabpanel">
-                <div class="content-card">
-                    <h2 class="mb-4">Solar System Configuration</h2>
-
-                    <div id="alert-solar"></div>
-
-                    <form id="solar-form">
-                        <div class="mb-4">
-                            <label class="form-label-custom">Rotation Speed: <span class="range-value"
-                                    id="rotation-value">0.5</span></label>
-                            <input type="range" class="form-range" id="rotation-speed" min="0.1" max="5" step="0.1"
-                                value="0.5" oninput="updateRotationValue(this.value)">
-                            <small class="text-muted d-block mt-2">Adjust how fast planets orbit (0.1 = slowest, 5 =
-                                fastest)</small>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label-custom">Number of Planets</label>
-                            <select class="form-control-custom form-select" id="planet-count">
-                                <option value="3">3 Planets</option>
-                                <option value="5">5 Planets</option>
-                                <option value="8" selected>8 Planets</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label-custom">Orbit Color</label>
-                            <input type="color" class="form-control" id="orbit-color" value="#00f3ff">
-                            <small class="text-muted d-block mt-2">Choose the color for planet orbits</small>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary-custom">
-                            💾 Save Configuration
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+           
 
     <!-- Create/Edit Post Modal -->
     <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
@@ -469,12 +510,8 @@
                 passwordForm.addEventListener('submit', handlePasswordChange);
             }
 
-            // Solar form
-            const solarForm = document.getElementById('solar-form');
-            if (solarForm) {
-                solarForm.addEventListener('submit', handleSolarConfigSave);
-            }
-
+          
+          
             // Post form
             const postForm = document.getElementById('post-form');
             if (postForm) {
@@ -503,7 +540,7 @@
 
                 // Load initial data
                 loadPosts();
-                loadSolarConfig();
+            
 
                 return true;
             } catch (error) {
@@ -728,50 +765,7 @@
             }
         }
 
-        // Load solar config
-        async function loadSolarConfig() {
-            try {
-                const config = await apiCall('/api/solar-config');
-                document.getElementById('rotation-speed').value = config.solar_rotation_speed || 0.5;
-                document.getElementById('rotation-value').textContent = config.solar_rotation_speed || 0.5;
-                document.getElementById('planet-count').value = config.solar_planet_count || 8;
-                document.getElementById('orbit-color').value = config.solar_orbit_color || '#00f3ff';
-            } catch (error) {
-                console.error('Failed to load solar config:', error);
-                // Set defaults if loading fails
-                document.getElementById('rotation-speed').value = 0.5;
-                document.getElementById('rotation-value').textContent = 0.5;
-                document.getElementById('planet-count').value = 8;
-                document.getElementById('orbit-color').value = '#00f3ff';
-            }
-        }
-
-        // Update rotation value display
-        function updateRotationValue(value) {
-            document.getElementById('rotation-value').textContent = value;
-        }
-
-        // Handle solar config save
-        async function handleSolarConfigSave(e) {
-            e.preventDefault();
-
-            const rotationSpeed = parseFloat(document.getElementById('rotation-speed').value);
-            const planetCount = parseInt(document.getElementById('planet-count').value);
-            const orbitColor = document.getElementById('orbit-color').value;
-
-            try {
-                await apiCall('/api/solar-config', 'PUT', {
-                    rotation_speed: rotationSpeed,
-                    planet_count: planetCount,
-                    orbit_color: orbitColor
-                });
-
-                showAlert('alert-solar', 'Solar configuration updated successfully!');
-            } catch (error) {
-                console.error('Error saving solar config:', error);
-                showAlert('alert-solar', 'Error: ' + error.message, 'error');
-            }
-        }
+        
 
         // Logout
         async function logout() {
