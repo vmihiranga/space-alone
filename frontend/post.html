@@ -392,34 +392,94 @@
     <body>
         <canvas id="particles-canvas"></canvas>
 
-        <nav class="glass-header">
+        <nav class="glass-header" id="main-header">
             <div class="nav-container">
-                 <svg class="nav-logo-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="planetGrad" cx="40%" cy="40%">
-                        <stop offset="0%" style="stop-color:#00f3ff;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#0088cc;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#004466;stop-opacity:1" />
-                    </radialGradient>
-                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#b800ff;stop-opacity:0.9" />
-                        <stop offset="50%" style="stop-color:#8800cc;stop-opacity:0.7" />
-                        <stop offset="100%" style="stop-color:#6600aa;stop-opacity:0.5" />
-                    </linearGradient>
-                </defs>
-                <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
-                <ellipse cx="100" cy="100" rx="75" ry="20" fill="none" stroke="url(#ringGrad)" stroke-width="8"
-                    opacity="0.8" transform="rotate(-15 100 100)" />
-                <text x="100" y="108" font-family="Arial" font-size="32" font-weight="bold" fill="#ffffff"
-                    text-anchor="middle" opacity="0.9">SA</text>
-            </svg>
+                <svg
+                    class="nav-logo-icon"
+                    viewBox="0 0 200 200"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <radialGradient id="planetGrad" cx="40%" cy="40%">
+                            <stop
+                                offset="0%"
+                                style="stop-color: #00f3ff; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #0088cc; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #004466; stop-opacity: 1"
+                            />
+                        </radialGradient>
+                        <linearGradient
+                            id="ringGrad"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                        >
+                            <stop
+                                offset="0%"
+                                style="stop-color: #b800ff; stop-opacity: 0.9"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #8800cc; stop-opacity: 0.7"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #6600aa; stop-opacity: 0.5"
+                            />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
+                    <ellipse
+                        cx="100"
+                        cy="100"
+                        rx="75"
+                        ry="20"
+                        fill="none"
+                        stroke="url(#ringGrad)"
+                        stroke-width="8"
+                        opacity="0.8"
+                        transform="rotate(-15 100 100)"
+                    />
+                    <text
+                        x="100"
+                        y="108"
+                        font-family="Arial"
+                        font-size="32"
+                        font-weight="bold"
+                        fill="#ffffff"
+                        text-anchor="middle"
+                        opacity="0.9"
+                    >
+                        SA
+                    </text>
+                </svg>
                 <h3 class="logo">SPACE ALONE</h3>
-                <div class="nav-links">
-                    <a href="/" class="nav-link-space">Home</a>
+
+                <button
+                    class="mobile-menu-toggle"
+                    id="mobile-menu-toggle"
+                    aria-label="Toggle Menu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="nav-links" id="nav-links">
+                    <a href="/#home" class="nav-link-space active">Home</a>
+                    <a href="/#mysteries" class="nav-link-space">Mysteries</a>
                     <a href="/#solar" class="nav-link-space">Solar System</a>
                     <a href="/#nasa" class="nav-link-space">NASA Data</a>
-                    <a href="/#apod" class="nav-link-space">APOD</a>
-                    <a href="/blog" class="nav-link-space active">Blog</a>
+                    <a href="/news" class="nav-link-space">News</a>
+                    <a href="/#spacex" class="nav-link-space">SpaceX</a>
+                    <a href="/blog" class="nav-link-space">Blog</a>
                 </div>
             </div>
         </nav>
@@ -1078,4 +1138,3 @@
         </script>
     </body>
 </html>
-
