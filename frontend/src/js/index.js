@@ -147,36 +147,62 @@ const planetsData = [
 
 const galaxyImages = [
     {
-        url: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop",
-        title: "Nebula",
-        desc: "Colorful cosmic clouds of gas and dust",
+        url: "https://i.ibb.co/G4wsdMwM/image.png",
+        title: "Pillars of Creation",
+        desc: "Majestic towers of gas and dust sculpted by newborn stars in the Eagle Nebula.",
     },
     {
-        url: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800&h=500&fit=crop",
-        title: "Galaxy",
-        desc: "Distant island universes in deep space",
+        url: "https://i.ibb.co/bgTMSsnw/image.png",
+        title: "Andromeda Galaxy",
+        desc: "Our nearest galactic neighbor—an ocean of billions of suns drifting toward the Milky Way.",
+    },
+
+    {
+        url: "https://i.ibb.co/35ytQW87/image.png",
+        title: "Aurora Skies",
+        desc: "Earth’s magnetic dance—ribbons of color swirling in the polar heavens.",
     },
     {
-        url: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=800&h=500&fit=crop",
-        title: "Black Hole",
-        desc: "Cosmic enigmas warping spacetime",
+        url: "https://i.ibb.co/LXRLy7Ny/image.png",
+        title: "Lunar Surface",
+        desc: "A silent, dusty world illuminated by distant sunlight—our cosmic companion.",
     },
     {
-        url: "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=800&h=500&fit=crop",
-        title: "Supernova",
-        desc: "Spectacular stellar explosions",
+        url: "https://i.ibb.co/FkcBNKyM/image.png",
+        title: "Interstellar Veil",
+        desc: "Ghostly clouds of ionized gas drifting between stars in the endless cosmic sea.",
     },
     {
-        url: "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=500&fit=crop",
-        title: "Exoplanet",
-        desc: "Worlds beyond our solar system",
+        url: "https://i.ibb.co/wZX16HMD/image.png",
+        title: "The Milky Way Core",
+        desc: "A blazing heart of our galaxy—dense, luminous, and alive with starbirth.",
+    },
+
+    {
+        url: "https://i.ibb.co/gZ49X3Mj/image.png",
+        title: "Crimson Nebula",
+        desc: "A sea of ionized hydrogen glowing in shades of red and gold across light-years.",
+    },
+
+    {
+        url: "https://i.ibb.co/vvdz1Nrq/image.png",
+        title: "Magellanic Clouds",
+        desc: "Two satellite galaxies orbiting the Milky Way—remnants of cosmic collisions.",
+    },
+
+    {
+        url: "https://i.ibb.co/HLKq4G5w/image.png",
+        title: "Solar Flare",
+        desc: "Massive plasma arcs ejected from the Sun—beautiful, yet dangerously powerful.",
     },
     {
-        url: "https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?w=800&h=500&fit=crop",
-        title: "Star Cluster",
-        desc: "Dense stellar communities",
+        url: "https://i.ibb.co/jvhsDZt9/image.png",
+        title: "Frozen Exoplanet",
+        desc: "A lonely, ice-bound world orbiting a dim red dwarf in the outer galactic rim.",
     },
+    
 ];
+
 
 function initParticles() {
     const canvas = document.getElementById("particles-canvas");
@@ -824,9 +850,7 @@ function setupAudioControl() {
             audioToggle.classList.add("playing");
             audioToggle.setAttribute("aria-pressed", "true");
         } catch (error) {
-            console.log(
-                "Autoplay blocked by browser. Waiting for user interaction.",
-            );
+            console.log("Autoplay blocked by browser. Waiting for user interaction.");
         }
     };
 
@@ -868,6 +892,7 @@ function setupAudioControl() {
         setTimeout(tryAutoPlay, 500);
     });
 }
+
 
 function setupNavigation() {
     const navLinks = document.querySelectorAll(".nav-link-space");
@@ -1377,8 +1402,12 @@ async function loadStarlinkStats() {
         `;
     }
 }
+let newsRetryCount = 0;
+const MAX_NEWS_RETRIES = 5;
+
 async function loadNewsPreview() {
     const container = document.getElementById("news-preview-grid");
+
     // show loading state
     container.innerHTML = `
     <div class="loading-state" id="news-loading">
@@ -1391,19 +1420,30 @@ async function loadNewsPreview() {
         const response = await fetch(`${API_BASE}/api/news/latest?limit=3`);
         if (!response.ok)
             throw new Error("News fetch failed: " + response.status);
+
         const data = await response.json();
         const newsItems = data.data?.results || [];
 
         if (!newsItems.length) {
-            // no items -> show error (per your request: no fallback content)
             showNewsError("No news items available.");
             return;
         }
 
+        // Reset retry count on success
+        newsRetryCount = 0;
         displayNewsPreview(newsItems.slice(0, 3));
     } catch (err) {
-        console.error("Error loading news:", err);
-        showNewsError("Unable to load latest news."); // show error instead of fallback
+        console.error(`Error loading news (Attempt ${newsRetryCount + 1}/${MAX_NEWS_RETRIES}):`, err);
+
+        // Retry automatically up to 5 times
+        if (newsRetryCount < MAX_NEWS_RETRIES) {
+            newsRetryCount++;
+            const retryDelay = 2000 * newsRetryCount; // Exponential backoff (2s, 4s, 6s...)
+            console.log(`Retrying in ${retryDelay / 1000}s...`);
+            setTimeout(loadNewsPreview, retryDelay);
+        } else {
+            showNewsError("Unable to load latest news after multiple attempts.");
+        }
     }
 }
 
@@ -1439,7 +1479,6 @@ function displayNewsPreview(items) {
         .join("");
 }
 
-// Show an error UI (no fallback content). Includes retry button.
 function showNewsError(message) {
     const container = document.getElementById("news-preview-grid");
     container.innerHTML = `
@@ -1452,7 +1491,10 @@ function showNewsError(message) {
   `;
 
     const btn = document.getElementById("news-retry-btn");
-    if (btn) btn.addEventListener("click", loadNewsPreview);
+    if (btn) btn.addEventListener("click", () => {
+        newsRetryCount = 0;
+        loadNewsPreview();
+    });
 }
 
 // simple HTML-escape helper to avoid XSS
@@ -1465,6 +1507,7 @@ function escapeHtml(unsafe) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
 function init() {
     setTimeout(() => {
         const loadingScreen = document.getElementById("loading-screen");
