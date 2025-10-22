@@ -12,6 +12,7 @@ let rocketScene, rocketCamera, rocketRenderer, rocket, rocketParticles = [];
 let isLaunching = false;
 let starlinkScene, starlinkCamera, starlinkRenderer, starlinkSatellites = [];
 let particlesAnimationFrame = null;
+let solarConfig = { rotation_speed: 0.5, planet_count: 8, orbit_color: '#00f3ff' };
 
 const planetsData = [
     { name: 'Mercury', size: 0.4, distance: 4, color: 0x8c7853, speed: 0.04, info: 'Smallest planet, closest to Sun', diameter: '4,879 km', mass: '3.3 × 10²³ kg', temp: '-173 to 427°C', moons: '0', type: 'Terrestrial', orbitalPeriod: '88 days' },
@@ -93,6 +94,21 @@ function initParticles() {
     });
 }
 
+async function loadSolarConfig() {
+    try {
+        const response = await fetch(`${API_BASE}/api/solar-config`);
+        if (response.ok) {
+            const config = await response.json();
+            solarConfig.rotation_speed = config.solar_rotation_speed || 0.5;
+            solarConfig.planet_count = config.solar_planet_count || 8;
+            solarConfig.orbit_color = config.solar_orbit_color || '#00f3ff';
+            console.log('✅ Solar config loaded:', solarConfig);
+        }
+    } catch (error) {
+        console.log('⚠️ Using default solar config');
+    }
+}
+
 function initSolarSystem() {
     const container = document.getElementById('solar-system-container');
     if (!container) return;
@@ -123,7 +139,10 @@ function initSolarSystem() {
     const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
     sun.add(sunGlow);
     
-    planetsData.forEach(data => {
+    const orbitColor = parseInt(solarConfig.orbit_color.replace('#', '0x'));
+    const planetsToShow = planetsData.slice(0, solarConfig.planet_count);
+    
+    planetsToShow.forEach(data => {
         const geometry = new THREE.SphereGeometry(data.size, 24, 24);
         const material = new THREE.MeshPhongMaterial({ color: data.color, shininess: 30 });
         const planet = new THREE.Mesh(geometry, material);
@@ -139,7 +158,7 @@ function initSolarSystem() {
         }
         orbitGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(orbitPoints), 3));
         
-        const orbitMaterial = new THREE.LineBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.4 });
+        const orbitMaterial = new THREE.LineBasicMaterial({ color: orbitColor, transparent: true, opacity: 0.4 });
         const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
         orbits.push(orbit);
         scene.add(orbit);
