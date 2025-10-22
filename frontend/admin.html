@@ -457,39 +457,53 @@
                 </div>
             </div>
 
-           
+
 
     <!-- Create/Edit Post Modal -->
-    <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content modal-content-custom">
-                <div class="modal-header modal-header-custom">
-                    <h5 class="modal-title" id="postModalLabel">Create New Post</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="padding: 2rem;">
-                    <form id="post-form">
-                        <input type="hidden" id="post-id">
-
-                        <div class="mb-3">
-                            <label class="form-label-custom">Title</label>
-                            <input type="text" class="form-control-custom form-control" id="post-title" required>
+            <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content modal-content-custom">
+                        <div class="modal-header modal-header-custom">
+                            <h5 class="modal-title" id="postModalLabel">Create New Post</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
+                        <div class="modal-body" style="padding: 2rem;">
+                            <form id="post-form">
+                                <input type="hidden" id="post-id">
 
-                        <div class="mb-3">
-                            <label class="form-label-custom">Content</label>
-                            <textarea class="form-control-custom form-control" id="post-content" required></textarea>
+                                <div class="mb-3">
+                                    <label class="form-label-custom">Title</label>
+                                    <input type="text" class="form-control-custom form-control" id="post-title" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label-custom">Content</label>
+                                    <textarea class="form-control-custom form-control" id="post-content" required></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label-custom">Image URL (Optional)</label>
+                                    <input type="url" class="form-control-custom form-control" id="post-image-url" placeholder="https://example.com/image.jpg">
+                                    <small style="color: #888; display: block; margin-top: 0.25rem;">Paste a direct image link to add a cover image</small>
+                                </div>
+
+                                <div class="mb-3" id="image-preview-container" style="display: none;">
+                                    <label class="form-label-custom">Image Preview</label>
+                                    <div style="position: relative; max-width: 400px;">
+                                        <img id="post-image-preview" src="" alt="Preview" style="width: 100%; border-radius: 10px; border: 2px solid rgba(0, 243, 255, 0.3);">
+                                        <button type="button" onclick="clearImagePreview()" style="position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 85, 0.9); border: none; color: white; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-weight: bold;">&times;</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer modal-footer-custom">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary-custom" onclick="savePost()">Save Post</button>
+                        <div class="modal-footer modal-footer-custom">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary-custom" onclick="savePost()">Save Post</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -504,15 +518,32 @@
 
         // Setup event listeners
         function setupEventListeners() {
-            // Password form
             const passwordForm = document.getElementById('password-form');
             if (passwordForm) {
                 passwordForm.addEventListener('submit', handlePasswordChange);
             }
 
-          
-          
-            // Post form
+            const postImageUrl = document.getElementById('post-image-url');
+            if (postImageUrl) {
+                postImageUrl.addEventListener('input', function() {
+                    const url = this.value.trim();
+                    const preview = document.getElementById('post-image-preview');
+                    const container = document.getElementById('image-preview-container');
+
+                    if (url && (url.match(/\.(jpeg|jpg|gif|png|webp)$/i) || url.includes('unsplash.com') || url.includes('imgur.com') || url.includes('images.'))) {
+                        preview.src = url;
+                        preview.onerror = function() {
+                            container.style.display = 'none';
+                        };
+                        preview.onload = function() {
+                            container.style.display = 'block';
+                        };
+                    } else {
+                        container.style.display = 'none';
+                    }
+                });
+            }
+
             const postForm = document.getElementById('post-form');
             if (postForm) {
                 postForm.addEventListener('submit', function (e) {
@@ -521,7 +552,23 @@
                 });
             }
         }
+        function clearImagePreview() {
+            document.getElementById('post-image-url').value = '';
+            document.getElementById('image-preview-container').style.display = 'none';
+        }
 
+        function showCreatePostModal() {
+            document.getElementById('postModalLabel').textContent = 'Create New Post';
+            document.getElementById('post-id').value = '';
+            document.getElementById('post-title').value = '';
+            document.getElementById('post-content').value = '';
+            document.getElementById('post-image-url').value = '';
+            document.getElementById('image-preview-container').style.display = 'none';
+
+            const modalEl = document.getElementById('postModal');
+            currentModalInstance = new bootstrap.Modal(modalEl);
+            currentModalInstance.show();
+        }
         // Check authentication
         async function checkAuth() {
             try {
@@ -540,7 +587,7 @@
 
                 // Load initial data
                 loadPosts();
-            
+
 
                 return true;
             } catch (error) {
@@ -679,6 +726,15 @@
                 document.getElementById('post-id').value = post.id;
                 document.getElementById('post-title').value = post.title;
                 document.getElementById('post-content').value = post.content;
+                document.getElementById('post-image-url').value = post.image_url || '';
+
+                if (post.image_url) {
+                    const preview = document.getElementById('post-image-preview');
+                    preview.src = post.image_url;
+                    document.getElementById('image-preview-container').style.display = 'block';
+                } else {
+                    document.getElementById('image-preview-container').style.display = 'none';
+                }
 
                 const modalEl = document.getElementById('postModal');
                 currentModalInstance = new bootstrap.Modal(modalEl);
@@ -694,18 +750,21 @@
             const id = document.getElementById('post-id').value;
             const title = document.getElementById('post-title').value.trim();
             const content = document.getElementById('post-content').value.trim();
+            const image_url = document.getElementById('post-image-url').value.trim();
 
             if (!title || !content) {
-                alert('Please fill in all fields');
+                alert('Please fill in all required fields');
                 return;
             }
 
             try {
+                const postData = {title, content, image_url: image_url || null};
+
                 if (id) {
-                    await apiCall(`/api/posts/${id}`, 'PUT', {title, content});
+                    await apiCall(`/api/posts/${id}`, 'PUT', postData);
                     showAlert('alert-posts', 'Post updated successfully!');
                 } else {
-                    await apiCall('/api/posts', 'POST', {title, content});
+                    await apiCall('/api/posts', 'POST', postData);
                     showAlert('alert-posts', 'Post created successfully!');
                 }
 
@@ -765,7 +824,7 @@
             }
         }
 
-        
+
 
         // Logout
         async function logout() {
