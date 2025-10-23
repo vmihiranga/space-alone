@@ -18,7 +18,6 @@ async function fetchSpaceX(endpoint) {
     }
 }
 
-// Get latest launch
 router.get('/latest', async (req, res) => {
     try {
         const data = await fetchSpaceX('/launches/latest');
@@ -31,7 +30,7 @@ router.get('/latest', async (req, res) => {
     }
 });
 
-// Get upcoming launches
+
 router.get('/upcoming', async (req, res) => {
     try {
         const data = await fetchSpaceX('/launches/upcoming');
@@ -45,7 +44,6 @@ router.get('/upcoming', async (req, res) => {
     }
 });
 
-// Get past launches 
 router.get('/past', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 10;
@@ -59,7 +57,7 @@ router.get('/past', async (req, res) => {
     }
 });
 
-// Get Starlink
+
 router.get('/starlink', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 50;
@@ -74,7 +72,7 @@ router.get('/starlink', async (req, res) => {
     }
 });
 
-// Get launch 
+
 router.get('/stats', async (req, res) => {
     try {
         const [latest, upcoming, past] = await Promise.all([
