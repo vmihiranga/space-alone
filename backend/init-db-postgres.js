@@ -27,29 +27,35 @@ async function initDatabase() {
     await sql.unsafe(schema);
     console.log('✅ Database schema created/verified');
 
+    let adminUser;
     const existingAdmin = await sql`
       SELECT * FROM users WHERE username = 'admin'
     `;
 
     if (existingAdmin.length === 0) {
       const adminPassword = await bcrypt.hash('admin123', 10);
-      await sql`
+      const result = await sql`
         INSERT INTO users (username, password, email, role)
         VALUES ('admin', ${adminPassword}, 'admin@spacealone.com', 'admin')
+        RETURNING id, username, role
       `;
+      adminUser = result[0];
       console.log('✅ Admin user created');
       console.log('   Username: admin');
       console.log('   Password: admin123');
+      console.log('   Role: admin');
       console.log('   ⚠️  Change password after first login!\n');
     } else {
+      adminUser = existingAdmin[0];
       console.log('✅ Admin user already exists');
+      console.log(`   Role: ${adminUser.role}`);
     }
 
     const existingPosts = await sql`SELECT COUNT(*) as count FROM posts`;
     
     if (existingPosts[0].count === '0' || existingPosts[0].count === 0) {
       await sql`
-        INSERT INTO posts (title, slug, content, image_url, author_name)
+        INSERT INTO posts (title, slug, content, image_url, author_id, author_name)
         VALUES 
         (
           'The Search for Extraterrestrial Life',
@@ -60,6 +66,7 @@ Recent discoveries of exoplanets in the habitable zone have renewed hope in find
 
 The search extends beyond our solar system to potentially billions of Earth-like planets in the Milky Way galaxy. Each discovery brings us closer to answering one of humanity''s most profound questions: Are we alone in the universe?',
           'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06',
+          ${adminUser.id},
           'Space Explorer'
         ),
         (
@@ -71,6 +78,7 @@ The first image of a black hole, captured in 2019, showed the supermassive black
 
 Scientists are now studying how black holes influence galaxy formation and evolution across cosmic time. From stellar-mass black holes formed by collapsing stars to supermassive black holes millions of times the mass of our Sun, these objects play a crucial role in shaping the universe we observe today.',
           'https://images.unsplash.com/photo-1543722530-d2c3201371e7',
+          ${adminUser.id},
           'Cosmic Scientist'
         ),
         (
@@ -82,6 +90,7 @@ The dream of becoming a multi-planetary species is closer than ever. SpaceX, NAS
 
 Yet with each passing year, the technologies mature and the plans become more concrete. The first humans to set foot on Mars may already be alive today, preparing for a journey that will forever change humanity''s relationship with the cosmos.',
           'https://images.unsplash.com/photo-1614732414444-096e5f1122d5',
+          ${adminUser.id},
           'Mars Explorer'
         )
       `;
