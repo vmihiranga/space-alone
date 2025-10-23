@@ -73,7 +73,7 @@ async function fetchExternal(url, resourceName) {
   }
 }
 
-// APOD
+
 router.get('/apod', async (req, res) => {
   try {
     let date = req.query.date;
@@ -103,7 +103,7 @@ router.get('/apod', async (req, res) => {
   }
 });
 
-// Mars Rover Photos (Curiosity)
+
 router.get('/mars-photos', async (req, res) => {
   try {
     const sol = req.query.sol || 1000;
@@ -119,7 +119,7 @@ router.get('/mars-photos', async (req, res) => {
   }
 });
 
-// Near Earth Objects (NEO)
+
 router.get('/neo', async (req, res) => {
   try {
     const startDate = req.query.start_date || new Date().toISOString().split('T')[0];
@@ -136,7 +136,7 @@ router.get('/neo', async (req, res) => {
   }
 });
 
-// Earth Imagery
+
 router.get('/earth-imagery', async (req, res) => {
   try {
     const lat = req.query.lat || 29.78;
@@ -154,7 +154,7 @@ router.get('/earth-imagery', async (req, res) => {
   }
 });
 
-// EPIC 
+
 router.get('/epic', async (req, res) => {
   try {
     const result = await fetchNASA(`/EPIC/api/natural?api_key=${NASA_API_KEY}`, 'EPIC');
@@ -169,7 +169,7 @@ router.get('/epic', async (req, res) => {
   }
 });
 
-// Asteroids NeoWs
+
 router.get('/asteroids', async (req, res) => {
   try {
     const result = await fetchNASA(`/neo/rest/v1/neo/browse?api_key=${NASA_API_KEY}`, 'Asteroids');
@@ -191,7 +191,7 @@ router.get('/exoplanets', async (req, res) => {
       'https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json&select=pl_name,pl_orbper,pl_rade,st_dist',
       'NASA Exoplanet Archive'
     );
-    result.data = result.data.slice(0, 100); // Limit to 100
+    result.data = result.data.slice(0, 100); 
     res.json(result);
   } catch (error) {
     res.status(500).json({ 
