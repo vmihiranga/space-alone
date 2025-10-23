@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const SPACEFLIGHT_API = 'https://api.spaceflightnewsapi.net/v4';
 
-// Helper function to fetch data from Spaceflight News API
+
 async function fetchFromAPI(endpoint, params = {}) {
   try {
     const response = await axios.get(`${SPACEFLIGHT_API}${endpoint}`, {
@@ -18,7 +18,6 @@ async function fetchFromAPI(endpoint, params = {}) {
   }
 }
 
-// Get blogs with pagination and filtering
 router.get('/blogs', async (req, res) => {
   try {
     const {
@@ -31,7 +30,7 @@ router.get('/blogs', async (req, res) => {
     } = req.query;
 
     const params = {
-      limit: Math.min(parseInt(limit), 100), // Max 100 per request
+      limit: Math.min(parseInt(limit), 100),
       offset: parseInt(offset),
     };
 
@@ -60,7 +59,7 @@ router.get('/blogs', async (req, res) => {
   }
 });
 
-// Get single blog by ID
+
 router.get('/blogs/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -85,7 +84,7 @@ router.get('/blogs/:id', async (req, res) => {
   }
 });
 
-// Get reports with pagination and filtering
+
 router.get('/reports', async (req, res) => {
   try {
     const {
@@ -123,7 +122,6 @@ router.get('/reports', async (req, res) => {
   }
 });
 
-// Get single report by ID
 router.get('/reports/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -148,7 +146,7 @@ router.get('/reports/:id', async (req, res) => {
   }
 });
 
-// Get articles (general news)
+
 router.get('/articles', async (req, res) => {
   try {
     const {
@@ -190,7 +188,6 @@ router.get('/articles', async (req, res) => {
   }
 });
 
-// Get single article by ID
 router.get('/articles/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -215,19 +212,19 @@ router.get('/articles/:id', async (req, res) => {
   }
 });
 
-// Get latest news (combined from articles, blogs, and reports)
+
 router.get('/latest', async (req, res) => {
   try {
     const limit = Math.min(parseInt(req.query.limit) || 10, 30);
 
-    // Fetch latest from all sources in parallel
+
     const [articles, blogs, reports] = await Promise.all([
       fetchFromAPI('/articles/', { limit: limit }),
       fetchFromAPI('/blogs/', { limit: limit }),
       fetchFromAPI('/reports/', { limit: limit }),
     ]);
 
-    // Combine and sort by published date
+
     const combined = [
       ...articles.results.map(item => ({ ...item, type: 'article' })),
       ...blogs.results.map(item => ({ ...item, type: 'blog' })),
@@ -251,7 +248,7 @@ router.get('/latest', async (req, res) => {
   }
 });
 
-// Search across all news types
+
 router.get('/search', async (req, res) => {
   try {
     const { query, limit = 10 } = req.query;
@@ -265,7 +262,7 @@ router.get('/search', async (req, res) => {
 
     const searchLimit = Math.min(parseInt(limit), 30);
 
-    // Search all sources in parallel
+
     const [articles, blogs, reports] = await Promise.all([
       fetchFromAPI('/articles/', { search: query, limit: searchLimit }),
       fetchFromAPI('/blogs/', { search: query, limit: searchLimit }),
