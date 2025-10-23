@@ -28,7 +28,7 @@ module.exports = (sql) => {
     }
   });
 
-  // Update solar settings
+  
   router.put('/', authMiddleware, adminMiddleware, async (req, res) => {
     const { rotation_speed, planet_count, orbit_color } = req.body;
     try {
