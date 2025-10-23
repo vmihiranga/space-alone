@@ -200,9 +200,7 @@ const galaxyImages = [
         title: "Frozen Exoplanet",
         desc: "A lonely, ice-bound world orbiting a dim red dwarf in the outer galactic rim.",
     },
-    
 ];
-
 
 function initParticles() {
     const canvas = document.getElementById("particles-canvas");
@@ -751,26 +749,35 @@ function displayBlogPosts(posts) {
         .map(
             (post) => `
         <div class="blog-card">
-            <h3>${escapeHtml(post.title)}</h3>
-            <div class="blog-meta">
-                <span class="blog-date">
+            ${
+                post.image_url
+                    ? `<div class="blog-image">
+                <img src="${escapeHtml(post.image_url)}" alt="${escapeHtml(post.title)}" loading="lazy">
+            </div>`
+                    : ""
+            }
+            <div class="blog-content">
+                <h3>${escapeHtml(post.title)}</h3>
+                <div class="blog-meta">
+                    <span class="blog-date">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        ${new Date(post.created_at).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                    </span>
+                </div>
+                <p class="blog-excerpt">${escapeHtml(post.content.substring(0, 150))}${post.content.length > 150 ? "..." : ""}</p>
+                <a href="/blog/${post.id}" class="blog-read-more" onclick="showBlogPost(${post.id}); return false;">
+                    Read More
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                    ${new Date(post.created_at).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                </span>
+                </a>
             </div>
-            <p class="blog-excerpt">${escapeHtml(post.content.substring(0, 150))}${post.content.length > 150 ? "..." : ""}</p>
-            <a href="#" class="blog-read-more" onclick="showBlogPost(${post.id}); return false;">
-                Read More
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </a>
         </div>
     `,
         )
@@ -841,7 +848,7 @@ function setupAudioControl() {
     spaceAudio.loop = true;
     let audioPlaying = false;
 
-    // Auto-play when the site loads
+
     const tryAutoPlay = async () => {
         try {
             spaceAudio.muted = false;
@@ -850,11 +857,13 @@ function setupAudioControl() {
             audioToggle.classList.add("playing");
             audioToggle.setAttribute("aria-pressed", "true");
         } catch (error) {
-            console.log("Autoplay blocked by browser. Waiting for user interaction.");
+            console.log(
+                "Autoplay blocked by browser. Waiting for user interaction.",
+            );
         }
     };
 
-    // Toggle button to play/pause
+  
     const togglePlayback = async () => {
         try {
             if (audioPlaying) {
@@ -873,7 +882,6 @@ function setupAudioControl() {
         }
     };
 
-    // Event listeners for click and keyboard
     audioToggle.addEventListener("click", togglePlayback);
     audioToggle.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -882,17 +890,14 @@ function setupAudioControl() {
         }
     });
 
-    // Accessibility attributes
     audioToggle.setAttribute("aria-pressed", "false");
     audioToggle.setAttribute("role", "button");
     audioToggle.setAttribute("tabindex", "0");
 
-    // Try auto-play after a short delay (some browsers block instant autoplay)
     window.addEventListener("load", () => {
         setTimeout(tryAutoPlay, 500);
     });
 }
-
 
 function setupNavigation() {
     const navLinks = document.querySelectorAll(".nav-link-space");
@@ -1148,22 +1153,22 @@ function displayLatestLaunch(launch) {
 
 function displayFallbackLatestLaunch() {
     const container = document.getElementById("latest-launch-container");
-    container.innerHTML = `<div class="wifi-loader">
-                            <svg class="circle-outer" viewBox="0 0 86 86">
-                                <circle class="back" cx="43" cy="43" r="40"></circle>
-                                <circle class="front" cx="43" cy="43" r="40"></circle>
-                                <circle class="new" cx="43" cy="43" r="40"></circle>
-                            </svg>
-                            <svg class="circle-middle" viewBox="0 0 60 60">
-                                <circle class="back" cx="30" cy="30" r="27"></circle>
-                                <circle class="front" cx="30" cy="30" r="27"></circle>
-                            </svg>
-                            <svg class="circle-inner" viewBox="0 0 34 34">
-                                <circle class="back" cx="17" cy="17" r="14"></circle>
-                                <circle class="front" cx="17" cy="17" r="14"></circle>
-                            </svg>
-                            <div class="text" data-text="Loading"></div>
-                        </div>`;
+    container.innerHTML = `    <div class="wifi-loader">
+        <svg class="circle-outer" viewBox="0 0 86 86">
+            <circle class="back" cx="43" cy="43" r="40"></circle>
+            <circle class="front" cx="43" cy="43" r="40"></circle>
+            <circle class="new" cx="43" cy="43" r="40"></circle>
+        </svg>
+        <svg class="circle-middle" viewBox="0 0 60 60">
+            <circle class="back" cx="30" cy="30" r="27"></circle>
+            <circle class="front" cx="30" cy="30" r="27"></circle>
+        </svg>
+        <svg class="circle-inner" viewBox="0 0 34 34">
+            <circle class="back" cx="17" cy="17" r="14"></circle>
+            <circle class="front" cx="17" cy="17" r="14"></circle>
+        </svg>
+        <div class="text" data-text="Loading"></div>
+    </div>`;
 }
 
 async function loadUpcomingLaunches() {
@@ -1425,24 +1430,23 @@ const MAX_NEWS_RETRIES = 10;
 async function loadNewsPreview() {
     const container = document.getElementById("news-preview-grid");
 
-    // show loading state
-    container.innerHTML = `
-                        <div class="wifi-loader">
-                            <svg class="circle-outer" viewBox="0 0 86 86">
-                                <circle class="back" cx="43" cy="43" r="40"></circle>
-                                <circle class="front" cx="43" cy="43" r="40"></circle>
-                                <circle class="new" cx="43" cy="43" r="40"></circle>
-                            </svg>
-                            <svg class="circle-middle" viewBox="0 0 60 60">
-                                <circle class="back" cx="30" cy="30" r="27"></circle>
-                                <circle class="front" cx="30" cy="30" r="27"></circle>
-                            </svg>
-                            <svg class="circle-inner" viewBox="0 0 34 34">
-                                <circle class="back" cx="17" cy="17" r="14"></circle>
-                                <circle class="front" cx="17" cy="17" r="14"></circle>
-                            </svg>
-                            <div class="text" data-text="Loading"></div>
-                        </div>
+
+    container.innerHTML = `    <div class="wifi-loader">
+        <svg class="circle-outer" viewBox="0 0 86 86">
+            <circle class="back" cx="43" cy="43" r="40"></circle>
+            <circle class="front" cx="43" cy="43" r="40"></circle>
+            <circle class="new" cx="43" cy="43" r="40"></circle>
+        </svg>
+        <svg class="circle-middle" viewBox="0 0 60 60">
+            <circle class="back" cx="30" cy="30" r="27"></circle>
+            <circle class="front" cx="30" cy="30" r="27"></circle>
+        </svg>
+        <svg class="circle-inner" viewBox="0 0 34 34">
+            <circle class="back" cx="17" cy="17" r="14"></circle>
+            <circle class="front" cx="17" cy="17" r="14"></circle>
+        </svg>
+        <div class="text" data-text="Loading"></div>
+    </div>
   `;
 
     try {
@@ -1458,20 +1462,25 @@ async function loadNewsPreview() {
             return;
         }
 
-        // Reset retry count on success
+
         newsRetryCount = 0;
         displayNewsPreview(newsItems.slice(0, 3));
     } catch (err) {
-        console.error(`Error loading news (Attempt ${newsRetryCount + 1}/${MAX_NEWS_RETRIES}):`, err);
+        console.error(
+            `Error loading news (Attempt ${newsRetryCount + 1}/${MAX_NEWS_RETRIES}):`,
+            err,
+        );
 
-        // Retry automatically up to 5 times
+
         if (newsRetryCount < MAX_NEWS_RETRIES) {
             newsRetryCount++;
-            const retryDelay = 2000 * newsRetryCount; // Exponential backoff (2s, 4s, 6s...)
+            const retryDelay = 2000 * newsRetryCount; 
             console.log(`Retrying in ${retryDelay / 1000}s...`);
             setTimeout(loadNewsPreview, retryDelay);
         } else {
-            showNewsError("Unable to load latest news after multiple attempts.");
+            showNewsError(
+                "Unable to load latest news after multiple attempts.",
+            );
         }
     }
 }
@@ -1492,13 +1501,13 @@ function displayNewsPreview(items) {
 
             return `
         <div class="news-preview-card" role="button" tabindex="0">
-  <img src="${item.image_url || 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop'}"
+  <img src="${item.image_url || "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop"}"
        alt="${escapeHtml(item.title)}"
        class="news-preview-image"
        onerror="this.src='https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop'">
 
   <div class="news-preview-content">
-    <span class="news-preview-badge">${escapeHtml(item.type || 'News')}</span>
+    <span class="news-preview-badge">${escapeHtml(item.type || "News")}</span>
     <h3 class="news-preview-title">${escapeHtml(item.title)}</h3>
     <p class="news-preview-date">${formattedDate}</p>
   </div>
@@ -1521,13 +1530,13 @@ function showNewsError(message) {
   `;
 
     const btn = document.getElementById("news-retry-btn");
-    if (btn) btn.addEventListener("click", () => {
-        newsRetryCount = 0;
-        loadNewsPreview();
-    });
+    if (btn)
+        btn.addEventListener("click", () => {
+            newsRetryCount = 0;
+            loadNewsPreview();
+        });
 }
 
-// simple HTML-escape helper to avoid XSS
 function escapeHtml(unsafe) {
     if (!unsafe) return "";
     return String(unsafe)
