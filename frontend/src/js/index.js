@@ -1148,7 +1148,22 @@ function displayLatestLaunch(launch) {
 
 function displayFallbackLatestLaunch() {
     const container = document.getElementById("latest-launch-container");
-    container.innerHTML = `<div class="loading-state"><p style="color: var(--neon-blue);">Unable to load latest launch data.</p></div>`;
+    container.innerHTML = `<div class="wifi-loader">
+                            <svg class="circle-outer" viewBox="0 0 86 86">
+                                <circle class="back" cx="43" cy="43" r="40"></circle>
+                                <circle class="front" cx="43" cy="43" r="40"></circle>
+                                <circle class="new" cx="43" cy="43" r="40"></circle>
+                            </svg>
+                            <svg class="circle-middle" viewBox="0 0 60 60">
+                                <circle class="back" cx="30" cy="30" r="27"></circle>
+                                <circle class="front" cx="30" cy="30" r="27"></circle>
+                            </svg>
+                            <svg class="circle-inner" viewBox="0 0 34 34">
+                                <circle class="back" cx="17" cy="17" r="14"></circle>
+                                <circle class="front" cx="17" cy="17" r="14"></circle>
+                            </svg>
+                            <div class="text" data-text="Loading"></div>
+                        </div>`;
 }
 
 async function loadUpcomingLaunches() {
@@ -1201,7 +1216,9 @@ function displayUpcomingLaunches(launches) {
 
 function displayFallbackUpcomingLaunches() {
     const container = document.getElementById("upcoming-launches-grid");
-    container.innerHTML = `<div class="loading-state"><p style="color: var(--neon-blue);">Unable to load upcoming launches.</p></div>`;
+    container.innerHTML = `<div class="loading-state">
+    <p style="color: var(--neon-blue);">Unable to load upcoming launches.</p>
+    </div>`;
 }
 
 function getCountdown(targetDate) {
@@ -1410,10 +1427,22 @@ async function loadNewsPreview() {
 
     // show loading state
     container.innerHTML = `
-    <div class="loading-state" id="news-loading">
-      <div class="spinner"></div>
-      <p>Loading latest news...</p>
-    </div>
+                        <div class="wifi-loader">
+                            <svg class="circle-outer" viewBox="0 0 86 86">
+                                <circle class="back" cx="43" cy="43" r="40"></circle>
+                                <circle class="front" cx="43" cy="43" r="40"></circle>
+                                <circle class="new" cx="43" cy="43" r="40"></circle>
+                            </svg>
+                            <svg class="circle-middle" viewBox="0 0 60 60">
+                                <circle class="back" cx="30" cy="30" r="27"></circle>
+                                <circle class="front" cx="30" cy="30" r="27"></circle>
+                            </svg>
+                            <svg class="circle-inner" viewBox="0 0 34 34">
+                                <circle class="back" cx="17" cy="17" r="14"></circle>
+                                <circle class="front" cx="17" cy="17" r="14"></circle>
+                            </svg>
+                            <div class="text" data-text="Loading"></div>
+                        </div>
   `;
 
     try {
