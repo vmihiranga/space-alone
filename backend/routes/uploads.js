@@ -6,7 +6,7 @@ const fs = require('fs');
 module.exports = (db) => {
   const router = express.Router();
 
-  // Middleware to verify session (local to this router)
+
   const authMiddleware = (req, res, next) => {
     if (!req.session || !req.session.user) {
       return res.status(401).json({ error: 'Not authenticated' });
@@ -22,7 +22,7 @@ module.exports = (db) => {
     next();
   };
 
-  // Configure multer for file uploads
+
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       const uploadDir = process.env.UPLOAD_DIR || './public/uploads';
@@ -40,7 +40,7 @@ module.exports = (db) => {
   const upload = multer({
     storage: storage,
     limits: {
-      fileSize: 5 * 1024 * 1024 // 5MB limit
+      fileSize: 5 * 1024 * 1024 
     },
     fileFilter: (req, file, cb) => {
       const allowedTypes = /jpeg|jpg|png|gif|webp/;
@@ -55,7 +55,6 @@ module.exports = (db) => {
     }
   });
 
-  // Get all uploads (requires authentication)
   router.get('/', authMiddleware, (req, res) => {
     db.all(
       'SELECT * FROM uploads ORDER BY created_at DESC',
@@ -70,7 +69,6 @@ module.exports = (db) => {
     );
   });
 
-  // Upload image (requires authentication)
   router.post('/', authMiddleware, adminMiddleware, upload.single('image'), (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -91,7 +89,7 @@ module.exports = (db) => {
       function(err) {
         if (err) {
           console.error('Error saving upload record:', err);
-          // Delete the uploaded file if database insert fails
+
           fs.unlinkSync(req.file.path);
           return res.status(500).json({ error: 'Database error' });
         }
@@ -108,9 +106,8 @@ module.exports = (db) => {
     );
   });
 
-  // Delete upload (requires authentication)
   router.delete('/:id', authMiddleware, adminMiddleware, (req, res) => {
-    // First, get the file information
+
     db.get(
       'SELECT * FROM uploads WHERE id = ?',
       [req.params.id],
@@ -124,7 +121,6 @@ module.exports = (db) => {
           return res.status(404).json({ error: 'Upload not found' });
         }
 
-        // Delete from database
         db.run(
           'DELETE FROM uploads WHERE id = ?',
           [req.params.id],
@@ -134,7 +130,7 @@ module.exports = (db) => {
               return res.status(500).json({ error: 'Database error' });
             }
 
-            // Delete the physical file
+  
             const uploadDir = process.env.UPLOAD_DIR || './public/uploads';
             const filePath = path.join(uploadDir, row.filename);
             
