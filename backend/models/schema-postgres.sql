@@ -66,6 +66,19 @@ CREATE TABLE IF NOT EXISTS post_likes (
 -- Create index for faster like counting
 CREATE INDEX IF NOT EXISTS idx_post_likes_post_id ON post_likes(post_id);
 
+-- ✅ Post dislikes table (NEW)
+CREATE TABLE IF NOT EXISTS post_dislikes (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER NOT NULL,
+    user_identifier TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    UNIQUE(post_id, user_identifier)
+);
+
+-- Create index for faster dislike counting
+CREATE INDEX IF NOT EXISTS idx_post_dislikes_post_id ON post_dislikes(post_id);
+
 -- Post shares table
 CREATE TABLE IF NOT EXISTS post_shares (
     id SERIAL PRIMARY KEY,
