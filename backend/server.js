@@ -155,8 +155,8 @@ process.on("SIGINT", async () => {
 
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("\n🚀 ═══════════════════════════════════════════════════════");
-  console.log("   Space Alone Server Started Successfully");
+  console.log("\n ═══════════════════════════════════════════════════════");
+  console.log("   Space Alone Server Started Successfully 🚀");
   console.log("   ═══════════════════════════════════════════════════════");
   console.log(`   🌐 Frontend:    http://localhost:${PORT}`);
   console.log(`   🔐 Admin panel: http://localhost:${PORT}/admin`);
@@ -164,7 +164,6 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`   📡 API Docs:    http://localhost:${PORT}/api/docs`);
   console.log(`   🏥 Health:      http://localhost:${PORT}/api/health`);
   console.log(`   📊 Status:      http://localhost:${PORT}/api/status`);
-  console.log(`   📰 News API:    http://localhost:${PORT}/api/news`);
   console.log(`   🔐 Auth Method: Session-based (No JWT)`);
   console.log(`   💾 Database:    PostgreSQL (Koyeb)`);
   console.log(`   🌍 Environment: ${process.env.NODE_ENV || "development"}`);
