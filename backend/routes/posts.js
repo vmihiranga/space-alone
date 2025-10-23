@@ -27,7 +27,7 @@ module.exports = (sql) => {
       .trim()
   }
 
-  // Get all posts with pagination
+
   router.get("/", async (req, res) => {
     try {
       const page = Number.parseInt(req.query.page) || 1
@@ -54,7 +54,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Search posts
+
   router.get("/search/query", async (req, res) => {
     const searchTerm = req.query.q
 
@@ -79,7 +79,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Get single post by ID or slug
+
   router.get("/:id", async (req, res) => {
     try {
       const identifier = req.params.id
@@ -116,26 +116,22 @@ module.exports = (sql) => {
     }
   })
 
-  // Create new post
+  
   router.post("/", authMiddleware, adminMiddleware, async (req, res) => {
-    const { title, content, image_url } = req.body
+    const { title, content, image_url, author_name, slug } = req.body
 
     if (!title || !content) {
       return res.status(400).json({ error: "Title and content are required" })
     }
 
-    const slug = createSlug(title)
+    const finalSlug = slug && slug.trim() ? slug.trim() : createSlug(title)
+    const finalAuthorName = author_name && author_name.trim() ? author_name.trim() : req.user.username
 
     try {
       const result = await sql`
         INSERT INTO posts (title, slug, content, image_url, author_id, author_name)
-        VALUES (${title}, ${slug}, ${content}, ${image_url || null}, ${req.user.id}, ${req.user.username})
+        VALUES (${title}, ${finalSlug}, ${content}, ${image_url || null}, ${req.user.id}, ${finalAuthorName})
         RETURNING *
-      `
-
-      await sql`
-        INSERT INTO user_activity (user_id, username, action, details)
-        VALUES (${req.user.id}, ${req.user.username}, 'CREATE_POST', ${"Created post: " + title})
       `
 
       res.status(201).json({
@@ -151,21 +147,22 @@ module.exports = (sql) => {
     }
   })
 
-  // Update post
+
   router.put("/:id", authMiddleware, adminMiddleware, async (req, res) => {
-    const { title, content, image_url } = req.body
+    const { title, content, image_url, author_name, slug } = req.body
 
     if (!title || !content) {
       return res.status(400).json({ error: "Title and content are required" })
     }
 
-    const slug = createSlug(title)
+    const finalSlug = slug && slug.trim() ? slug.trim() : createSlug(title)
+    const finalAuthorName = author_name && author_name.trim() ? author_name.trim() : req.user.username
 
     try {
       const result = await sql`
         UPDATE posts 
-        SET title = ${title}, slug = ${slug}, content = ${content}, 
-            image_url = ${image_url || null}, updated_at = CURRENT_TIMESTAMP 
+        SET title = ${title}, slug = ${finalSlug}, content = ${content}, 
+            image_url = ${image_url || null}, author_name = ${finalAuthorName}, updated_at = CURRENT_TIMESTAMP 
         WHERE id = ${Number.parseInt(req.params.id)}
         RETURNING *
       `
@@ -173,11 +170,6 @@ module.exports = (sql) => {
       if (result.length === 0) {
         return res.status(404).json({ error: "Post not found" })
       }
-
-      await sql`
-        INSERT INTO user_activity (user_id, username, action, details)
-        VALUES (${req.user.id}, ${req.user.username}, 'UPDATE_POST', ${"Updated post: " + title})
-      `
 
       res.json({ message: "Post updated successfully", slug, post: result[0] })
     } catch (error) {
@@ -189,7 +181,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Delete post
+
   router.delete("/:id", authMiddleware, adminMiddleware, async (req, res) => {
     try {
       const postResult = await sql`
@@ -206,11 +198,6 @@ module.exports = (sql) => {
         DELETE FROM posts WHERE id = ${Number.parseInt(req.params.id)}
       `
 
-      await sql`
-        INSERT INTO user_activity (user_id, username, action, details)
-        VALUES (${req.user.id}, ${req.user.username}, 'DELETE_POST', ${"Deleted post: " + post.title})
-      `
-
       res.json({ message: "Post deleted successfully" })
     } catch (error) {
       console.error("Error deleting post:", error)
@@ -218,9 +205,7 @@ module.exports = (sql) => {
     }
   })
 
-  // ===== LIKES ROUTES =====
-  
-  // Get likes count
+
   router.get("/:id/likes", async (req, res) => {
     try {
       const result = await sql`
@@ -233,7 +218,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Add like
+
   router.post("/:id/like", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -260,7 +245,6 @@ module.exports = (sql) => {
     }
   })
 
-  // Remove like
   router.delete("/:id/like", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -286,7 +270,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Check if user liked
+
   router.get("/:id/liked", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -303,9 +287,7 @@ module.exports = (sql) => {
     }
   })
 
-  // ===== DISLIKES ROUTES =====
-  
-  // Get dislikes count
+
   router.get("/:id/dislikes", async (req, res) => {
     try {
       const result = await sql`
@@ -319,7 +301,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Add dislike
+
   router.post("/:id/dislike", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -346,7 +328,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Remove dislike
+
   router.delete("/:id/dislike", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -372,7 +354,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Check if user disliked
+
   router.get("/:id/disliked", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -389,9 +371,7 @@ module.exports = (sql) => {
     }
   })
 
-  // ===== SHARES ROUTES =====
-  
-  // Track share
+
   router.post("/:id/share", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const { platform } = req.body
@@ -413,7 +393,7 @@ module.exports = (sql) => {
     }
   })
 
-  // Get shares count
+
   router.get("/:id/shares", async (req, res) => {
     try {
       const result = await sql`
