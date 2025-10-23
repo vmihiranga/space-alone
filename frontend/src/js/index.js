@@ -1402,8 +1402,8 @@ async function loadStarlinkStats() {
         `;
     }
 }
-let newsRetryCount = 0;
-const MAX_NEWS_RETRIES = 5;
+let newsRetryCount = 5;
+const MAX_NEWS_RETRIES = 10;
 
 async function loadNewsPreview() {
     const container = document.getElementById("news-preview-grid");
@@ -1462,18 +1462,19 @@ function displayNewsPreview(items) {
                   });
 
             return `
-        <div class="news-preview-card" onclick="window.open('${item.url}', '_blank')" role="button" tabindex="0">
-          <img src="${item.image_url || "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop"}"
-               alt="${escapeHtml(item.title)}"
-               class="news-preview-image"
-               onerror="this.src='https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop'">
+        <div class="news-preview-card" role="button" tabindex="0">
+  <img src="${item.image_url || 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop'}"
+       alt="${escapeHtml(item.title)}"
+       class="news-preview-image"
+       onerror="this.src='https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&h=400&fit=crop'">
 
-          <div class="news-preview-content">
-            <span class="news-preview-badge">${escapeHtml(item.type || "News")}</span>
-            <h3 class="news-preview-title">${escapeHtml(item.title)}</h3>
-            <p class="news-preview-date">${formattedDate}</p>
-          </div>
-        </div>
+  <div class="news-preview-content">
+    <span class="news-preview-badge">${escapeHtml(item.type || 'News')}</span>
+    <h3 class="news-preview-title">${escapeHtml(item.title)}</h3>
+    <p class="news-preview-date">${formattedDate}</p>
+  </div>
+</div>
+
       `;
         })
         .join("");
