@@ -49,7 +49,6 @@
                 z-index: 2;
             }
 
-           
             .carousel-wrapper {
                 width: 100%;
                 height: 400px;
@@ -81,10 +80,12 @@
 
             @keyframes rotating {
                 from {
-                    transform: perspective(var(--perspective)) rotateX(var(--rotateX)) rotateY(0);
+                    transform: perspective(var(--perspective))
+                        rotateX(var(--rotateX)) rotateY(0);
                 }
                 to {
-                    transform: perspective(var(--perspective)) rotateX(var(--rotateX)) rotateY(1turn);
+                    transform: perspective(var(--perspective))
+                        rotateX(var(--rotateX)) rotateY(1turn);
                 }
             }
 
@@ -94,7 +95,10 @@
                 border-radius: 12px;
                 overflow: hidden;
                 inset: 0;
-                transform: rotateY(calc((360deg / var(--quantity)) * var(--index))) translateZ(var(--translateZ));
+                transform: rotateY(
+                        calc((360deg / var(--quantity)) * var(--index))
+                    )
+                    translateZ(var(--translateZ));
                 cursor: pointer;
                 transition: all 0.3s ease;
             }
@@ -108,15 +112,15 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                background: #0000 radial-gradient(
-                    circle,
-                    rgba(var(--color-card), 0.3) 0%,
-                    rgba(var(--color-card), 0.7) 80%,
-                    rgba(var(--color-card), 1) 100%
-                );
+                background: #0000
+                    radial-gradient(
+                        circle,
+                        rgba(var(--color-card), 0.3) 0%,
+                        rgba(var(--color-card), 0.7) 80%,
+                        rgba(var(--color-card), 1) 100%
+                    );
             }
 
-          
             .tabs-container {
                 display: flex;
                 justify-content: center;
@@ -142,7 +146,7 @@
             }
 
             .tab-btn::before {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -151,7 +155,9 @@
                 border-radius: 50%;
                 background: rgba(0, 243, 255, 0.2);
                 transform: translate(-50%, -50%);
-                transition: width 0.4s ease, height 0.4s ease;
+                transition:
+                    width 0.4s ease,
+                    height 0.4s ease;
             }
 
             .tab-btn:hover::before {
@@ -159,7 +165,8 @@
                 height: 300px;
             }
 
-            .tab-btn:hover, .tab-btn.active {
+            .tab-btn:hover,
+            .tab-btn.active {
                 background: var(--gradient-primary);
                 color: var(--space-black);
                 border-color: var(--neon-blue);
@@ -172,7 +179,6 @@
                 z-index: 1;
             }
 
-            /* Tab Content */
             .tab-content {
                 display: none;
                 animation: fadeIn 0.5s ease;
@@ -193,7 +199,6 @@
                 }
             }
 
-    
             .news-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -204,20 +209,29 @@
             .news-card {
                 max-width: 100%;
                 border-radius: 16px;
-                background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(13, 17, 23, 0.95));
+                background: linear-gradient(
+                    135deg,
+                    rgba(10, 10, 10, 0.95),
+                    rgba(13, 17, 23, 0.95)
+                );
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
                 border: 1px solid var(--border-blue);
                 overflow: hidden;
                 transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 cursor: pointer;
                 position: relative;
+                margin: 20px;
             }
 
             .news-card::before {
-                content: '';
+                content: "";
                 position: absolute;
                 inset: 0;
-                background: linear-gradient(135deg, rgba(0, 243, 255, 0.05), rgba(184, 0, 255, 0.05));
+                background: linear-gradient(
+                    135deg,
+                    rgba(0, 243, 255, 0.05),
+                    rgba(184, 0, 255, 0.05)
+                );
                 opacity: 0;
                 transition: opacity 0.4s ease;
                 z-index: 1;
@@ -241,7 +255,14 @@
                 object-fit: cover;
                 width: 100%;
                 height: 200px;
-                background: linear-gradient(135deg, #8ef9fc 0%, #8efccc 25%, #8efc9d 50%, #d7fc8e 75%, #fcfc8e 100%);
+                background: linear-gradient(
+                    135deg,
+                    #8ef9fc 0%,
+                    #8efccc 25%,
+                    #8efc9d 50%,
+                    #d7fc8e 75%,
+                    #fcfc8e 100%
+                );
                 transition: transform 0.4s ease;
             }
 
@@ -416,7 +437,6 @@
                 box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3);
             }
 
-       
             .tab-loading {
                 display: flex;
                 flex-direction: column;
@@ -427,200 +447,6 @@
             }
 
           
-            .wifi-loader {
-                --background: #0a0a0a;
-                --front-color: #00f3ff;
-                --back-color: rgba(0, 243, 255, 0.2);
-                --text-color: rgba(255, 255, 255, 0.7);
-                width: 84px;
-                height: 84px;
-                border-radius: 50px;
-                position: relative;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .wifi-loader svg {
-                position: absolute;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .wifi-loader svg circle {
-                position: absolute;
-                fill: none;
-                stroke-width: 6px;
-                stroke-linecap: round;
-                stroke-linejoin: round;
-                transform: rotate(-100deg);
-                transform-origin: center;
-            }
-
-            .wifi-loader svg circle.back {
-                stroke: var(--back-color);
-            }
-
-            .wifi-loader svg circle.front {
-                stroke: var(--front-color);
-                filter: drop-shadow(0 0 8px var(--front-color));
-            }
-
-            .wifi-loader svg circle.new {
-                stroke: var(--purple);
-                filter: drop-shadow(0 0 8px var(--purple));
-            }
-
-            .wifi-loader svg.circle-outer {
-                height: 86px;
-                width: 86px;
-            }
-
-            .wifi-loader svg.circle-outer circle {
-                stroke-dasharray: 62.75 188.25;
-            }
-
-            .wifi-loader svg.circle-outer circle.back {
-                animation: circle-outer135 1.8s ease infinite 0.3s;
-            }
-
-            .wifi-loader svg.circle-outer circle.front {
-                animation: circle-outer135 1.8s ease infinite 0.15s;
-            }
-
-            .wifi-loader svg.circle-outer circle.new {
-                animation: circle-outer135 1.8s ease infinite;
-            }
-
-            .wifi-loader svg.circle-middle {
-                height: 60px;
-                width: 60px;
-            }
-
-            .wifi-loader svg.circle-middle circle {
-                stroke-dasharray: 42.5 127.5;
-            }
-
-            .wifi-loader svg.circle-middle circle.back {
-                animation: circle-middle6123 1.8s ease infinite 0.25s;
-            }
-
-            .wifi-loader svg.circle-middle circle.front {
-                animation: circle-middle6123 1.8s ease infinite 0.1s;
-            }
-
-            .wifi-loader svg.circle-inner {
-                height: 34px;
-                width: 34px;
-            }
-
-            .wifi-loader svg.circle-inner circle {
-                stroke-dasharray: 22 66;
-            }
-
-            .wifi-loader svg.circle-inner circle.back {
-                animation: circle-inner162 1.8s ease infinite 0.2s;
-            }
-
-            .wifi-loader svg.circle-inner circle.front {
-                animation: circle-inner162 1.8s ease infinite 0.05s;
-            }
-
-            .wifi-loader .text {
-                position: absolute;
-                bottom: -50px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-transform: uppercase;
-                font-weight: 600;
-                font-size: 16px;
-                letter-spacing: 2px;
-            }
-
-            .wifi-loader .text::before,
-            .wifi-loader .text::after {
-                content: attr(data-text);
-            }
-
-            .wifi-loader .text::before {
-                color: var(--text-color);
-            }
-
-            .wifi-loader .text::after {
-                color: var(--front-color);
-                animation: text-animation76 3.6s ease infinite;
-                position: absolute;
-                left: 0;
-                text-shadow: 0 0 10px var(--front-color);
-            }
-
-            @keyframes circle-outer135 {
-                0% {
-                    stroke-dashoffset: 25;
-                }
-                25% {
-                    stroke-dashoffset: 0;
-                }
-                65% {
-                    stroke-dashoffset: 301;
-                }
-                80% {
-                    stroke-dashoffset: 276;
-                }
-                100% {
-                    stroke-dashoffset: 276;
-                }
-            }
-
-            @keyframes circle-middle6123 {
-                0% {
-                    stroke-dashoffset: 17;
-                }
-                25% {
-                    stroke-dashoffset: 0;
-                }
-                65% {
-                    stroke-dashoffset: 204;
-                }
-                80% {
-                    stroke-dashoffset: 187;
-                }
-                100% {
-                    stroke-dashoffset: 187;
-                }
-            }
-
-            @keyframes circle-inner162 {
-                0% {
-                    stroke-dashoffset: 9;
-                }
-                25% {
-                    stroke-dashoffset: 0;
-                }
-                65% {
-                    stroke-dashoffset: 106;
-                }
-                80% {
-                    stroke-dashoffset: 97;
-                }
-                100% {
-                    stroke-dashoffset: 97;
-                }
-            }
-
-            @keyframes text-animation76 {
-                0% {
-                    clip-path: inset(0 100% 0 0);
-                }
-                50% {
-                    clip-path: inset(0);
-                }
-                100% {
-                    clip-path: inset(0 0 0 100%);
-                }
-            }
 
             .btn-load-more:hover {
                 transform: translateY(-3px);
@@ -654,7 +480,37 @@
 
                 .news-grid {
                     grid-template-columns: 1fr;
-                    gap: 20px;
+                    gap: 50px;
+                }
+                .news-card {
+                    margin: 10px;
+                }
+            }
+            @media (max-width: 480px) {
+                .carousel-wrapper {
+                    height: 350px;
+                }
+
+                .carousel-inner {
+                    --w: 140px;
+                    --h: 200px;
+                }
+
+                .tabs-container {
+                    gap: 10px;
+                }
+
+                .tab-btn {
+                    padding: 12px 25px;
+                    font-size: 0.9rem;
+                }
+
+                .news-grid {
+                    grid-template-columns: 1fr;
+                    gap: 50px;
+                }
+                .news-card {
+                    margin: 10px;
                 }
             }
         </style>
@@ -672,23 +528,72 @@
                 >
                     <defs>
                         <radialGradient id="planetGrad" cx="40%" cy="40%">
-                            <stop offset="0%" style="stop-color: #00f3ff; stop-opacity: 1" />
-                            <stop offset="50%" style="stop-color: #0088cc; stop-opacity: 1" />
-                            <stop offset="100%" style="stop-color: #004466; stop-opacity: 1" />
+                            <stop
+                                offset="0%"
+                                style="stop-color: #00f3ff; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #0088cc; stop-opacity: 1"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #004466; stop-opacity: 1"
+                            />
                         </radialGradient>
-                        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color: #b800ff; stop-opacity: 0.9" />
-                            <stop offset="50%" style="stop-color: #8800cc; stop-opacity: 0.7" />
-                            <stop offset="100%" style="stop-color: #6600aa; stop-opacity: 0.5" />
+                        <linearGradient
+                            id="ringGrad"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                        >
+                            <stop
+                                offset="0%"
+                                style="stop-color: #b800ff; stop-opacity: 0.9"
+                            />
+                            <stop
+                                offset="50%"
+                                style="stop-color: #8800cc; stop-opacity: 0.7"
+                            />
+                            <stop
+                                offset="100%"
+                                style="stop-color: #6600aa; stop-opacity: 0.5"
+                            />
                         </linearGradient>
                     </defs>
                     <circle cx="100" cy="100" r="45" fill="url(#planetGrad)" />
-                    <ellipse cx="100" cy="100" rx="75" ry="20" fill="none" stroke="url(#ringGrad)" stroke-width="8" opacity="0.8" transform="rotate(-15 100 100)" />
-                    <text x="100" y="108" font-family="Arial" font-size="32" font-weight="bold" fill="#ffffff" text-anchor="middle" opacity="0.9">SA</text>
+                    <ellipse
+                        cx="100"
+                        cy="100"
+                        rx="75"
+                        ry="20"
+                        fill="none"
+                        stroke="url(#ringGrad)"
+                        stroke-width="8"
+                        opacity="0.8"
+                        transform="rotate(-15 100 100)"
+                    />
+                    <text
+                        x="100"
+                        y="108"
+                        font-family="Arial"
+                        font-size="32"
+                        font-weight="bold"
+                        fill="#ffffff"
+                        text-anchor="middle"
+                        opacity="0.9"
+                    >
+                        SA
+                    </text>
                 </svg>
                 <h3 class="logo">SPACE ALONE</h3>
 
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">
+                <button
+                    class="mobile-menu-toggle"
+                    id="mobile-menu-toggle"
+                    aria-label="Toggle Menu"
+                >
                     <span></span>
                     <span></span>
                     <span></span>
@@ -711,35 +616,51 @@
                 <h1 class="hero-title text-gradient">SPACE NEWS</h1>
                 <p class="hero-subtitle">Latest Updates from the Cosmos</p>
                 <p class="hero-description">
-                    Stay informed with real-time space news, blogs, and reports from across the universe
+                    Stay informed with real-time space news, blogs, and reports
+                    from across the universe
                 </p>
             </div>
         </section>
 
-
-        <section class="section-space" style="padding-top: 60px;">
+        <section class="section-space" style="padding-top: 60px">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title text-gradient">Featured Stories</h2>
-                    <p class="section-subtitle">Explore the latest cosmic discoveries</p>
+                    <h2 class="section-title text-gradient">
+                        Featured Stories
+                    </h2>
+                    <p class="section-subtitle">
+                        Explore the latest cosmic discoveries
+                    </p>
                 </div>
                 <div class="carousel-wrapper">
-                    <div class="carousel-inner" id="carousel3d" style="--quantity: 10;">
-                
-                    </div>
-                    
+                    <div
+                        class="carousel-inner"
+                        id="carousel3d"
+                        style="--quantity: 10"
+                    ></div>
                 </div>
                 <div class="section-divider"></div>
             </div>
         </section>
 
-      
-        <section class="section-space" style="padding-top: 20px;">
+        <section class="section-space" style="padding-top: 20px">
             <div class="container">
                 <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search space news..." />
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="searchInput"
+                        placeholder="Search space news..."
+                    />
                     <button class="search-btn" id="searchBtn">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                        >
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.35-4.35"></path>
                         </svg>
@@ -761,22 +682,56 @@
                     </button>
                 </div>
 
-               
                 <div class="tab-content active" id="latest-content">
                     <div class="tab-loading">
                         <div class="wifi-loader">
                             <svg class="circle-outer" viewBox="0 0 86 86">
-                                <circle class="back" cx="43" cy="43" r="40"></circle>
-                                <circle class="front" cx="43" cy="43" r="40"></circle>
-                                <circle class="new" cx="43" cy="43" r="40"></circle>
+                                <circle
+                                    class="back"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="new"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
                             </svg>
                             <svg class="circle-middle" viewBox="0 0 60 60">
-                                <circle class="back" cx="30" cy="30" r="27"></circle>
-                                <circle class="front" cx="30" cy="30" r="27"></circle>
+                                <circle
+                                    class="back"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
                             </svg>
                             <svg class="circle-inner" viewBox="0 0 34 34">
-                                <circle class="back" cx="17" cy="17" r="14"></circle>
-                                <circle class="front" cx="17" cy="17" r="14"></circle>
+                                <circle
+                                    class="back"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
                             </svg>
                             <div class="text" data-text="Loading"></div>
                         </div>
@@ -787,17 +742,52 @@
                     <div class="tab-loading">
                         <div class="wifi-loader">
                             <svg class="circle-outer" viewBox="0 0 86 86">
-                                <circle class="back" cx="43" cy="43" r="40"></circle>
-                                <circle class="front" cx="43" cy="43" r="40"></circle>
-                                <circle class="new" cx="43" cy="43" r="40"></circle>
+                                <circle
+                                    class="back"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="new"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
                             </svg>
                             <svg class="circle-middle" viewBox="0 0 60 60">
-                                <circle class="back" cx="30" cy="30" r="27"></circle>
-                                <circle class="front" cx="30" cy="30" r="27"></circle>
+                                <circle
+                                    class="back"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
                             </svg>
                             <svg class="circle-inner" viewBox="0 0 34 34">
-                                <circle class="back" cx="17" cy="17" r="14"></circle>
-                                <circle class="front" cx="17" cy="17" r="14"></circle>
+                                <circle
+                                    class="back"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
                             </svg>
                             <div class="text" data-text="Loading"></div>
                         </div>
@@ -808,17 +798,52 @@
                     <div class="tab-loading">
                         <div class="wifi-loader">
                             <svg class="circle-outer" viewBox="0 0 86 86">
-                                <circle class="back" cx="43" cy="43" r="40"></circle>
-                                <circle class="front" cx="43" cy="43" r="40"></circle>
-                                <circle class="new" cx="43" cy="43" r="40"></circle>
+                                <circle
+                                    class="back"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="new"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
                             </svg>
                             <svg class="circle-middle" viewBox="0 0 60 60">
-                                <circle class="back" cx="30" cy="30" r="27"></circle>
-                                <circle class="front" cx="30" cy="30" r="27"></circle>
+                                <circle
+                                    class="back"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
                             </svg>
                             <svg class="circle-inner" viewBox="0 0 34 34">
-                                <circle class="back" cx="17" cy="17" r="14"></circle>
-                                <circle class="front" cx="17" cy="17" r="14"></circle>
+                                <circle
+                                    class="back"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
                             </svg>
                             <div class="text" data-text="Loading"></div>
                         </div>
@@ -829,38 +854,97 @@
                     <div class="tab-loading">
                         <div class="wifi-loader">
                             <svg class="circle-outer" viewBox="0 0 86 86">
-                                <circle class="back" cx="43" cy="43" r="40"></circle>
-                                <circle class="front" cx="43" cy="43" r="40"></circle>
-                                <circle class="new" cx="43" cy="43" r="40"></circle>
+                                <circle
+                                    class="back"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
+                                <circle
+                                    class="new"
+                                    cx="43"
+                                    cy="43"
+                                    r="40"
+                                ></circle>
                             </svg>
                             <svg class="circle-middle" viewBox="0 0 60 60">
-                                <circle class="back" cx="30" cy="30" r="27"></circle>
-                                <circle class="front" cx="30" cy="30" r="27"></circle>
+                                <circle
+                                    class="back"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="30"
+                                    cy="30"
+                                    r="27"
+                                ></circle>
                             </svg>
                             <svg class="circle-inner" viewBox="0 0 34 34">
-                                <circle class="back" cx="17" cy="17" r="14"></circle>
-                                <circle class="front" cx="17" cy="17" r="14"></circle>
+                                <circle
+                                    class="back"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
+                                <circle
+                                    class="front"
+                                    cx="17"
+                                    cy="17"
+                                    r="14"
+                                ></circle>
                             </svg>
                             <div class="text" data-text="Loading"></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-                    <button class="btn-load-more" id="loadMoreBtn">Load More</button>
+                <div
+                    class="load-more-container"
+                    id="loadMoreContainer"
+                    style="display: none"
+                >
+                    <button class="btn-load-more" id="loadMoreBtn">
+                        Load More
+                    </button>
                 </div>
             </div>
         </section>
 
-        <div class="audio-toggle" id="audio-toggle" title="Toggle Space Soundtrack">
-            <svg class="audio-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="1">
+        <div
+            class="audio-toggle"
+            id="audio-toggle"
+            title="Toggle Space Soundtrack"
+        >
+            <svg
+                class="audio-icon"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#00f3ff"
+                stroke-width="1"
+            >
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path class="audio-waves" d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path
+                    class="audio-waves"
+                    d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+                ></path>
             </svg>
         </div>
 
         <audio id="space-audio" loop preload="auto" autoplay muted>
-            <source src="./ambient-space-arpeggio-350710.mp3" type="audio/mpeg" />
+            <source
+                src="./ambient-space-arpeggio-350710.mp3"
+                type="audio/mpeg"
+            />
         </audio>
 
         <footer class="footer">
@@ -869,22 +953,53 @@
                     <div class="footer-section">
                         <h4 class="text-gradient footer-title">SPACE ALONE</h4>
                         <p class="footer-text">
-                            Exploring the universe through NASA's eyes. Real-time data and stunning visualizations of our cosmic neighborhood.
+                            Exploring the universe through NASA's eyes.
+                            Real-time data and stunning visualizations of our
+                            cosmic neighborhood.
                         </p>
                         <div class="footer-social">
-                            <a href="#" class="social-link" aria-label="Twitter">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                            <a
+                                href="#"
+                                class="social-link"
+                                aria-label="Twitter"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
+                                    />
                                 </svg>
                             </a>
                             <a href="#" class="social-link" aria-label="GitHub">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                                    />
                                 </svg>
                             </a>
-                            <a href="#" class="social-link" aria-label="YouTube">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            <a
+                                href="#"
+                                class="social-link"
+                                aria-label="YouTube"
+                            >
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                                    />
                                 </svg>
                             </a>
                         </div>
@@ -906,57 +1021,88 @@
                     <div class="footer-section">
                         <h5 class="footer-heading">Resources</h5>
                         <nav class="footer-links">
-                            <a href="https://api.nasa.gov" target="_blank" rel="noopener noreferrer">NASA API</a>
-                            <a href="https://www.nasa.gov" target="_blank" rel="noopener noreferrer">NASA Official</a>
-                            <a href="https://www.spacex.com" target="_blank" rel="noopener noreferrer">SpaceX</a>
-                            <a href="https://www.esa.int" target="_blank" rel="noopener noreferrer">ESA</a>
+                            <a
+                                href="https://api.nasa.gov"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >NASA API</a
+                            >
+                            <a
+                                href="https://www.nasa.gov"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >NASA Official</a
+                            >
+                            <a
+                                href="https://www.spacex.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >SpaceX</a
+                            >
+                            <a
+                                href="https://www.esa.int"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >ESA</a
+                            >
                         </nav>
                     </div>
                 </div>
 
                 <div class="footer-bottom">
-                    <p>&copy; 2025 Space Alone. Exploring the Universe Together.</p>
-                    <p>Made With Vishwa Mihiranga <span style="color: #00f3ff">❤</span></p>
+                    <p>
+                        &copy; 2025 Space Alone. Exploring the Universe
+                        Together.
+                    </p>
+                    <p>
+                        Made With Vishwa Mihiranga
+                        <span style="color: #00f3ff">❤</span>
+                    </p>
                 </div>
             </div>
         </footer>
 
         <script>
-            const API_BASE = '/api/news';
-            let currentTab = 'latest';
+            const API_BASE = "/api/news";
+            let currentTab = "latest";
             let currentOffset = 0;
             const LIMIT = 12;
             let isLoading = false;
             let hasMore = true;
 
             const carouselColors = [
-                '142, 249, 252',
-                '142, 252, 204',
-                '142, 252, 157',
-                '215, 252, 142',
-                '252, 252, 142',
-                '252, 208, 142',
-                '252, 142, 142',
-                '252, 142, 239',
-                '204, 142, 252',
-                '142, 202, 252'
+                "142, 249, 252",
+                "142, 252, 204",
+                "142, 252, 157",
+                "215, 252, 142",
+                "252, 252, 142",
+                "252, 208, 142",
+                "252, 142, 142",
+                "252, 142, 239",
+                "204, 142, 252",
+                "142, 202, 252",
             ];
 
-   
             function formatDate(dateString) {
                 const date = new Date(dateString);
-                return date.toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric' 
+                return date.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
                 });
             }
 
-         
             function createNewsCard(item) {
-                const badgeClass = item.type === 'blog' ? 'blog' : item.type === 'report' ? 'report' : '';
-                const imageUrl = item.image_url || 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400&h=220&fit=crop';
-                
+                const badgeClass =
+                    item.type === "blog"
+                        ? "blog"
+                        : item.type === "report"
+                          ? "report"
+                          : "";
+                const imageUrl =
+                    item.image_url ||
+                    "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400&h=220&fit=crop";
+
                 return `
                     <div class="news-card" onclick="window.open('${item.url}', '_blank')">
                         <img src="${imageUrl}" 
@@ -965,7 +1111,7 @@
                              onerror="this.src='https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400&h=220&fit=crop'"
                         />
                         <div class="news-card-content">
-                            <span class="news-badge ${badgeClass}">${item.type || 'article'}</span>
+                            <span class="news-badge ${badgeClass}">${item.type || "article"}</span>
                             <a href="${item.url}" target="_blank">
                                 <span class="news-card-title">${item.title}</span>
                             </a>
@@ -983,29 +1129,32 @@
                 `;
             }
 
-    
             async function populate3DCarousel() {
                 try {
                     const response = await fetch(`${API_BASE}/latest?limit=10`);
                     const data = await response.json();
 
                     if (data.success && data.data.results.length > 0) {
-                        const carousel = document.getElementById('carousel3d');
-                        carousel.innerHTML = '';
+                        const carousel = document.getElementById("carousel3d");
+                        carousel.innerHTML = "";
 
                         data.data.results.forEach((item, index) => {
-                            const card = document.createElement('div');
-                            card.className = 'carousel-card';
-                            card.style.setProperty('--index', index);
-                            card.style.setProperty('--color-card', carouselColors[index]);
-                            card.onclick = () => window.open(item.url, '_blank');
+                            const card = document.createElement("div");
+                            card.className = "carousel-card";
+                            card.style.setProperty("--index", index);
+                            card.style.setProperty(
+                                "--color-card",
+                                carouselColors[index],
+                            );
+                            card.onclick = () =>
+                                window.open(item.url, "_blank");
 
-                            const img = document.createElement('div');
-                            img.className = 'carousel-img';
+                            const img = document.createElement("div");
+                            img.className = "carousel-img";
                             if (item.image_url) {
                                 img.style.backgroundImage = `url(${item.image_url})`;
-                                img.style.backgroundSize = 'cover';
-                                img.style.backgroundPosition = 'center';
+                                img.style.backgroundSize = "cover";
+                                img.style.backgroundPosition = "center";
                             }
 
                             card.appendChild(img);
@@ -1013,16 +1162,15 @@
                         });
                     }
                 } catch (error) {
-                    console.error('Error loading carousel:', error);
+                    console.error("Error loading carousel:", error);
                 }
             }
 
-         
             async function fetchNews(tab, reset = false) {
                 if (isLoading) return;
-                
+
                 isLoading = true;
-                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                const loadMoreBtn = document.getElementById("loadMoreBtn");
                 if (loadMoreBtn) loadMoreBtn.disabled = true;
 
                 if (reset) {
@@ -1057,8 +1205,8 @@
                 }
 
                 try {
-                    let endpoint = '';
-                    if (tab === 'latest') {
+                    let endpoint = "";
+                    if (tab === "latest") {
                         endpoint = `${API_BASE}/latest?limit=${LIMIT}`;
                     } else {
                         endpoint = `${API_BASE}/${tab}?limit=${LIMIT}&offset=${currentOffset}`;
@@ -1072,38 +1220,42 @@
 
                         if (results.length === 0) {
                             if (reset) {
-                                container.innerHTML = '<div class="loading-state"><p>No news found.</p></div>';
+                                container.innerHTML =
+                                    '<div class="loading-state"><p>No news found.</p></div>';
                             }
                             hasMore = false;
                         } else {
-                            let newsGrid = container.querySelector('.news-grid');
-                            
+                            let newsGrid =
+                                container.querySelector(".news-grid");
+
                             if (reset || !newsGrid) {
-                                newsGrid = document.createElement('div');
-                                newsGrid.className = 'news-grid';
-                                container.innerHTML = '';
+                                newsGrid = document.createElement("div");
+                                newsGrid.className = "news-grid";
+                                container.innerHTML = "";
                                 container.appendChild(newsGrid);
                             }
 
-                            results.forEach(item => {
+                            results.forEach((item) => {
                                 newsGrid.innerHTML += createNewsCard(item);
                             });
 
                             currentOffset += results.length;
-                            
-                            const loadMoreContainer = document.getElementById('loadMoreContainer');
-                            if (tab !== 'latest' && results.length === LIMIT) {
-                                loadMoreContainer.style.display = 'block';
+
+                            const loadMoreContainer =
+                                document.getElementById("loadMoreContainer");
+                            if (tab !== "latest" && results.length === LIMIT) {
+                                loadMoreContainer.style.display = "block";
                             } else {
-                                loadMoreContainer.style.display = 'none';
+                                loadMoreContainer.style.display = "none";
                                 hasMore = false;
                             }
                         }
                     }
                 } catch (error) {
-                    console.error('Error fetching news:', error);
+                    console.error("Error fetching news:", error);
                     if (reset) {
-                        container.innerHTML = '<div class="loading-state"><p>Error loading news. Please try again later.</p></div>';
+                        container.innerHTML =
+                            '<div class="loading-state"><p>Error loading news. Please try again later.</p></div>';
                     }
                 } finally {
                     isLoading = false;
@@ -1111,7 +1263,6 @@
                 }
             }
 
-      
             async function searchNews(query) {
                 if (!query.trim()) {
                     fetchNews(currentTab, true);
@@ -1143,7 +1294,9 @@
                 `;
 
                 try {
-                    const response = await fetch(`${API_BASE}/search?query=${encodeURIComponent(query)}&limit=30`);
+                    const response = await fetch(
+                        `${API_BASE}/search?query=${encodeURIComponent(query)}&limit=30`,
+                    );
                     const data = await response.json();
 
                     if (data.success) {
@@ -1152,44 +1305,50 @@
                         if (results.length === 0) {
                             container.innerHTML = `<div class="loading-state"><p>No results found for "${query}"</p></div>`;
                         } else {
-                            const newsGrid = document.createElement('div');
-                            newsGrid.className = 'news-grid';
-                            
-                            results.forEach(item => {
+                            const newsGrid = document.createElement("div");
+                            newsGrid.className = "news-grid";
+
+                            results.forEach((item) => {
                                 newsGrid.innerHTML += createNewsCard(item);
                             });
 
-                            container.innerHTML = '';
+                            container.innerHTML = "";
                             container.appendChild(newsGrid);
                         }
 
-                        document.getElementById('loadMoreContainer').style.display = 'none';
+                        document.getElementById(
+                            "loadMoreContainer",
+                        ).style.display = "none";
                     }
                 } catch (error) {
-                    console.error('Error searching news:', error);
-                    container.innerHTML = '<div class="loading-state"><p>Error searching news. Please try again later.</p></div>';
+                    console.error("Error searching news:", error);
+                    container.innerHTML =
+                        '<div class="loading-state"><p>Error searching news. Please try again later.</p></div>';
                 } finally {
                     isLoading = false;
                 }
             }
 
-
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
+            document.querySelectorAll(".tab-btn").forEach((btn) => {
+                btn.addEventListener("click", () => {
                     const tab = btn.dataset.tab;
-                    
-             
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    const targetContent = document.getElementById(`${tab}-content`);
-                    targetContent.classList.add('active');
-                    
+
+                    document
+                        .querySelectorAll(".tab-btn")
+                        .forEach((b) => b.classList.remove("active"));
+                    btn.classList.add("active");
+
+                    document
+                        .querySelectorAll(".tab-content")
+                        .forEach((c) => c.classList.remove("active"));
+                    const targetContent = document.getElementById(
+                        `${tab}-content`,
+                    );
+                    targetContent.classList.add("active");
+
                     currentTab = tab;
-                    document.getElementById('searchInput').value = '';
-                    
-                
+                    document.getElementById("searchInput").value = "";
+
                     targetContent.innerHTML = `
                         <div class="tab-loading">
                             <div class="wifi-loader">
@@ -1210,58 +1369,61 @@
                             </div>
                         </div>
                     `;
-                    
-                 
+
                     setTimeout(() => {
                         fetchNews(tab, true);
                     }, 300);
                 });
             });
 
-            document.getElementById('searchBtn').addEventListener('click', () => {
-                const query = document.getElementById('searchInput').value;
-                searchNews(query);
-            });
-
-            document.getElementById('searchInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const query = e.target.value;
+            document
+                .getElementById("searchBtn")
+                .addEventListener("click", () => {
+                    const query = document.getElementById("searchInput").value;
                     searchNews(query);
-                }
+                });
+
+            document
+                .getElementById("searchInput")
+                .addEventListener("keypress", (e) => {
+                    if (e.key === "Enter") {
+                        const query = e.target.value;
+                        searchNews(query);
+                    }
+                });
+
+            document
+                .getElementById("loadMoreBtn")
+                .addEventListener("click", () => {
+                    fetchNews(currentTab, false);
+                });
+
+            const mobileMenuToggle =
+                document.getElementById("mobile-menu-toggle");
+            const navLinks = document.getElementById("nav-links");
+
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileMenuToggle.classList.toggle("active");
+                navLinks.classList.toggle("active");
             });
 
-
-            document.getElementById('loadMoreBtn').addEventListener('click', () => {
-                fetchNews(currentTab, false);
-            });
-
-
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const navLinks = document.getElementById('nav-links');
-
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
-            });
-
-    
-            const audioToggle = document.getElementById('audio-toggle');
-            const spaceAudio = document.getElementById('space-audio');
+            const audioToggle = document.getElementById("audio-toggle");
+            const spaceAudio = document.getElementById("space-audio");
             let isPlaying = false;
 
-            audioToggle.addEventListener('click', () => {
+            audioToggle.addEventListener("click", () => {
                 if (isPlaying) {
                     spaceAudio.pause();
-                    audioToggle.classList.remove('playing');
+                    audioToggle.classList.remove("playing");
                 } else {
                     spaceAudio.play();
-                    audioToggle.classList.add('playing');
+                    audioToggle.classList.add("playing");
                 }
                 isPlaying = !isPlaying;
             });
 
-            const canvas = document.getElementById('particles-canvas');
-            const ctx = canvas.getContext('2d');
+            const canvas = document.getElementById("particles-canvas");
+            const ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
@@ -1302,14 +1464,14 @@
 
             function animateParticles() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                particles.forEach(particle => {
+
+                particles.forEach((particle) => {
                     particle.update();
                     particle.draw();
                 });
 
                 particles.forEach((p1, i) => {
-                    particles.slice(i + 1).forEach(p2 => {
+                    particles.slice(i + 1).forEach((p2) => {
                         const dx = p1.x - p2.x;
                         const dy = p1.y - p2.y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -1328,7 +1490,7 @@
                 requestAnimationFrame(animateParticles);
             }
 
-            window.addEventListener('resize', () => {
+            window.addEventListener("resize", () => {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
             });
@@ -1336,7 +1498,7 @@
             animateParticles();
 
             populate3DCarousel();
-            fetchNews('latest', true);
+            fetchNews("latest", true);
         </script>
     </body>
 </html>
