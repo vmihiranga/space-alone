@@ -27,6 +27,7 @@ module.exports = (sql) => {
       .trim()
   }
 
+  // Get all posts with pagination
   router.get("/", async (req, res) => {
     try {
       const page = Number.parseInt(req.query.page) || 1
@@ -39,6 +40,7 @@ module.exports = (sql) => {
       const posts = await sql`
         SELECT p.*, 
           (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+          (SELECT COUNT(*) FROM post_dislikes WHERE post_id = p.id) as dislikes,
           (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
         FROM posts p 
         ORDER BY created_at DESC 
@@ -52,6 +54,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Search posts
   router.get("/search/query", async (req, res) => {
     const searchTerm = req.query.q
 
@@ -63,6 +66,7 @@ module.exports = (sql) => {
       const posts = await sql`
         SELECT p.*, 
           (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+          (SELECT COUNT(*) FROM post_dislikes WHERE post_id = p.id) as dislikes,
           (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
         FROM posts p 
         WHERE title ILIKE ${"%" + searchTerm + "%"} OR content ILIKE ${"%" + searchTerm + "%"}
@@ -75,6 +79,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Get single post by ID or slug
   router.get("/:id", async (req, res) => {
     try {
       const identifier = req.params.id
@@ -85,6 +90,7 @@ module.exports = (sql) => {
         const result = await sql`
           SELECT p.*, 
             (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+            (SELECT COUNT(*) FROM post_dislikes WHERE post_id = p.id) as dislikes,
             (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
           FROM posts p WHERE p.id = ${Number.parseInt(identifier)}
         `
@@ -93,6 +99,7 @@ module.exports = (sql) => {
         const result = await sql`
           SELECT p.*, 
             (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as likes,
+            (SELECT COUNT(*) FROM post_dislikes WHERE post_id = p.id) as dislikes,
             (SELECT COUNT(*) FROM post_shares WHERE post_id = p.id) as shares
           FROM posts p WHERE p.slug = ${identifier}
         `
@@ -109,6 +116,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Create new post
   router.post("/", authMiddleware, adminMiddleware, async (req, res) => {
     const { title, content, image_url } = req.body
 
@@ -143,6 +151,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Update post
   router.put("/:id", authMiddleware, adminMiddleware, async (req, res) => {
     const { title, content, image_url } = req.body
 
@@ -180,6 +189,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Delete post
   router.delete("/:id", authMiddleware, adminMiddleware, async (req, res) => {
     try {
       const postResult = await sql`
@@ -208,6 +218,9 @@ module.exports = (sql) => {
     }
   })
 
+  // ===== LIKES ROUTES =====
+  
+  // Get likes count
   router.get("/:id/likes", async (req, res) => {
     try {
       const result = await sql`
@@ -220,6 +233,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Add like
   router.post("/:id/like", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -246,6 +260,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Remove like
   router.delete("/:id/like", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -271,6 +286,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Check if user liked
   router.get("/:id/liked", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
@@ -287,6 +303,95 @@ module.exports = (sql) => {
     }
   })
 
+  // ===== DISLIKES ROUTES =====
+  
+  // Get dislikes count
+  router.get("/:id/dislikes", async (req, res) => {
+    try {
+      const result = await sql`
+        SELECT COUNT(*) as count FROM post_dislikes 
+        WHERE post_id = ${Number.parseInt(req.params.id)}
+      `
+      res.json({ count: Number.parseInt(result[0].count) })
+    } catch (error) {
+      console.error("Error counting dislikes:", error)
+      res.status(500).json({ error: "Database error" })
+    }
+  })
+
+  // Add dislike
+  router.post("/:id/dislike", async (req, res) => {
+    const postId = Number.parseInt(req.params.id)
+    const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
+
+    try {
+      await sql`
+        INSERT INTO post_dislikes (post_id, user_identifier)
+        VALUES (${postId}, ${userIdentifier})
+        ON CONFLICT (post_id, user_identifier) DO NOTHING
+      `
+      
+      const result = await sql`
+        SELECT COUNT(*) as count FROM post_dislikes WHERE post_id = ${postId}
+      `
+      
+      res.json({
+        message: "Post disliked",
+        dislikes: Number.parseInt(result[0].count),
+        disliked: true,
+      })
+    } catch (error) {
+      console.error("Error adding dislike:", error)
+      res.status(500).json({ error: "Database error" })
+    }
+  })
+
+  // Remove dislike
+  router.delete("/:id/dislike", async (req, res) => {
+    const postId = Number.parseInt(req.params.id)
+    const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
+
+    try {
+      await sql`
+        DELETE FROM post_dislikes 
+        WHERE post_id = ${postId} AND user_identifier = ${userIdentifier}
+      `
+      
+      const result = await sql`
+        SELECT COUNT(*) as count FROM post_dislikes WHERE post_id = ${postId}
+      `
+      
+      res.json({
+        message: "Dislike removed",
+        dislikes: Number.parseInt(result[0].count),
+        disliked: false,
+      })
+    } catch (error) {
+      console.error("Error removing dislike:", error)
+      res.status(500).json({ error: "Database error" })
+    }
+  })
+
+  // Check if user disliked
+  router.get("/:id/disliked", async (req, res) => {
+    const postId = Number.parseInt(req.params.id)
+    const userIdentifier = req.session?.user?.id?.toString() || req.ip || "anonymous"
+
+    try {
+      const result = await sql`
+        SELECT * FROM post_dislikes 
+        WHERE post_id = ${postId} AND user_identifier = ${userIdentifier}
+      `
+      res.json({ disliked: result.length > 0 })
+    } catch (error) {
+      console.error("Error checking dislike status:", error)
+      res.status(500).json({ error: "Database error" })
+    }
+  })
+
+  // ===== SHARES ROUTES =====
+  
+  // Track share
   router.post("/:id/share", async (req, res) => {
     const postId = Number.parseInt(req.params.id)
     const { platform } = req.body
@@ -308,6 +413,7 @@ module.exports = (sql) => {
     }
   })
 
+  // Get shares count
   router.get("/:id/shares", async (req, res) => {
     try {
       const result = await sql`
