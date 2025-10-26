@@ -770,7 +770,7 @@ function displayBlogPosts(posts) {
                     </span>
                 </div>
                 <p class="blog-excerpt">${escapeHtml(post.content.substring(0, 150))}${post.content.length > 150 ? "..." : ""}</p>
-                <a href="/blog/${post.id}" class="blog-read-more" onclick="showBlogPost(${post.id}); return false;">
+                <a href="/post?id=${post.id}" class="blog-read-more" onclick="showBlogPost(${post.id}); return false;">
                     Read More
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -809,6 +809,7 @@ function displayFallbackBlogPosts() {
         },
     ];
 
+    blogPosts = fallbackPosts;
     displayBlogPosts(fallbackPosts);
 }
 
@@ -848,7 +849,6 @@ function setupAudioControl() {
     spaceAudio.loop = true;
     let audioPlaying = false;
 
-
     const tryAutoPlay = async () => {
         try {
             spaceAudio.muted = false;
@@ -863,7 +863,6 @@ function setupAudioControl() {
         }
     };
 
-  
     const togglePlayback = async () => {
         try {
             if (audioPlaying) {
@@ -1430,7 +1429,6 @@ const MAX_NEWS_RETRIES = 10;
 async function loadNewsPreview() {
     const container = document.getElementById("news-preview-grid");
 
-
     container.innerHTML = `    <div class="wifi-loader">
         <svg class="circle-outer" viewBox="0 0 86 86">
             <circle class="back" cx="43" cy="43" r="40"></circle>
@@ -1462,7 +1460,6 @@ async function loadNewsPreview() {
             return;
         }
 
-
         newsRetryCount = 0;
         displayNewsPreview(newsItems.slice(0, 3));
     } catch (err) {
@@ -1471,10 +1468,9 @@ async function loadNewsPreview() {
             err,
         );
 
-
         if (newsRetryCount < MAX_NEWS_RETRIES) {
             newsRetryCount++;
-            const retryDelay = 2000 * newsRetryCount; 
+            const retryDelay = 2000 * newsRetryCount;
             console.log(`Retrying in ${retryDelay / 1000}s...`);
             setTimeout(loadNewsPreview, retryDelay);
         } else {
