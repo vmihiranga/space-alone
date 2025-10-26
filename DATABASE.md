@@ -30,13 +30,28 @@ Space Alone currently uses a dual-database architecture:
 - **Purpose**: Primary data storage
 - **Tables**: 
   - `users` - User accounts and authentication
+    - Fields: id, username, password, email, role, created_at
   - `posts` - Blog posts with rich content
+    - Fields: id, title, slug, content, image_url, author_id, author_name, created_at, updated_at
+    - Indexes: idx_posts_slug
   - `solar_config` - Solar system visualization settings
+    - Fields: id, planet_name, size, distance, color, speed, info, created_at, updated_at
   - `uploads` - File management for media assets
+    - Fields: id, filename, original_name, mimetype, size, path, uploaded_by, created_at
   - `post_likes` - Post like tracking
+    - Fields: id, post_id, user_identifier, created_at
+    - Indexes: idx_post_likes_post_id
+    - Constraints: UNIQUE(post_id, user_identifier)
   - `post_dislikes` - Post dislike tracking
+    - Fields: id, post_id, user_identifier, created_at
+    - Indexes: idx_post_dislikes_post_id
+    - Constraints: UNIQUE(post_id, user_identifier)
   - `post_shares` - Post share tracking
+    - Fields: id, post_id, platform, user_identifier, created_at
+    - Indexes: idx_post_shares_post_id
   - `app_settings` - Application configuration
+    - Fields: id, solar_rotation_speed, solar_planet_count, solar_orbit_color, updated_at
+    - Default Values: rotation_speed=0.5, planet_count=8, orbit_color='#00f3ff'
 
 ### Session Database (SQLite)
 - **Type**: SQLite 3
@@ -104,7 +119,13 @@ Run the initialization script to create all required tables:
 node backend/init-db-postgres.js
 ```
 
-This will create all necessary tables in your database.
+This will create all necessary tables in your database with the following structure:
+- Users table with authentication fields
+- Posts table with slug indexing for fast lookups
+- Solar configuration for planet customization
+- Uploads table for media management
+- Post engagement tables (likes, dislikes, shares) with proper indexes
+- App settings with default solar system values
 
 #### 4. Restart the Server
 
@@ -303,7 +324,7 @@ curl http://localhost:3000/api/health
     "host": "your-host.com",
     "database": "space_alone"
   },
-  "timestamp": "2024-10-26T10:30:00.000Z"
+  "timestamp": "2025-10-26T10:30:00.000Z"
 }
 ```
 
@@ -327,6 +348,21 @@ psql $DATABASE_URL -c "\dt"
  public | solar_config    | table | user
  public | uploads         | table | user
  public | users           | table | user
+(8 rows)
+```
+
+### Step 4: Verify Indexes
+
+```bash
+psql $DATABASE_URL -c "\di"
+```
+
+**Expected indexes:**
+```
+idx_posts_slug
+idx_post_likes_post_id
+idx_post_dislikes_post_id
+idx_post_shares_post_id
 ```
 
 ---
@@ -415,6 +451,22 @@ PGIDLE_TIMEOUT=30000
 # Check for connection leaks in code
 ```
 
+#### 6. "relation does not exist"
+
+**Problem:** Tables not created or initialization incomplete
+
+**Solutions:**
+```bash
+# Run initialization script
+node backend/init-db-postgres.js
+
+# Verify all tables exist
+psql $DATABASE_URL -c "\dt"
+
+# Check if app_settings has default values
+psql $DATABASE_URL -c "SELECT * FROM app_settings;"
+```
+
 ---
 
 ## 🔄 Migrating Data Between Databases
@@ -426,6 +478,9 @@ PGIDLE_TIMEOUT=30000
 pg_dump $DATABASE_URL > backup.sql
 # OR
 pg_dump -h host -U user -d database > backup.sql
+
+# Export specific tables
+pg_dump $DATABASE_URL -t users -t posts -t solar_config > backup.sql
 ```
 
 **SQLite:**
@@ -444,6 +499,28 @@ psql -h new_host -U user -d new_database < backup.sql
 
 **Important:** Update your `.env` with new DATABASE_URL after migration.
 
+### Data Validation After Migration
+
+```bash
+# Check row counts
+psql $NEW_DATABASE_URL -c "
+SELECT 
+  'users' as table_name, COUNT(*) as rows FROM users
+  UNION ALL
+SELECT 'posts', COUNT(*) FROM posts
+  UNION ALL
+SELECT 'solar_config', COUNT(*) FROM solar_config
+  UNION ALL
+SELECT 'post_likes', COUNT(*) FROM post_likes
+  UNION ALL
+SELECT 'post_dislikes', COUNT(*) FROM post_dislikes
+  UNION ALL
+SELECT 'post_shares', COUNT(*) FROM post_shares
+  UNION ALL
+SELECT 'app_settings', COUNT(*) FROM app_settings;
+"
+```
+
 ---
 
 ## 🔐 Security Best Practices
@@ -454,6 +531,7 @@ psql -h new_host -U user -d new_database < backup.sql
 # Add to .gitignore
 echo ".env" >> .gitignore
 echo "sessions.sqlite" >> .gitignore
+echo "*.db" >> .gitignore
 ```
 
 ### 2. Use Strong Passwords
@@ -461,6 +539,7 @@ echo "sessions.sqlite" >> .gitignore
 - Minimum 16 characters
 - Mix of uppercase, lowercase, numbers, symbols
 - Use a password generator
+- Rotate credentials periodically
 
 ### 3. Enable SSL/TLS
 
@@ -478,12 +557,111 @@ PGSSL_REJECT_UNAUTHORIZED=true
 - Use private networks when possible
 - Enable database firewall rules
 - Create read-only users for analytics
+- Implement role-based access control
 
 ### 5. Regular Backups
 
 ```bash
 # Automated daily backup (add to crontab)
 0 2 * * * pg_dump $DATABASE_URL > /backups/space_alone_$(date +\%Y\%m\%d).sql
+
+# Keep last 7 days of backups
+0 3 * * * find /backups -name "space_alone_*.sql" -mtime +7 -delete
+```
+
+### 6. Input Validation
+
+The application uses parameterized queries to prevent SQL injection:
+- All user inputs are sanitized
+- Foreign key constraints prevent orphaned records
+- Unique constraints on critical fields (username, email, post slug)
+
+---
+
+## 📊 Database Schema Details
+
+### Users Table
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,  -- Hashed with bcrypt
+    email TEXT UNIQUE,
+    role TEXT DEFAULT 'user',  -- 'user' or 'admin'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Posts Table
+```sql
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    slug TEXT UNIQUE,  -- URL-friendly identifier
+    content TEXT NOT NULL,
+    image_url TEXT,
+    author_id INTEGER REFERENCES users(id),
+    author_name TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_posts_slug ON posts(slug);
+```
+
+### Post Engagement Tables
+```sql
+-- Likes
+CREATE TABLE post_likes (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+    user_identifier TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(post_id, user_identifier)
+);
+
+-- Dislikes
+CREATE TABLE post_dislikes (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+    user_identifier TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(post_id, user_identifier)
+);
+
+-- Shares
+CREATE TABLE post_shares (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+    platform TEXT NOT NULL,  -- 'facebook', 'twitter', etc.
+    user_identifier TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Solar Configuration Table
+```sql
+CREATE TABLE solar_config (
+    id SERIAL PRIMARY KEY,
+    planet_name TEXT UNIQUE NOT NULL,
+    size REAL,
+    distance REAL,
+    color TEXT,
+    speed REAL,
+    info TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### App Settings Table
+```sql
+CREATE TABLE app_settings (
+    id INTEGER PRIMARY KEY DEFAULT 1,
+    solar_rotation_speed REAL DEFAULT 0.5,
+    solar_planet_count INTEGER DEFAULT 8,
+    solar_orbit_color TEXT DEFAULT '#00f3ff',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ---
@@ -498,6 +676,10 @@ PGSSL_REJECT_UNAUTHORIZED=true
 | **Production Ready** | ✅ Yes | ❌ No | ✅ Yes |
 | **Concurrent Users** | High | Limited | High |
 | **File-based** | No | Yes | No |
+| **Foreign Keys** | ✅ Full | ⚠️ Limited | ✅ Full |
+| **Indexing** | Advanced | Basic | Advanced |
+| **Full-text Search** | ✅ Yes | ⚠️ Basic | ✅ Yes |
+| **JSON Support** | ✅ Native | ⚠️ Limited | ✅ Native |
 | **Best For** | Production | Development | Enterprise |
 | **Cloud Hosting** | ✅ Easy | ⚠️ Limited | ✅ Easy |
 
@@ -508,19 +690,23 @@ PGSSL_REJECT_UNAUTHORIZED=true
 - [ ] Use PostgreSQL (not SQLite)
 - [ ] Set `NODE_ENV=production`
 - [ ] Enable SSL/TLS (`?sslmode=require`)
-- [ ] Use strong `SESSION_SECRET`
+- [ ] Use strong `SESSION_SECRET` (32+ characters)
 - [ ] Configure connection pooling
 - [ ] Set up automated backups
 - [ ] Whitelist application IPs
 - [ ] Monitor database performance
 - [ ] Set up connection retry logic
 - [ ] Configure read replicas (if needed)
+- [ ] Verify all indexes are created
+- [ ] Test foreign key constraints
+- [ ] Validate unique constraints
+- [ ] Check app_settings defaults
 
 **Production .env example:**
 ```env
 NODE_ENV=production
 DATABASE_URL=postgresql://user:pass@host:5432/db?sslmode=require
-SESSION_SECRET=super_long_random_string_at_least_32_characters
+SESSION_SECRET=super_long_random_string_at_least_32_characters_long_12345
 PGMAX_CONNECTIONS=20
 PGMIN_CONNECTIONS=5
 NASA_API_KEY=your_api_key
@@ -534,8 +720,10 @@ NASA_API_KEY=your_api_key
 
 1. **Check logs:** `tail -f logs/server.log`
 2. **Test connection:** `psql $DATABASE_URL -c "SELECT 1;"`
-3. **Review this documentation**
-4. **Open GitHub Issue** with:
+3. **Verify tables:** `psql $DATABASE_URL -c "\dt"`
+4. **Check indexes:** `psql $DATABASE_URL -c "\di"`
+5. **Review this documentation**
+6. **Open GitHub Issue** with:
    - Error messages
    - Database provider
    - Configuration (without passwords!)
@@ -550,11 +738,32 @@ psql $DATABASE_URL -c "SELECT version();"
 # List all tables
 psql $DATABASE_URL -c "\dt"
 
+# List all indexes
+psql $DATABASE_URL -c "\di"
+
 # Check database size
 psql $DATABASE_URL -c "SELECT pg_size_pretty(pg_database_size(current_database()));"
 
 # Show active connections
 psql $DATABASE_URL -c "SELECT count(*) FROM pg_stat_activity;"
+
+# Check table row counts
+psql $DATABASE_URL -c "
+SELECT schemaname,relname,n_live_tup 
+FROM pg_stat_user_tables 
+ORDER BY n_live_tup DESC;
+"
+
+# View app settings
+psql $DATABASE_URL -c "SELECT * FROM app_settings;"
+
+# Check post engagement stats
+psql $DATABASE_URL -c "
+SELECT 
+  (SELECT COUNT(*) FROM post_likes) as likes,
+  (SELECT COUNT(*) FROM post_dislikes) as dislikes,
+  (SELECT COUNT(*) FROM post_shares) as shares;
+"
 ```
 
 ---
@@ -566,6 +775,7 @@ psql $DATABASE_URL -c "SELECT count(*) FROM pg_stat_activity;"
 - [Neon Documentation](https://neon.tech/docs)
 - [Supabase Database Guide](https://supabase.com/docs/guides/database)
 - [Node.js PostgreSQL Tutorial](https://node-postgres.com/)
+- [SQL Indexing Best Practices](https://use-the-index-luke.com/)
 
 ---
 
@@ -574,5 +784,9 @@ psql $DATABASE_URL -c "SELECT count(*) FROM pg_stat_activity;"
 1. **Development**: Use SQLite for quick local testing
 2. **Staging**: Use PostgreSQL (Neon/Supabase free tier)
 3. **Production**: Use managed PostgreSQL (Koyeb/Railway/Render)
+4. **Always run** `init-db-postgres.js` after setting up a new database
+5. **Verify indexes** are created for optimal performance
 
 **🔒 Security First:** Always use SSL in production and never commit `.env` files!
+
+---
