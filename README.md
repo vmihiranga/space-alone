@@ -118,43 +118,78 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Database Schema
+<div align="center">
+  
+### 🗄️ DATABASE ARCHITECTURE
 
-**Core Tables:**
-- `users` - User accounts and authentication
-- `posts` - Blog posts with rich content
-- `solar_config` - Solar system visualization settings
-- `uploads` - File management for media assets
-- `post_likes`, `post_dislikes`, `post_shares` - Social engagement tracking
-- `app_settings` - Application configuration
+</div>
 
+Space Alone uses a **dual-database architecture** for optimal performance:
 
-### API Endpoints
+#### **Primary Database - PostgreSQL**
+- **Type**: PostgreSQL 15+ (Production-grade)
+- **Current Host**: Koyeb PostgreSQL instance
+- **Purpose**: Main application data storage
 
-#### Authentication (`/api/auth/*`)
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/logout` - User logout
-- `GET /api/auth/users` - Get all users (admin only)
-- `POST /api/auth/users` - Create new user (admin only)
-- `DELETE /api/auth/users/:id` - Delete user (admin only)
+#### **Session Database - SQLite**
+- **Type**: SQLite 3
+- **Storage**: `sessions.sqlite` (local file)
+- **Purpose**: User session management
 
-#### Blog Management (`/api/posts`)
-- `GET /api/posts` - Retrieve all posts
-- `POST /api/posts` - Create new post
-- `PUT /api/posts/:id` - Update post
-- `DELETE /api/posts/:id` - Delete post
+📖 **[Complete Database Documentation →](./DATABASE.md)**
 
-#### NASA Data (`/api/nasa/*`)
-- `GET /api/nasa/apod` - Astronomy Picture of the Day
-- `GET /api/nasa/neo` - Near-Earth Objects
-- `GET /api/nasa/mars` - Mars rover photos
-- `GET /api/nasa/iss` - ISS location
+Learn how to:
+- Switch to your own database (Neon, Supabase, Railway, etc.)
+- Configure with DATABASE_URL or individual parameters
+- Migrate data between databases
+- Troubleshoot connection issues
+- Optimize for production
 
-#### Space Data
-- `GET /api/spacex` - SpaceX launch data
-- `GET /api/news` - Space news feed
-- `GET /api/health` - Health check
+<div align="center">
+  
+### 📄 API ENDPOINTS
+
+</div>
+
+### 🔐 Authentication — `/api/auth/*`
+Manage access across the galaxy.
+- `POST /api/auth/login` — Enter your command deck
+- `POST /api/auth/register` — Create a new space account
+- `POST /api/auth/logout` — Securely exit the system
+- `GET /api/auth/users` — Retrieve list of explorers (Admin only)
+- `POST /api/auth/users` — Add a new crew member (Admin only)
+- `DELETE /api/auth/users/:id` — Remove a crew member (Admin only)
+
+---
+
+### 📝 Mission Logs — `/api/posts`
+Control your stories and discoveries.
+- `GET /api/posts` — Fetch all mission logs
+- `POST /api/posts` — Submit a new log entry
+- `PUT /api/posts/:id` — Edit a recorded mission
+- `DELETE /api/posts/:id` — Erase a log from existence
+
+---
+
+### 🚀 NASA Data — `/api/nasa/*`
+Direct portal into humanity’s real-time space knowledge.
+- `GET /api/nasa/apod` — Astronomy Picture of the Day 
+- `GET /api/nasa/neo` — Track hazardous asteroids 
+- `GET /api/nasa/mars` — Snapshots from Mars surface 
+- `GET /api/nasa/iss` — International Space Station tracking 
+
+---
+
+### Extra Space Intelligence
+- `GET /api/spacex` — SpaceX mission information 
+- `GET /api/news` — Latest cosmic news feed ️
+- `GET /api/health` — System integrity check 
+
+---
+
+📖 **Full Documentation & API Playground**  
+[![API Docs](https://img.shields.io/badge/API%20Docs-View%20Now-blue?style=for-the-badge&logo=rocket)](https://space-alone.onrender.com/api/docs)
+*Launch your experiments from here!* ⚡
 
 <div align="center">
 
