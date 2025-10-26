@@ -171,6 +171,8 @@ Before getting started, ensure you have:
 - **Node.js** (v14 or higher) - [Download here](https://nodejs.org/)
 - **Git** - [Download here](https://git-scm.com/)
 - A modern web browser (Chrome 90+, Firefox 88+, Safari 14+, or Edge 90+)
+- **Fonts**: Roboto Regular, Starcraft ( for best experince )
+- An Internet Connection 
 
 ### Quick Start
 
@@ -202,7 +204,7 @@ Open your browser and navigate to:
 **⚠️ IMPORTANT: Change these immediately after first login!**
 
 - **Username**: `admin`
-- **Password**: `admin123`
+- **Password**: `123456`
 
 ### Troubleshooting
 
