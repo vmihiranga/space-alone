@@ -121,6 +121,7 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 <div align="center">
   
 ### 🗄️ DATABASE ARCHITECTURE
+---
 
 </div>
 
@@ -148,6 +149,7 @@ Learn how to:
 <div align="center">
   
 ### 📄 API ENDPOINTS
+---
 
 </div>
 
@@ -160,7 +162,6 @@ Manage access across the galaxy.
 - `POST /api/auth/users` — Add a new crew member (Admin only)
 - `DELETE /api/auth/users/:id` — Remove a crew member (Admin only)
 
----
 
 ### 📝 Mission Logs — `/api/posts`
 Control your stories and discoveries.
@@ -169,8 +170,6 @@ Control your stories and discoveries.
 - `PUT /api/posts/:id` — Edit a recorded mission
 - `DELETE /api/posts/:id` — Erase a log from existence
 
----
-
 ### 🚀 NASA Data — `/api/nasa/*`
 Direct portal into humanity’s real-time space knowledge.
 - `GET /api/nasa/apod` — Astronomy Picture of the Day 
@@ -178,14 +177,10 @@ Direct portal into humanity’s real-time space knowledge.
 - `GET /api/nasa/mars` — Snapshots from Mars surface 
 - `GET /api/nasa/iss` — International Space Station tracking 
 
----
-
 ### Extra Space Intelligence
 - `GET /api/spacex` — SpaceX mission information 
 - `GET /api/news` — Latest cosmic news feed ️
 - `GET /api/health` — System integrity check 
-
----
 
 📖 **Full Documentation & API Playground**  
 [![API Docs](https://img.shields.io/badge/API%20Docs-View%20Now-blue?style=for-the-badge&logo=rocket)](https://space-alone.onrender.com/api/docs)
