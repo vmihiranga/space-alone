@@ -4,7 +4,13 @@
 
 An immersive space-themed web experience that takes you on a journey through the cosmos. Navigate through stunning celestial environments and experience the solitude and beauty of space exploration.
 
-![Space Alone Banner](https://i.postimg.cc/85nSNKrt/image.png)
+[![Space Alone Banner](https://i.postimg.cc/85nSNKrt/image.png)](https://space-alone.onrender.com)
+
+## 🌐 LIVE DEMO
+
+[![Visit Now](https://img.shields.io/badge/🚀_Visit_Now-Live_Demo-4CAF50?style=for-the-badge&logoColor=white)](https://space-alone.onrender.com)
+
+**Experience Space Alone:** [space-alone.onrender.com](https://space-alone.onrender.com)
 
 ## OVERVIEW
 
@@ -138,17 +144,17 @@ space-alone/
 ## SCREENSHOTS AND PREVIEW
 
 ### Main View of Home
-![Space View](https://i.postimg.cc/85nSNKrt/image.png)
-*The immersive main space environment*
+[![Space View](https://i.postimg.cc/85nSNKrt/image.png)](https://space-alone.onrender.com)
+*The immersive main space environment - Click to explore!*
 
 ### Interactive Elements
-![Interactive Features](https://i.postimg.cc/mDcbzWRx/image.png)
-*Various interactive celestial objects and controls*
+[![Interactive Features](https://i.postimg.cc/mDcbzWRx/image.png)](https://space-alone.onrender.com)
+*Various interactive celestial objects and controls - Click to try it live!*
 
 ### Mobile Experience
-![Mobile View](https://i.postimg.cc/tTJKS3m6/image.png)
+[![Mobile View](https://i.postimg.cc/tTJKS3m6/image.png)](https://space-alone.onrender.com)
 
-*Responsive design across all devices*
+*Responsive design across all devices - Click to visit!*
 
 ## TECH STACK INFORMATION
 
@@ -246,6 +252,7 @@ limitations under the License.
 **Vishwa Mihiranga**
 - GitHub: [@vmihiranga](https://github.com/vmihiranga)
 - Project Link: [https://github.com/vmihiranga/space-alone](https://github.com/vmihiranga/space-alone)
+- Live Demo: [https://space-alone.onrender.com](https://space-alone.onrender.com)
 
 ---
 
