@@ -1,5 +1,25 @@
 # 🗄️ DATABASE CONFIGURATION
 
+> **Complete database setup guide for Space Alone**  
+> Learn how to configure, switch, and optimize your database
+
+---
+
+## 📋 Table of Contents
+
+- [Current Database Setup](#current-database-setup)
+- [Using Your Own Database](#-using-your-own-database)
+- [Getting Database URLs](#-getting-database-urls-from-popular-services)
+- [Configuration Methods](#️-database-configuration-methods)
+- [Supported Databases](#️-supported-databases)
+- [Verification](#-verifying-database-connection)
+- [Troubleshooting](#-troubleshooting)
+- [Data Migration](#-migrating-data-between-databases)
+- [Security](#-security-best-practices)
+- [Production Deployment](#-production-deployment-checklist)
+
+---
+
 ## Current Database Setup
 
 Space Alone currently uses a dual-database architecture:
