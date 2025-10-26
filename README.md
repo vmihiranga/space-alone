@@ -188,6 +188,7 @@ Direct portal into humanity’s real-time space knowledge.
 
 📖 **Full Documentation & API Playground**  
 [![API Docs](https://img.shields.io/badge/API%20Docs-View%20Now-blue?style=for-the-badge&logo=rocket)](https://space-alone.onrender.com/api/docs)
+
 *Launch your experiments from here!* ⚡
 
 <div align="center">
