@@ -6,7 +6,7 @@
         }
     ],
     "functions": {
-        "backend/server.js": {
+        "api/index.js": {
             "maxDuration": 60
         }
     }
