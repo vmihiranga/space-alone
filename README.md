@@ -138,15 +138,15 @@ space-alone/
 ## SCREENSHOTS AND PREVIEW
 
 ### Main View of Home
-![Space View](https://i.ibb.co/BVBxQLg/image.png)
+![Space View](https://i.postimg.cc/85nSNKrt/image.png)
 *The immersive main space environment*
 
 ### Interactive Elements
-![Interactive Features](https://i.ibb.co/Z1LFHMM/image.png)
+![Interactive Features](https://i.postimg.cc/mDcbzWRx/image.png)
 *Various interactive celestial objects and controls*
 
 ### Mobile Experience
-![Mobile View](https://i.ibb.co/HDg93Q2/image.png)
+![Mobile View](https://i.postimg.cc/tTJKS3m6/image.png)
 *Responsive design across all devices*
 
 ## TECH STACK INFORMATION
