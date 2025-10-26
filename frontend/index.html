@@ -4,6 +4,10 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Space Alone - Journey Through the Cosmos</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+
         <link
             rel="icon"
             type="image/svg+xml"
@@ -15,7 +19,6 @@
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <link rel="stylesheet" href="./src/styles/main.css" />
-        <link rel="stylesheet" href="./src/styles/font-fix.css" />
     </head>
 
     <body>
@@ -1346,6 +1349,67 @@
                 </div>
             </div>
         </footer>
+        <script>
+            function setupAudioControl() {
+                const audioToggle = document.getElementById("audio-toggle");
+                const spaceAudio = document.getElementById("space-audio");
+
+                if (!audioToggle || !spaceAudio) return;
+
+                spaceAudio.volume = 0.3;
+                spaceAudio.loop = true;
+                let audioPlaying = false;
+
+                const tryAutoPlay = async () => {
+                    try {
+                        spaceAudio.muted = false;
+                        await spaceAudio.play();
+                        audioPlaying = true;
+                        audioToggle.classList.add("playing");
+                        audioToggle.setAttribute("aria-pressed", "true");
+                    } catch (error) {
+                        console.log(
+                            "Autoplay blocked by browser. Waiting for user interaction.",
+                        );
+                    }
+                };
+
+                const togglePlayback = async () => {
+                    try {
+                        if (audioPlaying) {
+                            await spaceAudio.pause();
+                            audioToggle.classList.remove("playing");
+                            audioToggle.setAttribute("aria-pressed", "false");
+                        } else {
+                            spaceAudio.muted = false;
+                            await spaceAudio.play();
+                            audioToggle.classList.add("playing");
+                            audioToggle.setAttribute("aria-pressed", "true");
+                        }
+                        audioPlaying = !audioPlaying;
+                    } catch (error) {
+                        console.log("Audio playback error:", error);
+                    }
+                };
+
+                audioToggle.addEventListener("click", togglePlayback);
+                audioToggle.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        togglePlayback();
+                    }
+                });
+
+                audioToggle.setAttribute("aria-pressed", "false");
+                audioToggle.setAttribute("role", "button");
+                audioToggle.setAttribute("tabindex", "0");
+
+                window.addEventListener("load", () => {
+                    setTimeout(tryAutoPlay, 500);
+                });
+            }
+            setupAudioControl();
+        </script>
         <script src="./src/js/index.js"></script>
     </body>
 </html>
