@@ -119,9 +119,11 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 ```
 
 <div align="center">
+
+---
   
 ### 🗄️ DATABASE ARCHITECTURE
----
+
 
 </div>
 
@@ -148,8 +150,10 @@ Learn how to:
 
 <div align="center">
   
+  ---
+  
 ### 📄 API ENDPOINTS
----
+
 
 </div>
 
