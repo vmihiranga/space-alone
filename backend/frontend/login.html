@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Login - Space Alone</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='planetGrad' cx='40%25' cy='40%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f3ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230088cc;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23004466;stop-opacity:1' /%3E%3C/radialGradient%3E%3ClinearGradient id='ringGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23b800ff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%238800cc;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%236600aa;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='100' cy='100' r='45' fill='url(%23planetGrad)'/%3E%3Cellipse cx='100' cy='100' rx='75' ry='20' fill='none' stroke='url(%23ringGrad)' stroke-width='8' opacity='0.8' transform='rotate(-15 100 100)'/%3E%3Ctext x='100' y='108' font-family='Arial' font-size='32' font-weight='bold' fill='%23ffffff' text-anchor='middle' opacity='0.9'%3ESA%3C/text%3E%3C/svg%3E"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <style>
+            body {
+                background: linear-gradient(
+                    135deg,
+                    #0a0e27 0%,
+                    #1a1f3a 50%,
+                    #2a1b4a 100%
+                );
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                overflow: hidden;
+                position: relative;
+                margin: 0;
+                padding: 0;
+            }
+
+            #stars-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+            }
+
+            .login-container {
+                position: relative;
+                z-index: 1;
+                max-width: 450px;
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+
+            .login-card {
+                background: rgba(26, 31, 58, 0.85);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 2px solid rgba(0, 243, 255, 0.3);
+                border-radius: 25px;
+                padding: 3rem;
+                box-shadow:
+                    0 20px 60px rgba(0, 0, 0, 0.5),
+                    0 0 40px rgba(0, 243, 255, 0.2);
+                animation: slideIn 0.8s ease;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .logo {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .logo h1 {
+                font-size: 2.5rem;
+                font-weight: 900;
+                background: linear-gradient(90deg, #00f3ff, #b800ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 0.5rem;
+                word-wrap: break-word;
+            }
+
+            .logo p {
+                color: #b8b8b8;
+                font-size: 0.9rem;
+                letter-spacing: 2px;
+            }
+
+            .form-control {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(0, 243, 255, 0.3);
+                border-radius: 15px;
+                padding: 15px;
+                color: #ffffff;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .form-control:focus {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: #00f3ff;
+                box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+                color: #ffffff;
+                outline: none;
+            }
+
+            .form-control::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            .form-label {
+                color: #00f3ff;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                display: block;
+            }
+
+            .btn-login {
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(90deg, #00f3ff, #b800ff);
+                border: none;
+                border-radius: 15px;
+                color: white;
+                font-weight: 700;
+                font-size: 1.1rem;
+                letter-spacing: 1px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                box-sizing: border-box;
+            }
+
+            .btn-login:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(0, 243, 255, 0.5);
+            }
+
+            .btn-login:active {
+                transform: translateY(0);
+            }
+
+            .btn-login:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            .alert-custom {
+                background: rgba(255, 0, 85, 0.2);
+                border: 1px solid #ff0055;
+                color: #ff0055;
+                border-radius: 15px;
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                animation: shake 0.5s ease;
+                word-wrap: break-word;
+            }
+
+            @keyframes shake {
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+                25% {
+                    transform: translateX(-10px);
+                }
+                75% {
+                    transform: translateX(10px);
+                }
+            }
+
+            .alert-success {
+                background: rgba(0, 243, 255, 0.2);
+                border: 1px solid #00f3ff;
+                color: #00f3ff;
+            }
+
+            .back-link {
+                text-align: center;
+                margin-top: 1.5rem;
+            }
+
+            .back-link a {
+                color: #00f3ff;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                word-wrap: break-word;
+            }
+
+            .back-link a:hover {
+                color: #b800ff;
+                text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+            }
+
+            .spinner {
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-top-color: #00f3ff;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                animation: spin 1s linear infinite;
+                display: inline-block;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .password-toggle {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #00f3ff;
+                opacity: 0.7;
+                transition: opacity 0.3s ease;
+                z-index: 2;
+            }
+
+            .password-toggle:hover {
+                opacity: 1;
+            }
+
+            .input-wrapper {
+                position: relative;
+            }
+
+    
+            @media (max-width: 1024px) {
+                .login-container {
+                    max-width: 420px;
+                }
+
+                .login-card {
+                    padding: 2.5rem;
+                }
+
+                .logo h1 {
+                    font-size: 2.3rem;
+                }
+
+                .logo p {
+                    font-size: 0.85rem;
+                }
+            }
+
+      
+            @media (max-width: 768px) {
+                body {
+                    overflow-y: auto;
+                    align-items: flex-start;
+                    padding: 20px 0;
+                }
+
+                .login-container {
+                    max-width: 100%;
+                    padding: 15px;
+                    margin: auto;
+                }
+
+                .login-card {
+                    padding: 2rem;
+                    border-radius: 20px;
+                }
+
+                .logo {
+                    margin-bottom: 1.5rem;
+                }
+
+                .logo h1 {
+                    font-size: 2rem;
+                }
+
+                .logo p {
+                    font-size: 0.8rem;
+                    letter-spacing: 1.5px;
+                }
+
+                .form-control {
+                    padding: 12px;
+                    font-size: 0.95rem;
+                    border-radius: 12px;
+                }
+
+                .form-label {
+                    font-size: 0.95rem;
+                    margin-bottom: 0.4rem;
+                }
+
+                .btn-login {
+                    padding: 13px;
+                    font-size: 1rem;
+                    border-radius: 12px;
+                }
+
+                .alert-custom {
+                    padding: 0.875rem;
+                    font-size: 0.95rem;
+                    border-radius: 12px;
+                    margin-bottom: 1.25rem;
+                }
+
+                .back-link {
+                    margin-top: 1.25rem;
+                    font-size: 0.95rem;
+                }
+
+                .password-toggle {
+                    right: 12px;
+                }
+            }
+
+      
+            @media (max-width: 480px) {
+                body {
+                    padding: 15px 0;
+                }
+
+                .login-container {
+                    padding: 10px;
+                }
+
+                .login-card {
+                    padding: 1.5rem;
+                    border-radius: 18px;
+                    border-width: 1.5px;
+                }
+
+                .logo {
+                    margin-bottom: 1.25rem;
+                }
+
+                .logo h1 {
+                    font-size: 1.75rem;
+                    margin-bottom: 0.4rem;
+                }
+
+                .logo p {
+                    font-size: 0.75rem;
+                    letter-spacing: 1px;
+                }
+
+                .form-control {
+                    padding: 11px;
+                    font-size: 0.9rem;
+                    border-radius: 10px;
+                }
+
+                .form-label {
+                    font-size: 0.9rem;
+                    margin-bottom: 0.35rem;
+                }
+
+                .btn-login {
+                    padding: 12px;
+                    font-size: 0.95rem;
+                    letter-spacing: 0.5px;
+                    border-radius: 10px;
+                }
+
+                .alert-custom {
+                    padding: 0.75rem;
+                    font-size: 0.9rem;
+                    border-radius: 10px;
+                    margin-bottom: 1rem;
+                }
+
+                .back-link {
+                    margin-top: 1rem;
+                    font-size: 0.9rem;
+                }
+
+                .password-toggle {
+                    right: 10px;
+                    font-size: 0.9rem;
+                }
+
+                .spinner {
+                    width: 18px;
+                    height: 18px;
+                    border-width: 2.5px;
+                    margin-right: 8px;
+                }
+            }
+
+        
+            @media (max-width: 320px) {
+                body {
+                    padding: 10px 0;
+                }
+
+                .login-container {
+                    padding: 8px;
+                }
+
+                .login-card {
+                    padding: 1.25rem;
+                    border-radius: 15px;
+                }
+
+                .logo h1 {
+                    font-size: 1.5rem;
+                }
+
+                .logo p {
+                    font-size: 0.7rem;
+                }
+
+                .form-control {
+                    padding: 10px;
+                    font-size: 0.85rem;
+                }
+
+                .form-label {
+                    font-size: 0.85rem;
+                }
+
+                .btn-login {
+                    padding: 11px;
+                    font-size: 0.9rem;
+                }
+
+                .alert-custom {
+                    padding: 0.65rem;
+                    font-size: 0.85rem;
+                }
+
+                .back-link {
+                    font-size: 0.85rem;
+                }
+
+                .spinner {
+                    width: 16px;
+                    height: 16px;
+                    border-width: 2px;
+                }
+            }
+
+        
+            @media (max-height: 600px) and (orientation: landscape) {
+                body {
+                    align-items: flex-start;
+                    padding: 10px 0;
+                }
+
+                .login-card {
+                    padding: 1.5rem;
+                }
+
+                .logo {
+                    margin-bottom: 1rem;
+                }
+
+                .logo h1 {
+                    font-size: 1.75rem;
+                    margin-bottom: 0.25rem;
+                }
+
+                .logo p {
+                    font-size: 0.75rem;
+                }
+
+                .form-control {
+                    padding: 10px;
+                }
+
+                .btn-login {
+                    padding: 11px;
+                }
+
+                .alert-custom {
+                    padding: 0.75rem;
+                    margin-bottom: 1rem;
+                }
+
+                .back-link {
+                    margin-top: 1rem;
+                }
+            }
+
+         
+            @media (max-height: 450px) and (orientation: landscape) {
+                .login-card {
+                    padding: 1rem;
+                }
+
+                .logo {
+                    margin-bottom: 0.75rem;
+                }
+
+                .logo h1 {
+                    font-size: 1.5rem;
+                }
+
+                .logo p {
+                    display: none;
+                }
+
+                .form-control {
+                    padding: 8px;
+                    font-size: 0.85rem;
+                }
+
+                .btn-login {
+                    padding: 9px;
+                    font-size: 0.9rem;
+                }
+            }
+
+        
+            @media (hover: none) and (pointer: coarse) {
+                .form-control {
+                    min-height: 44px;
+                }
+
+                .btn-login {
+                    min-height: 48px;
+                }
+
+                .password-toggle {
+                    min-width: 44px;
+                    min-height: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+          
+            @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+                .login-card {
+                    border-width: 1.5px;
+                }
+            }
+
+          
+            @media (max-width: 360px) {
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    overflow-x: hidden;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="stars-bg"></canvas>
+
+        <div class="login-container">
+            <div class="login-card">
+                <div class="logo">
+                    <h1>🚀 SPACE ALONE</h1>
+                    <p>ADMIN PORTAL</p>
+                </div>
+
+                <div id="alert-container"></div>
+
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label class="form-label">Username</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            placeholder="Enter your username"
+                            required
+                            autofocus
+                        />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Password</label>
+                        <div class="input-wrapper">
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                placeholder="Enter your password"
+                                required
+                            />
+                            <span
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                            >
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path
+                                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                    ></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-login" id="login-btn">
+                        Login
+                    </button>
+                </form>
+
+                <div class="back-link">
+                    <a href="/">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const canvas = document.getElementById("stars-bg");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const stars = [];
+            for (let i = 0; i < 100; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2,
+                    speed: Math.random() * 0.5 + 0.1,
+                });
+            }
+
+            function animateStars() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stars.forEach((star) => {
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                    ctx.fill();
+
+                    star.y += star.speed;
+                    if (star.y > canvas.height) {
+                        star.y = 0;
+                        star.x = Math.random() * canvas.width;
+                    }
+                });
+                requestAnimationFrame(animateStars);
+            }
+            animateStars();
+
+            window.addEventListener("resize", () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            document
+                .getElementById("login-form")
+                .addEventListener("submit", async (e) => {
+                    e.preventDefault();
+
+                    const username = document.getElementById("username").value;
+                    const password = document.getElementById("password").value;
+                    const loginBtn = document.getElementById("login-btn");
+
+                    loginBtn.disabled = true;
+                    loginBtn.innerHTML =
+                        '<span class="spinner"></span>Logging in...';
+
+                    try {
+                        const response = await fetch("/api/auth/login", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            credentials: "include",
+                            body: JSON.stringify({ username, password }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            showAlert(
+                                "Login successful! Redirecting...",
+                                "success",
+                            );
+
+                            setTimeout(() => {
+                                window.location.href = "/admin";
+                            }, 1000);
+                        } else {
+                            showAlert(
+                                data.error || "Invalid credentials",
+                                "danger",
+                            );
+                            loginBtn.disabled = false;
+                            loginBtn.innerHTML = "Login";
+                        }
+                    } catch (error) {
+                        console.error("Login error:", error);
+                        showAlert(
+                            "Connection error. Please try again.",
+                            "danger",
+                        );
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = "Login";
+                    }
+                });
+
+            function togglePassword() {
+                const passwordInput = document.getElementById("password");
+                const type =
+                    passwordInput.type === "password" ? "text" : "password";
+                passwordInput.type = type;
+            }
+
+            function showAlert(message, type) {
+                const alertContainer =
+                    document.getElementById("alert-container");
+                const alertClass =
+                    type === "success"
+                        ? "alert-success alert-custom"
+                        : "alert-custom";
+
+                alertContainer.innerHTML = `
+                <div class="${alertClass}">
+                    ${message}
+                </div>
+            `;
+
+                setTimeout(() => {
+                    alertContainer.innerHTML = "";
+                }, 3000);
+            }
+
+            async function checkExistingSession() {
+                try {
+                    const response = await fetch("/api/auth/verify", {
+                        credentials: "include",
+                    });
+
+                    if (response.ok) {
+                        window.location.href = "/admin";
+                    }
+                } catch (error) {}
+            }
+
+            checkExistingSession();
+
+            document
+                .getElementById("username")
+                .addEventListener("keypress", (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        document.getElementById("password").focus();
+                    }
+                });
+        </script>
+    </body>
+</html>
