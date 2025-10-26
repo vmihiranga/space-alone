@@ -309,6 +309,7 @@ space-alone/
 
 ### Mobile-Responsive Design
 [![Mobile View](https://i.postimg.cc/tTJKS3m6/image.png)](https://space-alone.onrender.com)
+
 *Seamless experience across all devices - Visit on your phone!*
 
 ---
