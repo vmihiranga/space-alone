@@ -62,18 +62,16 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 
 ### 📝 Cosmic Blog Platform
 - **Content Management System**: Full CRUD operations for blog posts
-- **Rich Text Editor**: Create engaging space-themed articles
 - **Social Engagement**: Like, dislike, and share functionality for posts
 - **User Authentication**: Secure session-based login system
-- **File Uploads**: Support for images and media in blog posts
+- **Media Shows**: Support for images and media in blog posts
 
 ### 👨‍💼 Comprehensive Admin Dashboard
 - **User Management**: 
   - View all registered users with detailed information
-  - Create new users with customizable roles (admin/user)
+  - Create new users with customizable roles (admin)
   - Delete users (with self-deletion protection)
 - **Blog Management**: Edit, delete, and moderate blog posts
-- **Settings Configuration**: Customize site-wide settings
 - **Navigation**: Quick access to main site via "Visit Site" button
 
 ### 📱 Modern Web Experience
@@ -205,7 +203,7 @@ Before getting started, ensure you have:
 
 - **Node.js** (v14 or higher) - [Download here](https://nodejs.org/)
 - **Git** - [Download here](https://git-scm.com/)
-- A modern web browser (Chrome 90+, Firefox 88+, Safari 14+, or Edge 90+)
+- A modern web browser (Chrome , Firefox , Safari or Edge )
 - **Fonts**: Roboto Regular, Starcraft ( for best experince )
 - An Internet Connection 
 
@@ -235,8 +233,6 @@ Open your browser and navigate to:
 
 
 ### Default Admin Credentials
-
-**⚠️ IMPORTANT: Change these immediately after first login!**
 
 - **Username**: `admin`
 - **Password**: `123456`
@@ -285,8 +281,7 @@ space-alone/
     │   └── auth.js              # Authentication middleware
     │
     ├── 📁 models/
-    │   ├── schema-postgres.sql  # Database schema
-    │   └── user.sql             # User model queries
+    │   └── schema-postgres.sql  # Database schema
     │
     ├── 📁 routes/
     │   ├── auth.js              # Authentication routes
@@ -295,7 +290,6 @@ space-alone/
     │   ├── posts.js             # Blog post management
     │   ├── solar.js             # Solar system data
     │   ├── space.js             # General space data
-    │   └── uploads.js           # File upload handling
     │
     ├── 📁 frontend/
     │   ├── 📁 errors/
@@ -308,11 +302,6 @@ space-alone/
     │   │   │   └── index.js     # Main JavaScript
     │   │   └── 📁 styles/
     │   │       └── main.css     # Main stylesheet
-    │   │
-    │   ├── 📁 assets/
-    │   │   ├── 📁 images/       # Image assets
-    │   │   ├── 📁 sounds/       # Audio files
-    │   │   └── 📁 models/       # 3D models
     │   │
     │   ├── admin.html           # Admin dashboard
     │   ├── api.html             # API documentation
@@ -341,7 +330,7 @@ space-alone/
 *Immersive 3D solar system with realistic planetary orbits - Click to explore live!*
 
 ### Interactive Dashboard
-[![Interactive Features](https://i.postimg.cc/mDcbzWRx/image.png)](https://space-alone.onrender.com)
+[![Interactive Features](https://i.postimg.cc/JzJF4bnx/image.png)](https://space-alone.onrender.com)
 *Admin dashboard with user management and blog controls - Try it yourself!*
 
 ### Mobile-Responsive Design
@@ -409,7 +398,6 @@ NASA_API_KEY=<your-api-key>
 
 </div>
 
-- **Helmet.js**: Security headers protection
 - **Rate Limiting**: API endpoint protection
 - **CORS**: Configured cross-origin requests
 - **Session-Based Auth**: Secure session management (no JWT)
@@ -417,19 +405,8 @@ NASA_API_KEY=<your-api-key>
 - **XSS Protection**: Input sanitization
 - **HTTPS Ready**: SSL/TLS support
 
-<div align="center">
-
 ---
 
-## ⚡ PERFORMANCE METRICS
-
-</div>
-
-- **Load Time**: < 3 seconds (average)
-- **First Contentful Paint**: < 1.5 seconds
-- **Time to Interactive**: < 4 seconds
-- **Lighthouse Score**: 85+ (Performance)
-- **Frame Rate**: Consistent 60fps for 3D visualizations
 
 <div align="center">
 
@@ -507,24 +484,18 @@ limitations under the License.
 
 ###  Typography
 
-
-
-- **Google Fonts** - Roboto family
-- **CDNFonts** - Starcraft font
+- **Google Fonts** 
+- **CDNFonts**
 
 
 
 ###  Design Inspiration
-
-
 
 - UI components and design elements inspired by **Universe.io**
 
 
 
 ###  Development Tools
-
-
 
 - Content generation assistance from **ChatGPT** (OpenAI)
 - Code optimization with **GitHub Copilot**
