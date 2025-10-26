@@ -12,9 +12,7 @@ const sql = require("./db");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
 app.set("trust proxy", 1);
-
 
 app.use(
   helmet({
@@ -23,14 +21,12 @@ app.use(
   }),
 );
 
-
 app.use(
   cors({
     origin: true,
     credentials: true,
   }),
 );
-
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, 
@@ -39,10 +35,8 @@ const limiter = rateLimit({
 });
 app.use("/api/", limiter);
 
-
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
 
 app.use(
   session({
@@ -63,12 +57,10 @@ app.use(
   }),
 );
 
-
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
-
 
 const authRoutes = require("./routes/auth")(sql);
 const postsRoutes = require("./routes/posts")(sql);
@@ -86,9 +78,7 @@ app.use("/api/spacex", spacexRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/news", newsRoutes); 
 
-
 app.use(express.static(path.join(__dirname, "../frontend")));
-
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
@@ -109,13 +99,14 @@ app.get("/login", (req, res) => {
 app.get("/admin", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/admin.html"));
 });
+
 app.get("/news", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/news.html"));
 });
+
 app.get("/api/docs", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/api.html"));
 });
-
 
 app.get("/api/health", (req, res) => {
   res.json({
@@ -127,18 +118,30 @@ app.get("/api/health", (req, res) => {
 
 
 app.use((req, res) => {
-  res.status(404).json({ error: "Not found" });
+
+  if (req.path.startsWith('/api/')) {
+    res.status(404).json({ error: "API endpoint not found" });
+  } else {
+
+    res.status(404).sendFile(path.join(__dirname, "../frontend/errors/404.html"));
+  }
 });
 
 
 app.use((err, req, res, next) => {
   console.error("Error:", err.stack);
-  res.status(500).json({
-    error: "Internal server error",
-    message: process.env.NODE_ENV === "development" ? err.message : undefined,
-  });
-});
 
+  
+  if (req.path.startsWith('/api/')) {
+    res.status(500).json({
+      error: "Internal server error",
+      message: process.env.NODE_ENV === "development" ? err.message : undefined,
+    });
+  } else {
+ 
+    res.status(500).sendFile(path.join(__dirname, "../frontend/errors/500.html"));
+  }
+});
 
 process.on("SIGTERM", async () => {
   console.log("SIGTERM signal received: closing HTTP server");
@@ -151,8 +154,6 @@ process.on("SIGINT", async () => {
   await sql.end();
   process.exit(0);
 });
-
-
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("\n ═══════════════════════════════════════════════════════");
