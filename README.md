@@ -481,16 +481,18 @@ limitations under the License.
 
 ## 🙏 CREDITS & ATTRIBUTIONS
 
-### 🔊 Audio Assets
-
 </div>
+
+###  Audio Assets
+
+
 
 - Space ambient sound from **Pixabay**  
   Source: https://pixabay.com/sound-effects/ambient-soundscapes-007-space-atmosphere-304974/
 
 
 
-### 🖼️ Visual Assets
+### Visual Assets
 
 
 
@@ -500,7 +502,7 @@ limitations under the License.
 
 
 
-### 🚀 APIs & Data Sources
+###  APIs & Data Sources
 
 
 
@@ -511,7 +513,7 @@ limitations under the License.
 
 
 
-### 🔤 Typography
+###  Typography
 
 
 
@@ -520,7 +522,7 @@ limitations under the License.
 
 
 
-### 🎨 Design Inspiration
+###  Design Inspiration
 
 
 
@@ -528,7 +530,7 @@ limitations under the License.
 
 
 
-### 🤖 Development Tools
+###  Development Tools
 
 
 
