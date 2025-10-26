@@ -451,49 +451,49 @@ limitations under the License.
 - Space ambient sound from **Pixabay**  
   Source: https://pixabay.com/sound-effects/ambient-soundscapes-007-space-atmosphere-304974/
 
-<div align="center">
+
 
 ### 🖼️ Visual Assets
 
-</div>
+
 
 - Publicly available space imagery sourced from Google (subject to original copyrights)
 - NASA image archives
 - ESA public domain imagery
 
-<div align="center">
+
 
 ### 🚀 APIs & Data Sources
 
-</div>
+
 
 - **NASA APIs** - Astronomy Picture of the Day, Near-Earth Objects, Mars photos
 - **SpaceX API** - Launch data and mission information
 - **Spaceflight News API** - Curated space news (https://spaceflightnewsapi.net/)
 - **Open Notify API** - ISS location tracking
 
-<div align="center">
+
 
 ### 🔤 Typography
 
-</div>
+
 
 - **Google Fonts** - Roboto family
 - **CDNFonts** - Starcraft font
 
-<div align="center">
+
 
 ### 🎨 Design Inspiration
 
-</div>
+
 
 - UI components and design elements inspired by **Universe.io**
 
-<div align="center">
+
 
 ### 🤖 Development Tools
 
-</div>
+
 
 - Content generation assistance from **ChatGPT** (OpenAI)
 - Code optimization with **GitHub Copilot**
