@@ -365,16 +365,9 @@ space-alone/
 # Repository: https://github.com/vmihiranga/space-alone
 ```
 
-2. **Configure Secrets**
-Add the following in Replit Secrets:
-- `SESSION_SECRET`
-- `NASA_API_KEY`
-- Database credentials
-
-3. **Run Setup**
+2. **Run Setup**
 ```bash
 npm install
-node backend/init-db-postgres.js
 npm start
 ```
 
@@ -401,7 +394,6 @@ NODE_ENV=production
 PORT=5000
 SESSION_SECRET=<your-production-secret>
 NASA_API_KEY=<your-api-key>
-# Add database credentials
 ```
 
 **Deployment Type:**
