@@ -1,3 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/starcraft');
+@import url('https://fonts.cdnfonts.com/css/sf-old-republic');
+@import url('https://fonts.cdnfonts.com/css/space-grotesk');
+@import url('https://fonts.cdnfonts.com/css/robo');
+
+@font-face {
+  font-family: 'Orbitron';
+  font-display: swap;
+  src: local('Orbitron');
+}
+
+@font-face {
+  font-family: 'Exo 2';
+  font-display: swap;
+  src: local('Exo 2');
+}
+
+@font-face {
+  font-family: 'Rajdhani';
+  font-display: swap;
+  src: local('Rajdhani');
+}
+
 :root {
   --space-black: #000000;
   --space-dark: #0a0a0a;
@@ -27,7 +70,7 @@ html {
 }
 
 body {
-  font-family: 'SF Old Republic Bold', 'Oswald', sans-serif;
+  font-family: 'SF Old Republic Bold', 'Exo 2', 'Rajdhani', 'Arial Narrow', 'Arial', sans-serif;
   background: var(--space-black);
   color: var(--white);
   line-height: 1.6;
@@ -36,16 +79,69 @@ body {
 
 h1,
 h2 {
-  font-family: 'ROBO Regular', sans-serif !important;
+  font-family: 'ROBO Regular', 'Orbitron', 'Audiowide', 'Russo One', 'Impact', 'Arial Black', sans-serif !important;
   font-weight: 400;
+  letter-spacing: 1px;
 }
 
 h3,
 h4,
 h5,
 h6 {
-  font-family: 'SF Old Republic Bold', sans-serif;
+  font-family: 'SF Old Republic Bold', 'Rajdhani', 'Saira Condensed', 'Teko', 'Arial Bold', sans-serif;
   font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.logo {
+  font-family: 'Starcraft', 'Audiowide', 'Black Ops One', 'Bungee', 'Impact', 'Arial Black', sans-serif !important;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  margin: 0 20px 0 6px;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  z-index: 1001;
+  white-space: nowrap;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: 'Starcraft', 'Audiowide', 'Monoton', 'Bungee Shade', 'Impact', sans-serif !important;
+  font-size: clamp(3rem, 8vw, 6rem);
+  margin-bottom: 20px;
+  text-shadow: 0 0 60px rgba(0, 243, 255, 0.6);
+  letter-spacing: 4px;
+  animation: glow 2s ease-in-out infinite alternate;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--neon-blue);
+  margin-bottom: 10px;
+  font-family: 'Space Grotesk', 'Orbitron', 'Michroma', 'Electrolize', 'Space Mono', 'Consolas', monospace;
+  text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+  letter-spacing: 2px;
+}
+
+.countdown-value {
+  color: var(--white);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', 'Space Mono', 'Share Tech Mono', 'Roboto Mono', 'Consolas', monospace;
+  letter-spacing: 1px;
+}
+
+.footer-title {
+  font-family: 'Starcraft', 'Audiowide', 'Russo One', 'Bungee', 'Impact', sans-serif !important;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 a {
@@ -225,7 +321,7 @@ a:hover {
 }
 
 .logo {
-  font-family: 'Starcraft', sans-serif !important;
+  font-family: 'Starcraft', 'Audiowide', 'Orbitron', 'Black Ops One', 'Impact', sans-serif !important;
   font-size: clamp(1.4rem, 2vw, 1.8rem);
   margin: 0 20px 0 6px;
   background: var(--gradient-primary);
@@ -407,14 +503,6 @@ a:hover {
   }
 }
 
-.hero-title {
-  font-family: 'Starcraft', sans-serif !important;
-  font-size: clamp(3rem, 8vw, 6rem);
-  margin-bottom: 20px;
-  text-shadow: 0 0 60px rgba(0, 243, 255, 0.6);
-  letter-spacing: 2px;
-  animation: glow 2s ease-in-out infinite alternate;
-}
 
 @keyframes glow {
   from {
@@ -453,7 +541,7 @@ a:hover {
 
 .scroll-indicator {
   position: absolute;
-  bottom: 50px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   animation: bounce 2s infinite;
@@ -1387,14 +1475,6 @@ a:hover {
   filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.6));
 }
 
-.stat-value {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--neon-blue);
-  margin-bottom: 10px;
-  font-family: 'Space Grotesk', sans-serif;
-  text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
-}
 
 .stat-label {
   font-size: 0.95rem;
@@ -1618,12 +1698,7 @@ a:hover {
   margin-bottom: 8px;
 }
 
-.countdown-value {
-  color: var(--white);
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-family: 'Space Grotesk', monospace;
-}
+
 
 /*  STARLINK SECTION  */
 .starlink-section {
@@ -1781,20 +1856,24 @@ a:hover {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 50px;
   margin-bottom: 50px;
+  text-align: left;
 }
 
 .footer-section {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: flex-start;
 }
 
-.footer-title {
-  font-family: 'Starcraft', sans-serif !important;
-  font-size: 2rem;
-  margin-bottom: 10px;
-  text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+.footer-links {
+  align-items: flex-start;
 }
+
+.footer-social {
+  justify-content: flex-start;
+}
+
 
 .footer-heading {
   font-size: 1.3rem;
@@ -1908,7 +1987,6 @@ a:hover {
   margin: 20px auto;
 }
 
-/* DOT SPINNER */
 .dot-spinner {
   position: relative;
   display: flex;
@@ -2011,765 +2089,6 @@ a:hover {
   50% {
     transform: scale(1);
     opacity: 1;
-  }
-}
-
-/* RESPONSIVE DESIGN  */
-@media (max-width: 1200px) {
-  .container {
-    max-width: 100%;
-    padding: 0 15px;
-  }
-
-  .nav-links {
-    gap: 5px;
-  }
-
-  .nav-link-space {
-    padding: 8px 15px;
-    font-size: 0.9rem;
-  }
-
-  .news-preview-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .mysteries-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-
-  .blog-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
-
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .glass-header {
-    width: 90%;
-    padding: 15px 20px;
-    border-radius: 20px;
-    top: 10px;
-  }
-
-  .mobile-menu-toggle {
-    display: flex;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    margin-top: 15px;
-    flex-direction: column;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-blue);
-    border-radius: var(--radius-md);
-    padding: 20px;
-    gap: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-20px);
-    transition: all 0.3s ease;
-  }
-
-  .nav-links.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .nav-link-space {
-    padding: 12px 15px;
-    border-radius: 8px;
-    text-align: center;
-  }
-
-  .logo {
-    font-size: 1.5rem;
-  }
-
-  .hero-section {
-    padding-top: 120px;
-    background-attachment: scroll;
-  }
-
-  .section-space {
-    padding: 80px 0;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .section-subtitle {
-    font-size: 1rem;
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 6vw, 5.5rem);
-    margin-bottom: 30px;
-    text-shadow: 0 0 20px var(--neon-blue),
-      0 0 40px var(--neon-blue),
-      0 0 60px var(--neon-blue);
-    letter-spacing: 3px;
-    animation: glow 2s ease-in-out infinite alternate;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    color: var(--white);
-    margin-bottom: 20px;
-    font-weight: 500;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-
-  .hero-description {
-    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-    color: var(--text-gray);
-    margin-bottom: 40px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.8;
-    text-align: center;
-    padding: 0 20px;
-  }
-
-  @keyframes glow {
-    from {
-      text-shadow: 0 0 20px var(--neon-blue),
-        0 0 40px var(--neon-blue),
-        0 0 60px var(--neon-blue);
-    }
-
-    to {
-      text-shadow: 0 0 30px var(--neon-blue),
-        0 0 50px var(--neon-blue),
-        0 0 70px var(--neon-blue);
-    }
-  }
-
-  .btn-gradient {
-    padding: 15px 30px;
-    font-size: 0.9rem;
-  }
-
-  .solar-container {
-    height: 50vh;
-  }
-
-  .nasa-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .mysteries-grid {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-
-  .mystery-card {
-    padding: 30px 25px;
-  }
-
-  .mystery-card h3 {
-    font-size: 1.3rem;
-  }
-
-  .mystery-desc {
-    font-size: 0.95rem;
-  }
-
-  .detail-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-
-  .detail-label,
-  .detail-value {
-    flex: 1;
-    text-align: left;
-  }
-
-  .controls-panel {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .btn-neon {
-    width: 100%;
-    max-width: 250px;
-    justify-content: center;
-  }
-
-  .popup-content {
-    padding: 30px 20px;
-    margin: 20px;
-  }
-
-  .popup-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  #popup-body h4 {
-    font-size: 1.5rem;
-  }
-
-  .apod-image {
-    height: 300px;
-  }
-
-  .slideshow-container {
-    height: 60vh;
-  }
-
-  .gallery-slide-overlay {
-    padding: 25px;
-  }
-
-  .gallery-slide-title {
-    font-size: 1.3rem;
-  }
-
-  .gallery-slide-desc {
-    font-size: 0.9rem;
-  }
-
-  .blog-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .blog-card {
-    padding: 30px 25px;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .footer {
-    padding: 60px 0 30px;
-  }
-
-  .audio-toggle {
-    width: 55px;
-    height: 55px;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .spacex-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-
-  .stat-card {
-    padding: 25px 20px;
-  }
-
-  .stat-value {
-    font-size: 2.2rem;
-  }
-
-  .stat-label {
-    font-size: 0.85rem;
-  }
-
-  .subsection-title {
-    font-size: 1.6rem;
-  }
-
-  .launch-image-container {
-    height: 250px;
-  }
-
-  .launch-details {
-    padding: 25px;
-  }
-
-  .launch-name {
-    font-size: 1.6rem;
-  }
-
-  .launch-info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .starlink-viz-container {
-    height: 350px;
-  }
-
-  .upcoming-launches-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer {
-    text-align: center;
-  }
-
-  .footer-section {
-    align-items: center;
-  }
-
-  .footer-links {
-    align-items: center;
-  }
-
-  .footer-links a {
-    padding-left: 0;
-  }
-
-  .footer-links a:hover {
-    padding-left: 0;
-  }
-
-  .footer-links a::before {
-    display: none;
-  }
-
-  .footer-social {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .site-icon {
-    width: 100px;
-    height: 100px;
-  }
-
-  .spinner-ring {
-    width: 140px;
-    height: 140px;
-  }
-
-  .loading-text {
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-  }
-
-  .glass-header {
-    padding: 12px 15px;
-  }
-
-  .logo {
-    font-size: 1.3rem;
-  }
-
-  .nav-link-space {
-    padding: 10px 12px;
-    font-size: 0.9rem;
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    margin-bottom: 30px;
-    text-shadow: 0 0 20px var(--neon-blue),
-      0 0 40px var(--neon-blue),
-      0 0 60px var(--neon-blue);
-    letter-spacing: 2px;
-    animation: glow 2s ease-in-out infinite alternate;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    color: var(--white);
-    margin-bottom: 20px;
-    font-weight: 500;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-
-  .hero-description {
-    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-    color: var(--text-gray);
-    margin-bottom: 40px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.8;
-    text-align: center;
-    padding: 0 20px;
-  }
-
-  @keyframes glow {
-    from {
-      text-shadow: 0 0 20px var(--neon-blue),
-        0 0 60px var(--neon-blue);
-    }
-
-    to {
-      text-shadow: 0 0 30px var(--neon-blue),
-        0 0 70px var(--neon-blue);
-    }
-  }
-
-  .btn-gradient {
-    padding: 12px 25px;
-    font-size: 0.85rem;
-  }
-
-  .section-space {
-    padding: 60px 0;
-  }
-
-  .section-title {
-    font-size: 1.8rem;
-  }
-
-  .mystery-intro p {
-    font-size: 1rem;
-  }
-
-  .mystery-card {
-    padding: 25px 20px;
-  }
-
-  .mystery-icon svg {
-    width: 50px;
-    height: 50px;
-  }
-
-  .mystery-card h3 {
-    font-size: 1.2rem;
-  }
-
-  .mystery-conclusion {
-    padding: 35px 25px;
-  }
-
-  .mystery-conclusion h3 {
-    font-size: 1.6rem;
-  }
-
-  .mystery-conclusion p {
-    font-size: 1rem;
-  }
-
-  .highlight-text {
-    font-size: 1.1rem;
-  }
-
-  .solar-container {
-    height: 40vh;
-  }
-
-  .nasa-card {
-    padding: 25px;
-  }
-
-  .card-title {
-    font-size: 1.2rem;
-  }
-
-  .apod-image,
-  .slideshow-container {
-    height: 250px;
-  }
-
-  .apod-details {
-    padding: 25px;
-  }
-
-  .apod-title {
-    font-size: 1.4rem;
-  }
-
-  .slideshow-container {
-    height: 60vh;
-  }
-
-  .gallery-slide-overlay {
-    padding: 25px;
-  }
-
-  .gallery-slide-title {
-    font-size: 1.3rem;
-  }
-
-  .gallery-slide-desc {
-    font-size: 0.9rem;
-  }
-
-  .blog-card h3 {
-    font-size: 1.3rem;
-  }
-
-  .blog-excerpt {
-    font-size: 0.95rem;
-  }
-
-  .audio-toggle {
-    width: 50px;
-    height: 50px;
-    bottom: 15px;
-    right: 15px;
-  }
-
-  .audio-toggle svg {
-    width: 25px;
-    height: 25px;
-  }
-
-  .popup-content {
-    padding: 25px 15px;
-  }
-
-  .popup-close {
-    width: 38px;
-    height: 38px;
-    font-size: 1.5rem;
-  }
-
-  .footer {
-    padding: 50px 0 20px;
-  }
-
-  .footer-title {
-    font-size: 1.5rem;
-  }
-
-  .footer-heading {
-    font-size: 1.1rem;
-  }
-
-  .footer-section {
-    gap: 15px;
-  }
-
-  .social-link {
-    width: 40px;
-    height: 40px;
-  }
-
-  .newsletter-form {
-    flex-direction: column;
-  }
-
-  .newsletter-btn {
-    width: 100%;
-    height: 50px;
-    border-radius: 50px;
-  }
-
-  .newsletter-btn:hover {
-    transform: scale(1.05);
-  }
-
-  .spacex-stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .stat-card {
-    padding: 20px;
-  }
-
-  .stat-icon svg {
-    width: 40px;
-    height: 40px;
-  }
-
-  .stat-value {
-    font-size: 2rem;
-  }
-
-  .launch-image-container {
-    height: 200px;
-  }
-
-  .launch-details {
-    padding: 20px;
-  }
-
-  .launch-name {
-    font-size: 1.4rem;
-  }
-
-  .starlink-viz-container {
-    height: 300px;
-  }
-
-  .footer {
-    text-align: center;
-  }
-
-  .footer-section {
-    align-items: center;
-  }
-
-  .footer-links {
-    align-items: center;
-  }
-
-  .footer-links a {
-    padding-left: 0;
-  }
-
-  .footer-links a:hover {
-    padding-left: 0;
-  }
-
-  .footer-links a::before {
-    display: none;
-  }
-
-  .footer-social {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 360px) {
-  .hero-title {
-    font-size: 1.8rem;
-  }
-
-  .section-title {
-    font-size: 1.6rem;
-  }
-
-  .mystery-card {
-    padding: 20px 15px;
-  }
-
-  .nasa-card {
-    padding: 20px;
-  }
-
-  .apod-details {
-    padding: 20px;
-  }
-
-  .blog-card {
-    padding: 25px 20px;
-  }
-
-  .footer {
-    text-align: center;
-  }
-
-  .footer-section {
-    align-items: center;
-  }
-
-  .footer-links {
-    align-items: center;
-  }
-
-  .footer-links a {
-    padding-left: 0;
-  }
-
-  .footer-links a:hover {
-    padding-left: 0;
-  }
-
-  .footer-links a::before {
-    display: none;
-  }
-
-  .footer-social {
-    justify-content: center;
-  }
-
-}
-
-
-@media (max-width: 1200px) {
-  .container {
-    max-width: 100%;
-    padding: 0 15px;
-  }
-
-  .nav-links {
-    gap: 5px;
-  }
-
-  .nav-link-space {
-    padding: 8px 15px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 992px) {
-  .mysteries-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-
-  .nasa-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-
-  .section-space {
-    padding: 80px 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .glass-header {
-    padding: 10px 20px;
-    top: 10px;
-  }
-
-  .hero-section {
-    padding-top: 80px;
-  }
-
-  .section-space {
-    padding: 60px 0;
-  }
-
-  .section-header {
-    margin-bottom: 40px;
-  }
-
-  .apod-image {
-    height: 300px;
-  }
-
-  .solar-container {
-    height: 50vh;
-  }
-}
-
-@media (max-width: 480px) {
-  .glass-header {
-    padding: 8px 15px;
-  }
-
-  .nav-link-space {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-  }
-
-  .btn-gradient {
-    padding: 14px 30px;
-    font-size: 0.9rem;
-  }
-
-  .mystery-card {
-    padding: 25px 20px;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .solar-container {
-    height: 40vh;
-  }
-
-  .apod-image {
-    height: 250px;
   }
 }
 
@@ -2991,5 +2310,3351 @@ a:hover {
 
   100% {
     stroke-dashoffset: 9;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2.8rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  h3 {
+    font-size: 1.8rem;
+  }
+
+  h4 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    margin-bottom: 50px;
+    text-align: left;
+  }
+
+  .footer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .footer-links {
+    align-items: flex-start;
+  }
+
+  .footer-social {
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+
+  .hero-title {
+    font-size: 6.5rem;
+  }
+
+  .section-title {
+    font-size: 4rem;
+  }
+}
+
+
+@media (max-width: 1399px) {
+  .container {
+    max-width: 1140px;
+  }
+
+  .mysteries-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .blog-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 960px;
+    padding: 0 20px;
+  }
+
+  .nav-links {
+    gap: 8px;
+  }
+
+  .nav-link-space {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .news-preview-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .spacex-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+
+@media (max-width: 1199px) {
+  .glass-header {
+    width: 92%;
+    padding: 12px 25px;
+  }
+
+  .hero-title {
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+  }
+
+  .section-space {
+    padding: 100px 0;
+  }
+
+  .mysteries-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+
+  .nasa-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .upcoming-launches-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 991px) {
+  .container {
+    max-width: 720px;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+    margin: 0 15px 0 5px;
+  }
+
+  .nav-logo-icon {
+    width: clamp(40px, 4.5vw, 50px);
+  }
+
+  .hero-section {
+    min-height: 90vh;
+    padding-top: 100px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  }
+
+  .hero-description {
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+    max-width: 550px;
+  }
+
+  .btn-gradient {
+    padding: 16px 35px;
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    font-size: clamp(2.2rem, 4.5vw, 3rem);
+  }
+
+  .section-subtitle {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  }
+
+  .mystery-intro p {
+    font-size: 1.1rem;
+  }
+
+  .solar-container {
+    height: 60vh;
+  }
+
+  .apod-image {
+    height: 400px;
+  }
+
+  .slideshow-container {
+    height: 70vh;
+  }
+
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .launch-image-container {
+    height: 350px;
+  }
+
+  .starlink-viz-container {
+    height: 380px;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .glass-header {
+    width: 90%;
+    padding: 15px 20px;
+    border-radius: 20px;
+    top: 10px;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 15px;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--border-blue);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    gap: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 40px rgba(0, 243, 255, 0.2);
+  }
+
+  .nav-links.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-link-space {
+    padding: 14px 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    margin: 0 12px 0 4px;
+  }
+
+  .nav-logo-icon {
+    width: clamp(38px, 4vw, 48px);
+  }
+
+  
+  .hero-section {
+    min-height: 85vh;
+    padding-top: 120px;
+    background-attachment: scroll;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 6.5vw, 4.5rem);
+    margin-bottom: 25px;
+    letter-spacing: 3px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.15rem, 2.3vw, 1.45rem);
+    margin-bottom: 18px;
+  }
+
+  .hero-description {
+    font-size: clamp(0.92rem, 1.7vw, 1.08rem);
+    margin-bottom: 35px;
+    max-width: 500px;
+    padding: 0 15px;
+  }
+
+  .btn-gradient {
+    padding: 15px 32px;
+    font-size: 0.92rem;
+  }
+
+  .scroll-indicator {
+    bottom: 20px;
+  }
+
+  
+  .section-space {
+    padding: 80px 0;
+  }
+
+  .section-header {
+    margin-bottom: 50px;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 12px;
+  }
+
+  .section-subtitle {
+    font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+  }
+
+  
+  .mystery-intro {
+    margin-bottom: 50px;
+    padding: 0 15px;
+  }
+
+  .mystery-intro p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .mysteries-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .mystery-card {
+    padding: 35px 28px;
+  }
+
+  .mystery-card h3 {
+    font-size: 1.35rem;
+  }
+
+  .mystery-desc {
+    font-size: 0.98rem;
+  }
+
+  .mystery-details {
+    padding-top: 18px;
+  }
+
+  .detail-item {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .detail-label {
+    flex: 0 0 40%;
+  }
+
+  .detail-value {
+    flex: 0 0 55%;
+  }
+
+  .mystery-conclusion {
+    padding: 45px 35px;
+  }
+
+  .mystery-conclusion h3 {
+    font-size: 1.9rem;
+    margin-bottom: 20px;
+  }
+
+  .mystery-conclusion p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .highlight-text {
+    font-size: 1.15rem;
+    margin-top: 25px;
+  }
+
+ 
+  .solar-container {
+    height: 55vh;
+    border-radius: var(--radius-md);
+  }
+
+  .controls-panel {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+  }
+
+  .btn-neon {
+    padding: 11px 22px;
+    font-size: 0.88rem;
+  }
+
+ 
+  .nasa-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .nasa-card {
+    padding: 30px;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .card-description,
+  .data-content {
+    font-size: 0.93rem;
+  }
+
+
+  .apod-container {
+    margin-bottom: 50px;
+  }
+
+  .apod-image {
+    height: 320px;
+  }
+
+  .apod-details {
+    padding: 30px;
+  }
+
+  .apod-title {
+    font-size: 1.6rem;
+  }
+
+  .apod-date {
+    font-size: 0.88rem;
+  }
+
+  .apod-explanation {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+ 
+  .slideshow-container {
+    height: 65vh;
+  }
+
+  .gallery-slide-overlay {
+    padding: 30px 25px;
+  }
+
+  .gallery-slide-title {
+    font-size: 1.5rem;
+  }
+
+  .gallery-slide-desc {
+    font-size: 0.95rem;
+  }
+
+  .slideshow-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .indicator-dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  
+  .blog-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .blog-image {
+    height: 200px;
+  }
+
+  .blog-content {
+    padding: 30px;
+  }
+
+  .blog-card h3 {
+    font-size: 1.45rem;
+  }
+
+  .blog-meta {
+    font-size: 0.83rem;
+  }
+
+  .blog-excerpt {
+    font-size: 0.95rem;
+  }
+
+
+  .news-preview-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .news-preview-image {
+    height: 200px;
+  }
+
+  .news-preview-content {
+    padding: 18px;
+  }
+
+  .news-preview-title {
+    font-size: 1.15rem;
+  }
+
+  .news-preview-summary {
+    font-size: 0.88rem;
+  }
+
+  .popup-content {
+    padding: 35px 25px;
+    margin: 15px;
+    max-height: 85vh;
+  }
+
+  .popup-close {
+    width: 42px;
+    height: 42px;
+    font-size: 1.6rem;
+  }
+
+  #popup-body h4 {
+    font-size: 1.7rem;
+  }
+
+  #popup-body p {
+    font-size: 0.95rem;
+  }
+
+  .popup-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .spacex-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .stat-card {
+    padding: 30px 25px;
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  .subsection-title {
+    font-size: 1.75rem;
+    margin-bottom: 25px;
+  }
+
+  .launch-image-container {
+    height: 280px;
+  }
+
+  .launch-details {
+    padding: 30px;
+  }
+
+  .launch-name {
+    font-size: 1.8rem;
+  }
+
+  .launch-date {
+    font-size: 0.95rem;
+  }
+
+  .launch-description {
+    font-size: 1rem;
+  }
+
+  .launch-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .upcoming-launches-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .upcoming-launch-card {
+    padding: 28px;
+  }
+
+  .upcoming-launch-card h4 {
+    font-size: 1.3rem;
+  }
+
+  .countdown-timer {
+    padding: 12px;
+  }
+
+  .countdown-value {
+    font-size: 1.35rem;
+  }
+
+  .starlink-viz-container {
+    height: 350px;
+  }
+
+  .starlink-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .starlink-stat-item {
+    padding: 20px 18px;
+  }
+
+  .starlink-stat-item strong {
+    font-size: 0.88rem;
+    margin-bottom: 8px;
+  }
+
+  .starlink-stat-item span {
+    font-size: 1.5rem;
+  }
+
+  .audio-toggle {
+    width: 52px;
+    height: 52px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .audio-toggle svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    text-align: center;
+  }
+
+  .footer-section {
+    align-items: center;
+    gap: 18px;
+  }
+
+  .footer-links {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    padding-left: 0 !important;
+  }
+
+  .footer-links a::before {
+    display: none;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+
+  .spinner {
+    width: 45px;
+    height: 45px;
+    border-width: 3.5px;
+    margin-bottom: 16px;
+  }
+
+  .spinner-small {
+    width: 28px;
+    height: 28px;
+    border-width: 2.5px;
+    margin: 16px auto;
+  }
+
+  .dot-spinner {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  .wifi-loader {
+    width: 76px;
+    height: 76px;
+  }
+
+  .wifi-loader svg.circle-outer {
+    height: 78px;
+    width: 78px;
+  }
+
+  .wifi-loader svg.circle-middle {
+    height: 54px;
+    width: 54px;
+  }
+
+  .wifi-loader svg.circle-inner {
+    height: 30px;
+    width: 30px;
+  }
+
+  .wifi-loader .text {
+    bottom: -45px;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+  }
+}
+
+
+@media (max-width: 479px) {
+
+
+  .site-icon {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 22px;
+  }
+
+  .spinner-ring {
+    width: 130px;
+    height: 130px;
+    top: -20px;
+    border-width: 2.5px;
+  }
+
+  .loading-text {
+    font-size: 0.9rem;
+    letter-spacing: 1.8px;
+    margin-top: 32px;
+  }
+
+  .glass-header {
+    width: 84%;
+    padding: 10px 12px;
+    border-radius: 16px;
+    top: 8px;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    margin: 0 8px 0 2px;
+    letter-spacing: 1.5px;
+  }
+
+  .nav-logo-icon {
+    width: clamp(32px, 3.5vw, 42px);
+  }
+
+  .mobile-menu-toggle {
+    padding: 6px;
+  }
+
+  .mobile-menu-toggle span {
+    width: 24px;
+    height: 2.5px;
+  }
+
+  .nav-links {
+    padding: 16px;
+    margin-top: 10px;
+    border-radius: 14px;
+  }
+
+  .nav-link-space {
+    padding: 11px 16px;
+    font-size: 0.92rem;
+    border-radius: 8px;
+  }
+
+  .hero-section {
+    padding-top: 85px;
+    min-height: 100vh;
+  }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 5.5vw, 3.5rem);
+    margin-bottom: 20px;
+    letter-spacing: 1.8px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.05rem, 2.1vw, 1.28rem);
+    margin-bottom: 14px;
+  }
+
+  .hero-description {
+    font-size: clamp(0.88rem, 1.6vw, 1rem);
+    margin-bottom: 30px;
+    max-width: 420px;
+    padding: 0 10px;
+    line-height: 1.65;
+  }
+
+  .btn-gradient {
+    padding: 13px 26px;
+    font-size: 0.85rem;
+    letter-spacing: 0.8px;
+    gap: 8px;
+  }
+
+  .scroll-indicator {
+    bottom: 16px;
+    padding: 8px;
+  }
+
+
+  .section-space {
+    padding: 60px 0;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3.6vw, 2.3rem);
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: clamp(0.88rem, 1.5vw, 0.98rem);
+  }
+
+
+  .mystery-intro {
+    margin-bottom: 40px;
+    padding: 0 10px;
+  }
+
+  .mystery-intro p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .mystery-card {
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .mystery-icon {
+    margin-bottom: 20px;
+  }
+
+  .mystery-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .mystery-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .mystery-desc {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  .mystery-details {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .detail-item {
+    margin: 9px 0;
+    padding: 5px 0;
+    font-size: 0.86rem;
+  }
+
+  .mystery-conclusion {
+    padding: 35px 25px;
+    border-radius: 18px;
+  }
+
+  .mystery-conclusion h3 {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .mystery-conclusion p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .highlight-text {
+    font-size: 1.05rem;
+    margin-top: 20px;
+  }
+
+
+  .solar-container {
+    height: 42vh;
+    border-radius: 14px;
+  }
+
+  .controls-panel {
+    gap: 9px;
+    margin-top: 20px;
+  }
+
+  .btn-neon {
+    padding: 10px 20px;
+    font-size: 0.83rem;
+    border-radius: 40px;
+  }
+
+
+  .nasa-grid {
+    gap: 22px;
+  }
+
+  .nasa-card {
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 9px;
+  }
+
+  .card-title::before {
+    width: 7px;
+    height: 7px;
+  }
+
+  .card-description {
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+  }
+
+  .data-content {
+    font-size: 0.88rem;
+  }
+
+  .data-content p {
+    margin: 7px 0;
+    padding: 5px 0;
+  }
+
+  .data-content strong {
+    min-width: 100px;
+    font-size: 0.88rem;
+  }
+
+
+  .apod-container {
+    margin-bottom: 45px;
+  }
+
+  .apod-content {
+    border-radius: 14px;
+  }
+
+  .apod-image {
+    height: 240px;
+  }
+
+  .apod-details {
+    padding: 25px 20px;
+  }
+
+  .apod-title {
+    font-size: 1.4rem;
+    margin-bottom: 7px;
+  }
+
+  .apod-date {
+    font-size: 0.83rem;
+    margin-bottom: 14px;
+  }
+
+  .apod-explanation {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .slideshow-container {
+    height: 50vh;
+  }
+
+  .gallery-slide-overlay {
+    padding: 22px 18px;
+  }
+
+  .gallery-slide-title {
+    font-size: 1.28rem;
+    margin-bottom: 7px;
+  }
+
+  .gallery-slide-desc {
+    font-size: 0.88rem;
+  }
+
+  .slideshow-controls {
+    gap: 14px;
+    margin: 18px auto;
+  }
+
+  .slideshow-btn {
+    width: 44px;
+    height: 44px;
+    border-width: 1.8px;
+  }
+
+  .slideshow-indicators {
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .indicator-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+
+  .blog-grid {
+    gap: 28px;
+  }
+
+  .blog-card {
+    border-radius: 14px;
+  }
+
+  .blog-image {
+    height: 180px;
+  }
+
+  .blog-content {
+    padding: 25px 20px;
+  }
+
+  .blog-card h3 {
+    font-size: 1.28rem;
+    margin-bottom: 11px;
+    line-height: 1.25;
+  }
+
+  .blog-meta {
+    font-size: 0.8rem;
+    gap: 11px;
+    margin-bottom: 14px;
+  }
+
+  .blog-excerpt {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .blog-read-more {
+    font-size: 0.88rem;
+    gap: 7px;
+  }
+
+
+  .news-preview-grid {
+    gap: 16px;
+    padding: 10px;
+  }
+
+  .news-preview-card {
+    border-radius: 14px;
+  }
+
+  .news-preview-image {
+    height: 180px;
+  }
+
+  .news-preview-content {
+    padding: 15px;
+  }
+
+  .news-preview-badge {
+    padding: 4px 11px;
+    font-size: 0.66rem;
+    border-radius: 12px;
+    margin-bottom: 7px;
+  }
+
+  .news-preview-title {
+    font-size: 1.08rem;
+    margin-bottom: 5px;
+    line-height: 1.35;
+  }
+
+  .news-preview-summary {
+    font-size: 0.83rem;
+    line-height: 1.55;
+    margin-bottom: 11px;
+  }
+
+  .news-preview-meta {
+    font-size: 0.76rem;
+    padding-top: 9px;
+  }
+
+ 
+  .planet-popup {
+    padding: 10px;
+  }
+
+  .popup-content {
+    padding: 28px 18px;
+    margin: 10px;
+    max-height: 80vh;
+    border-radius: 18px;
+  }
+
+  .popup-close {
+    width: 38px;
+    height: 38px;
+    top: 10px;
+    right: 10px;
+    font-size: 1.4rem;
+    border-width: 1.8px;
+  }
+
+  #popup-body h4 {
+    font-size: 1.45rem;
+    margin-bottom: 11px;
+  }
+
+  #popup-body p {
+    font-size: 0.9rem;
+    margin-bottom: 9px;
+    line-height: 1.65;
+  }
+
+  #popup-body strong {
+    font-size: 0.9rem;
+  }
+
+  .popup-grid {
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+ 
+  .spacex-stats-grid {
+    gap: 18px;
+    margin-bottom: 50px;
+  }
+
+  .stat-card {
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .stat-icon {
+    margin-bottom: 16px;
+  }
+
+  .stat-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-value {
+    font-size: 2.1rem;
+    margin-bottom: 7px;
+  }
+
+  .stat-label {
+    font-size: 0.86rem;
+  }
+
+  .subsection-title {
+    font-size: 1.55rem;
+    margin-bottom: 20px;
+  }
+
+  
+  .latest-launch-section {
+    margin-bottom: 70px;
+  }
+
+  .latest-launch-card {
+    border-radius: 18px;
+  }
+
+  .launch-image-container {
+    height: 220px;
+  }
+
+  .launch-badge {
+    top: 12px;
+    right: 12px;
+    padding: 5px 14px;
+    font-size: 0.78rem;
+    border-radius: 40px;
+  }
+
+  .launch-details {
+    padding: 25px 20px;
+  }
+
+  .launch-name {
+    font-size: 1.55rem;
+    margin-bottom: 11px;
+  }
+
+  .launch-date {
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+    gap: 6px;
+  }
+
+  .launch-description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 22px;
+  }
+
+  .launch-info-grid {
+    gap: 14px;
+    margin-top: 22px;
+    padding-top: 22px;
+  }
+
+  .launch-info-item {
+    padding: 11px;
+    border-radius: 10px;
+  }
+
+  .launch-info-label {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .launch-info-value {
+    font-size: 1rem;
+  }
+
+ 
+  .upcoming-launches-section {
+    margin-bottom: 70px;
+  }
+
+  .upcoming-launches-grid {
+    gap: 22px;
+  }
+
+  .upcoming-launch-card {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .upcoming-launch-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 11px;
+  }
+
+  .upcoming-launch-card .launch-date {
+    margin-bottom: 14px;
+  }
+
+  .upcoming-launch-card p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 11px;
+  }
+
+  .countdown-timer {
+    padding: 9px;
+    margin-top: 14px;
+    border-radius: 7px;
+  }
+
+  .countdown-label {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .countdown-value {
+    font-size: 1.25rem;
+  }
+
+
+  .starlink-section {
+    margin-bottom: 50px;
+  }
+
+  .starlink-viz-container {
+    height: 300px;
+    border-radius: 18px;
+    margin-bottom: 22px;
+  }
+
+  .starlink-stats {
+    gap: 14px;
+  }
+
+  .starlink-stat-item {
+    padding: 18px 16px;
+    border-radius: 10px;
+  }
+
+  .starlink-stat-item strong {
+    font-size: 0.86rem;
+    margin-bottom: 7px;
+  }
+
+  .starlink-stat-item span {
+    font-size: 1.4rem;
+  }
+
+
+  .audio-toggle {
+    width: 50px;
+    height: 50px;
+    bottom: 18px;
+    right: 18px;
+    border-width: 1.8px;
+  }
+
+  .audio-toggle svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  
+  .footer {
+    padding: 55px 0 20px;
+    margin-top: 65px;
+  }
+
+  .footer-grid {
+    gap: 30px;
+    margin-bottom: 38px;
+  }
+
+  .footer-section {
+    gap: 14px;
+  }
+
+  .footer-title {
+    font-size: 1.55rem;
+    margin-bottom: 7px;
+  }
+
+  .footer-heading {
+    font-size: 1.1rem;
+    margin-bottom: 3px;
+  }
+
+  .footer-text {
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .footer-links {
+    gap: 8px;
+  }
+
+  .footer-links a {
+    font-size: 0.88rem;
+  }
+
+  .footer-social {
+    gap: 11px;
+    margin-top: 7px;
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+    border-width: 1.8px;
+  }
+
+  .social-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .footer-bottom {
+    padding-top: 30px;
+  }
+
+  .footer-bottom p {
+    margin: 5px 0;
+    font-size: 0.84rem;
+  }
+
+  .loading-state {
+    padding: 35px;
+  }
+
+  .spinner {
+    width: 42px;
+    height: 42px;
+    border-width: 3px;
+    margin-bottom: 14px;
+  }
+
+  .spinner-small {
+    width: 26px;
+    height: 26px;
+    border-width: 2.5px;
+    margin: 14px auto;
+  }
+
+  .dot-spinner {
+    height: 2.3rem;
+    width: 2.3rem;
+  }
+
+  .wifi-loader {
+    width: 72px;
+    height: 72px;
+  }
+
+  .wifi-loader svg {
+    stroke-width: 5px;
+  }
+
+  .wifi-loader svg.circle-outer {
+    height: 74px;
+    width: 74px;
+  }
+
+  .wifi-loader svg.circle-middle {
+    height: 50px;
+    width: 50px;
+  }
+
+  .wifi-loader svg.circle-inner {
+    height: 28px;
+    width: 28px;
+  }
+
+  .wifi-loader .text {
+    bottom: -42px;
+    font-size: 13px;
+    letter-spacing: 1.3px;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .glass-header {
+    width: 82%;
+    padding: 8px 10px;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+    margin: 0 6px 0 2px;
+  }
+
+  .nav-logo-icon {
+    width: clamp(30px, 3.2vw, 38px);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5.2vw, 3.2rem);
+    letter-spacing: 1.5px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+  }
+
+  .hero-description {
+    font-size: clamp(0.85rem, 1.55vw, 0.95rem);
+  }
+
+  .btn-gradient {
+    padding: 12px 24px;
+    font-size: 0.82rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.65rem, 3.4vw, 2.1rem);
+  }
+
+  .section-subtitle {
+    font-size: clamp(0.85rem, 1.45vw, 0.95rem);
+  }
+
+  .mystery-card {
+    padding: 22px 18px;
+  }
+
+  .mystery-icon svg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .mystery-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .mystery-desc {
+    font-size: 0.9rem;
+  }
+
+  .mystery-conclusion {
+    padding: 32px 22px;
+  }
+
+  .mystery-conclusion h3 {
+    font-size: 1.5rem;
+  }
+
+  .mystery-conclusion p {
+    font-size: 0.92rem;
+  }
+
+  .solar-container {
+    height: 38vh;
+  }
+
+  .nasa-card {
+    padding: 22px 18px;
+  }
+
+  .apod-image {
+    height: 220px;
+  }
+
+  .apod-details {
+    padding: 22px 18px;
+  }
+
+  .apod-title {
+    font-size: 1.3rem;
+  }
+
+  .slideshow-container {
+    height: 45vh;
+  }
+
+  .blog-content {
+    padding: 22px 18px;
+  }
+
+  .blog-card h3 {
+    font-size: 1.22rem;
+  }
+
+  .popup-content {
+    padding: 25px 16px;
+  }
+
+  #popup-body h4 {
+    font-size: 1.35rem;
+  }
+
+  .stat-value {
+    font-size: 1.95rem;
+  }
+
+  .launch-image-container {
+    height: 200px;
+  }
+
+  .launch-details {
+    padding: 22px 18px;
+  }
+
+  .launch-name {
+    font-size: 1.45rem;
+  }
+
+  .starlink-viz-container {
+    height: 280px;
+  }
+
+  .audio-toggle {
+    width: 48px;
+    height: 48px;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .audio-toggle svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .footer {
+    padding: 50px 0 18px;
+  }
+
+  .footer-title {
+    font-size: 1.45rem;
+  }
+
+  .footer-heading {
+    font-size: 1.05rem;
+  }
+
+  .social-link {
+    width: 38px;
+    height: 38px;
+  }
+
+  .social-link svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+
+  .solar-container {
+    height: 85vh;
+  }
+
+  .slideshow-container {
+    height: 85vh;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .section-space {
+    padding: 50px 0;
+  }
+
+  .starlink-viz-container {
+    height: 75vh;
+  }
+}
+
+@media print {
+
+  .glass-header,
+  .scroll-indicator,
+  .audio-toggle,
+  .slideshow-controls,
+  .slideshow-indicators,
+  .mobile-menu-toggle,
+  .controls-panel {
+    display: none !important;
+  }
+
+  .hero-section {
+    background-attachment: scroll !important;
+  }
+
+  .section-space {
+    padding: 40px 0;
+    page-break-inside: avoid;
+  }
+
+  * {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .glass-header {
+    width: 88%;
+    padding: 12px 18px;
+  }
+
+  .hero-section {
+    padding-top: 100px;
+  }
+
+  .section-space {
+    padding: 70px 0;
+  }
+
+  .mystery-card {
+    padding: 30px 25px;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .detail-label,
+  .detail-value {
+    flex: 1;
+    text-align: left;
+  }
+
+  .controls-panel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-neon {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .spacex-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .launch-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .starlink-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 575px) {
+
+  .site-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 25px;
+  }
+
+  .spinner-ring {
+    width: 140px;
+    height: 140px;
+    top: -20px;
+  }
+
+  .loading-text {
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    margin-top: 35px;
+  }
+
+
+  .glass-header {
+    width: 86%;
+    padding: 10px 15px;
+    border-radius: 18px;
+  }
+
+  .logo {
+    font-size: 1.35rem;
+    margin: 0 10px 0 3px;
+  }
+
+  .nav-logo-icon {
+    width: clamp(35px, 3.8vw, 45px);
+  }
+
+  .mobile-menu-toggle span {
+    width: 26px;
+    height: 2.5px;
+  }
+
+  .nav-links {
+    padding: 18px;
+    margin-top: 12px;
+  }
+
+  .nav-link-space {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+  }
+
+  .hero-section {
+    padding-top: 100px;
+    min-height: 100vh;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 22px;
+    letter-spacing: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.08rem, 2.2vw, 1.35rem);
+    margin-bottom: 16px;
+  }
+
+  .hero-description {
+    font-size: clamp(0.9rem, 1.65vw, 1.05rem);
+    margin-bottom: 32px;
+    max-width: 450px;
+    padding: 0 12px;
+  }
+
+  .btn-gradient {
+    padding: 14px 28px;
+    font-size: 0.88rem;
+    letter-spacing: 1px;
+  }
+
+  .scroll-indicator {
+    bottom: 18px;
+  }
+
+
+  .section-space {
+    padding: 65px 0;
+  }
+
+  .section-header {
+    margin-bottom: 45px;
+  }
+
+  .section-title {
+    font-size: clamp(1.85rem, 3.8vw, 2.5rem);
+    margin-bottom: 10px;
+  }
+
+  .section-subtitle {
+    font-size: clamp(0.9rem, 1.55vw, 1.02rem);
+  }
+
+ 
+  .mystery-intro {
+    margin-bottom: 45px;
+    padding: 0 12px;
+  }
+
+  .mystery-intro p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .mystery-card {
+    padding: 28px 22px;
+  }
+
+  .mystery-icon svg {
+    width: 52px;
+    height: 52px;
+  }
+
+  .mystery-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 18px;
+  }
+
+  .mystery-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .mystery-details {
+    margin-top: 18px;
+    padding-top: 18px;
+  }
+
+  .detail-item {
+    margin: 10px 0;
+    padding: 6px 0;
+    font-size: 0.88rem;
+  }
+
+  .mystery-conclusion {
+    padding: 38px 28px;
+  }
+
+  .mystery-conclusion h3 {
+    font-size: 1.7rem;
+    margin-bottom: 18px;
+  }
+
+  .mystery-conclusion p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .highlight-text {
+    font-size: 1.08rem;
+    margin-top: 22px;
+  }
+
+ 
+  .solar-container {
+    height: 45vh;
+  }
+
+  .controls-panel {
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  
+  .nasa-card {
+    padding: 28px 22px;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+
+  .card-description {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .data-content {
+    font-size: 0.9rem;
+  }
+
+  .data-content p {
+    margin: 8px 0;
+    padding: 6px 0;
+  }
+
+
+  .apod-image {
+    height: 260px;
+  }
+
+  .apod-details {
+    padding: 28px 22px;
+  }
+
+  .apod-title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .apod-date {
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+
+  .apod-explanation {
+    font-size: 0.93rem;
+    line-height: 1.65;
+  }
+
+ 
+  .slideshow-container {
+    height: 55vh;
+  }
+
+  .gallery-slide-overlay {
+    padding: 25px 20px;
+  }
+
+  .gallery-slide-title {
+    font-size: 1.35rem;
+    margin-bottom: 8px;
+  }
+
+  .gallery-slide-desc {
+    font-size: 0.9rem;
+  }
+
+  .slideshow-controls {
+    gap: 16px;
+    margin: 20px auto;
+  }
+
+  .slideshow-btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .indicator-dot {
+    width: 11px;
+    height: 11px;
+    gap: 10px;
+  }
+
+
+  .blog-image {
+    height: 190px;
+  }
+
+  .blog-content {
+    padding: 28px 22px;
+  }
+
+  .blog-card h3 {
+    font-size: 1.35rem;
+    margin-bottom: 12px;
+  }
+
+  .blog-meta {
+    font-size: 0.82rem;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .blog-excerpt {
+    font-size: 0.93rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+ 
+  .news-preview-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 12px;
+  }
+
+  .news-preview-image {
+    height: 190px;
+  }
+
+  .news-preview-content {
+    padding: 16px;
+  }
+
+  .news-preview-badge {
+    padding: 5px 12px;
+    font-size: 0.68rem;
+    margin-bottom: 8px;
+  }
+
+  .news-preview-title {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .news-preview-summary {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+  }
+
+  .news-preview-meta {
+    font-size: 0.78rem;
+    padding-top: 10px;
+  }
+
+
+  .popup-content {
+    padding: 30px 20px;
+    margin: 12px;
+    max-height: 82vh;
+  }
+
+  .popup-close {
+    width: 40px;
+    height: 40px;
+    top: 12px;
+    right: 12px;
+    font-size: 1.5rem;
+  }
+
+  #popup-body h4 {
+    font-size: 1.55rem;
+    margin-bottom: 12px;
+  }
+
+  #popup-body p {
+    font-size: 0.93rem;
+    margin-bottom: 10px;
+    line-height: 1.7;
+  }
+
+  .popup-grid {
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .stat-card {
+    padding: 28px 22px;
+  }
+
+  .stat-icon svg {
+    width: 42px;
+    height: 42px;
+  }
+
+  .stat-value {
+    font-size: 2.3rem;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 0.88rem;
+  }
+
+  .subsection-title {
+    font-size: 1.65rem;
+    margin-bottom: 22px;
+  }
+
+ 
+  .launch-image-container {
+    height: 240px;
+  }
+
+  .launch-badge {
+    top: 15px;
+    right: 15px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+  }
+
+  .launch-details {
+    padding: 28px 22px;
+  }
+
+  .launch-name {
+    font-size: 1.65rem;
+    margin-bottom: 12px;
+  }
+
+  .launch-date {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .launch-description {
+    font-size: 0.98rem;
+    margin-bottom: 25px;
+  }
+
+  .launch-info-grid {
+    gap: 16px;
+    margin-top: 25px;
+    padding-top: 25px;
+  }
+
+  .launch-info-item {
+    padding: 12px;
+  }
+
+  .launch-info-label {
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+  }
+
+  .launch-info-value {
+    font-size: 1.05rem;
+  }
+
+
+  .upcoming-launch-card {
+    padding: 25px 20px;
+  }
+
+  .upcoming-launch-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
+  .upcoming-launch-card .launch-date {
+    margin-bottom: 16px;
+  }
+
+  .upcoming-launch-card p {
+    font-size: 0.93rem;
+    margin-bottom: 12px;
+  }
+
+  .countdown-timer {
+    padding: 10px;
+    margin-top: 16px;
+  }
+
+  .countdown-label {
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+  }
+
+  .countdown-value {
+    font-size: 1.3rem;
+  }
+
+ 
+  .starlink-viz-container {
+    height: 320px;
+    margin-bottom: 25px;
+  }
+
+ 
+  .starlink-stat-item {
+    padding: 20px 18px;
+  }
+
+  .starlink-stat-item strong {
+    font-size: 0.88rem;
+    margin-bottom: 8px;
+  }
+
+  .starlink-stat-item span {
+    font-size: 1.5rem;
+  }
+
+
+  .audio-toggle {
+    width: 52px;
+    height: 52px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .audio-toggle svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  
+  .footer {
+    padding: 60px 0 22px;
+    margin-top: 70px;
+  }
+
+  .footer-grid {
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  .footer-section {
+    gap: 16px;
+  }
+
+  .footer-title {
+    font-size: 1.65rem;
+    margin-bottom: 8px;
+  }
+
+  .footer-heading {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+  }
+
+  .footer-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .footer-links {
+    gap: 9px;
+  }
+
+  .footer-links a {
+    font-size: 0.9rem;
+  }
+
+  .footer-social {
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .social-link {
+    width: 42px;
+    height: 42px;
+  }
+
+  .footer-bottom {
+    padding-top: 32px;
+  }
+
+  .footer-bottom p {
+    margin: 6px 0;
+    font-size: 0.86rem;
+  }
+
+ 
+  .spinner {
+    width: 45px;
+    height: 45px;
+    border-width: 3.5px;
+    margin-bottom: 16px;
+  }
+
+  .spinner-small {
+    width: 28px;
+    height: 28px;
+    border-width: 2.5px;
+    margin: 16px auto;
+  }
+
+  
+  .dot-spinner {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+ 
+  .wifi-loader {
+    width: 76px;
+    height: 76px;
+  }
+
+  .wifi-loader svg.circle-outer {
+    height: 78px;
+    width: 78px;
+  }
+
+  .wifi-loader svg.circle-middle {
+    height: 54px;
+    width: 54px;
+  }
+
+  .wifi-loader svg.circle-inner {
+    height: 30px;
+    width: 30px;
+  }
+
+  .wifi-loader .text {
+    bottom: -45px;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+  }
+}
+
+
+@media (max-width: 479px) {
+
+ 
+  .site-icon {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 22px;
+  }
+
+  .spinner-ring {
+    width: 130px;
+    height: 130px;
+    top: -20px;
+    border-width: 2.5px;
+  }
+
+  .loading-text {
+    font-size: 0.9rem;
+    letter-spacing: 1.8px;
+    margin-top: 32px;
+  }
+
+
+  .glass-header {
+    width: 84%;
+    padding: 10px 12px;
+    border-radius: 16px;
+    top: 8px;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    margin: 0 8px 0 2px;
+    letter-spacing: 1.5px;
+  }
+
+  .nav-logo-icon {
+    width: clamp(32px, 3.5vw, 42px);
+  }
+
+  .mobile-menu-toggle {
+    padding: 6px;
+  }
+
+  .mobile-menu-toggle span {
+    width: 24px;
+    height: 2.5px;
+  }
+
+  .nav-links {
+    padding: 16px;
+    margin-top: 10px;
+    border-radius: 14px;
+  }
+
+  .nav-link-space {
+    padding: 11px 16px;
+    font-size: 0.92rem;
+    border-radius: 8px;
+  }
+
+
+  .hero-section {
+    padding-top: 100px;
+    min-height: 100vh;
+  }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 5.5vw, 3.5rem);
+    margin-bottom: 20px;
+    letter-spacing: 1.8px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.05rem, 2.1vw, 1.28rem);
+    margin-bottom: 14px;
+  }
+
+  .hero-description {
+    font-size: clamp(0.88rem, 1.6vw, 1rem);
+    margin-bottom: 30px;
+    max-width: 420px;
+    padding: 0 10px;
+    line-height: 1.65;
+  }
+
+  .btn-gradient {
+    padding: 13px 26px;
+    font-size: 0.85rem;
+    letter-spacing: 0.8px;
+    gap: 8px;
+  }
+
+  .scroll-indicator {
+    bottom: 60px;
+    padding: 8px;
+  }
+
+ 
+  .section-space {
+    padding: 60px 0;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3.6vw, 2.3rem);
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: clamp(0.88rem, 1.5vw, 0.98rem);
+  }
+
+  
+  .mystery-intro {
+    margin-bottom: 40px;
+    padding: 0 10px;
+  }
+
+  .mystery-intro p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .mystery-card {
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .mystery-icon {
+    margin-bottom: 20px;
+  }
+
+  .mystery-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .mystery-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .mystery-desc {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  .mystery-details {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .detail-item {
+    margin: 9px 0;
+    padding: 5px 0;
+    font-size: 0.86rem;
+  }
+
+  .mystery-conclusion {
+    padding: 35px 25px;
+    border-radius: 18px;
+  }
+
+  .mystery-conclusion h3 {
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+  }
+
+  .mystery-conclusion p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .highlight-text {
+    font-size: 1.05rem;
+    margin-top: 20px;
+  }
+
+ 
+  .solar-container {
+    height: 42vh;
+    border-radius: 14px;
+  }
+
+  .controls-panel {
+    gap: 9px;
+    margin-top: 20px;
+  }
+
+  .btn-neon {
+    padding: 10px 20px;
+    font-size: 0.83rem;
+    border-radius: 40px;
+  }
+
+
+  .nasa-grid {
+    gap: 22px;
+  }
+
+  .nasa-card {
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 9px;
+  }
+
+  .card-title::before {
+    width: 7px;
+    height: 7px;
+  }
+
+  .card-description {
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+  }
+
+  .data-content {
+    font-size: 0.88rem;
+  }
+
+  .data-content p {
+    margin: 7px 0;
+    padding: 5px 0;
+  }
+
+  .data-content strong {
+    min-width: 100px;
+    font-size: 0.88rem;
+  }
+
+ 
+  .apod-container {
+    margin-bottom: 45px;
+  }
+
+  .apod-content {
+    border-radius: 14px;
+  }
+
+  .apod-image {
+    height: 240px;
+  }
+
+  .apod-details {
+    padding: 25px 20px;
+  }
+
+  .apod-title {
+    font-size: 1.4rem;
+    margin-bottom: 7px;
+  }
+
+  .apod-date {
+    font-size: 0.83rem;
+    margin-bottom: 14px;
+  }
+
+  .apod-explanation {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  
+  .slideshow-container {
+    height: 50vh;
+  }
+
+  .gallery-slide-overlay {
+    padding: 22px 18px;
+  }
+
+  .gallery-slide-title {
+    font-size: 1.28rem;
+    margin-bottom: 7px;
+  }
+
+  .gallery-slide-desc {
+    font-size: 0.88rem;
+  }
+
+  .slideshow-controls {
+    gap: 14px;
+    margin: 18px auto;
+  }
+
+  .slideshow-btn {
+    width: 44px;
+    height: 44px;
+    border-width: 1.8px;
+  }
+
+  .slideshow-indicators {
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .indicator-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  
+  .blog-grid {
+    gap: 28px;
+  }
+
+  .blog-card {
+    border-radius: 14px;
+  }
+
+  .blog-image {
+    height: 180px;
+  }
+
+  .blog-content {
+    padding: 25px 20px;
+  }
+
+  .blog-card h3 {
+    font-size: 1.28rem;
+    margin-bottom: 11px;
+    line-height: 1.25;
+  }
+
+  .blog-meta {
+    font-size: 0.8rem;
+    gap: 11px;
+    margin-bottom: 14px;
+  }
+
+  .blog-excerpt {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .blog-read-more {
+    font-size: 0.88rem;
+    gap: 7px;
+  }
+
+
+  .news-preview-grid {
+    gap: 16px;
+    padding: 10px;
+  }
+
+  .news-preview-card {
+    border-radius: 14px;
+  }
+
+  .news-preview-image {
+    height: 180px;
+  }
+
+  .news-preview-content {
+    padding: 15px;
+  }
+
+  .news-preview-badge {
+    padding: 4px 11px;
+    font-size: 0.66rem;
+    border-radius: 12px;
+    margin-bottom: 7px;
+  }
+
+  .news-preview-title {
+    font-size: 1.08rem;
+    margin-bottom: 5px;
+    line-height: 1.35;
+  }
+
+  .news-preview-summary {
+    font-size: 0.83rem;
+    line-height: 1.55;
+    margin-bottom: 11px;
+  }
+
+  .news-preview-meta {
+    font-size: 0.76rem;
+    padding-top: 9px;
+  }
+
+ 
+  .planet-popup {
+    padding: 10px;
+  }
+
+  .popup-content {
+    padding: 28px 18px;
+    margin: 10px;
+    max-height: 80vh;
+    border-radius: 18px;
+  }
+
+  .popup-close {
+    width: 38px;
+    height: 38px;
+    top: 10px;
+    right: 10px;
+    font-size: 1.4rem;
+    border-width: 1.8px;
+  }
+
+  #popup-body h4 {
+    font-size: 1.45rem;
+    margin-bottom: 11px;
+  }
+
+  #popup-body p {
+    font-size: 0.9rem;
+    margin-bottom: 9px;
+    line-height: 1.65;
+  }
+
+  #popup-body strong {
+    font-size: 0.9rem;
+  }
+
+  .popup-grid {
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+
+  .spacex-stats-grid {
+    gap: 18px;
+    margin-bottom: 50px;
+  }
+
+  .stat-card {
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .stat-icon {
+    margin-bottom: 16px;
+  }
+
+  .stat-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-value {
+    font-size: 2.1rem;
+    margin-bottom: 7px;
+  }
+
+  .stat-label {
+    font-size: 0.86rem;
+  }
+
+  .subsection-title {
+    font-size: 1.55rem;
+    margin-bottom: 20px;
+  }
+
+  
+  .latest-launch-section {
+    margin-bottom: 70px;
+  }
+
+  .latest-launch-card {
+    border-radius: 18px;
+  }
+
+  .launch-image-container {
+    height: 220px;
+  }
+
+  .launch-badge {
+    top: 12px;
+    right: 12px;
+    padding: 5px 14px;
+    font-size: 0.78rem;
+    border-radius: 40px;
+  }
+
+  .launch-details {
+    padding: 25px 20px;
+  }
+
+  .launch-name {
+    font-size: 1.55rem;
+    margin-bottom: 11px;
+  }
+
+  .launch-date {
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+    gap: 6px;
+  }
+
+  .launch-description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 22px;
+  }
+
+  .launch-info-grid {
+    gap: 14px;
+    margin-top: 22px;
+    padding-top: 22px;
+  }
+
+  .launch-info-item {
+    padding: 11px;
+    border-radius: 10px;
+  }
+
+  .launch-info-label {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .launch-info-value {
+    font-size: 1rem;
+  }
+
+ 
+  .upcoming-launches-section {
+    margin-bottom: 70px;
+  }
+
+  .upcoming-launches-grid {
+    gap: 22px;
+  }
+
+  .upcoming-launch-card {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .upcoming-launch-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 11px;
+  }
+
+  .upcoming-launch-card .launch-date {
+    margin-bottom: 14px;
+  }
+
+  .upcoming-launch-card p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 11px;
+  }
+
+  .countdown-timer {
+    padding: 9px;
+    margin-top: 14px;
+    border-radius: 7px;
+  }
+
+  .countdown-label {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .countdown-value {
+    font-size: 1.25rem;
+  }
+
+
+  .starlink-section {
+    margin-bottom: 50px;
+  }
+
+  .starlink-viz-container {
+    height: 300px;
+    border-radius: 18px;
+    margin-bottom: 22px;
+  }
+
+  .starlink-stats {
+    gap: 14px;
+  }
+
+  .starlink-stat-item {
+    padding: 18px 16px;
+    border-radius: 10px;
+  }
+
+  .starlink-stat-item strong {
+    font-size: 0.86rem;
+    margin-bottom: 7px;
+  }
+
+  .starlink-stat-item span {
+    font-size: 1.4rem;
+  }
+
+
+  .audio-toggle {
+    width: 50px;
+    height: 50px;
+    bottom: 18px;
+    right: 18px;
+    border-width: 1.8px;
+  }
+
+  .audio-toggle svg {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  .footer {
+    padding: 55px 0 20px;
+    margin-top: 65px;
+  }
+
+  .footer-grid {
+    gap: 30px;
+    margin-bottom: 38px;
+  }
+
+  .footer-section {
+    gap: 14px;
+  }
+
+  .footer-title {
+    font-size: 1.55rem;
+    margin-bottom: 7px;
+  }
+
+  .footer-heading {
+    font-size: 1.1rem;
+    margin-bottom: 3px;
+  }
+
+  .footer-text {
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .footer-links {
+    gap: 8px;
+  }
+
+  .footer-links a {
+    font-size: 0.88rem;
+  }
+
+  .footer-social {
+    gap: 11px;
+    margin-top: 7px;
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+    border-width: 1.8px;
+  }
+
+  .social-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .footer-bottom {
+    padding-top: 30px;
+  }
+
+  .footer-bottom p {
+    margin: 5px 0;
+    font-size: 0.84rem;
+  }
+
+
+  .loading-state {
+    padding: 35px;
+  }
+
+  .spinner {
+    width: 42px;
+    height: 42px;
+    border-width: 3px;
+    margin-bottom: 14px;
+  }
+
+  .spinner-small {
+    width: 26px;
+    height: 26px;
+    border-width: 2.5px;
+    margin: 14px auto;
+  }
+
+
+  .dot-spinner {
+    height: 2.3rem;
+    width: 2.3rem;
+  }
+
+ 
+  .wifi-loader {
+    width: 72px;
+    height: 72px;
+  }
+
+  .wifi-loader svg {
+    stroke-width: 5px;
+  }
+
+  .wifi-loader svg.circle-outer {
+    height: 74px;
+    width: 74px;
+  }
+
+  .wifi-loader svg.circle-middle {
+    height: 50px;
+    width: 50px;
+  }
+
+  .wifi-loader svg.circle-inner {
+    height: 28px;
+    width: 28px;
+  }
+
+  .wifi-loader .text {
+    bottom: -42px;
+    font-size: 13px;
+    letter-spacing: 1.3px;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .glass-header {
+    width: 82%;
+    padding: 8px 10px;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+    margin: 0 6px 0 2px;
+  }
+
+  .nav-logo-icon {
+    width: clamp(30px, 3.2vw, 38px);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5.2vw, 3.2rem);
+    letter-spacing: 1.5px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+  }
+
+  .hero-description {
+    font-size: clamp(0.85rem, 1.55vw, 0.95rem);
+  }
+
+  .btn-gradient {
+    padding: 12px 24px;
+    font-size: 0.82rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.65rem, 3.4vw, 2.1rem);
+  }
+
+  .section-subtitle {
+    font-size: clamp(0.85rem, 1.45vw, 0.95rem);
+  }
+
+  .mystery-card {
+    padding: 22px 18px;
+  }
+
+  .mystery-icon svg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .mystery-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .mystery-desc {
+    font-size: 0.9rem;
+  }
+
+  .mystery-conclusion {
+    padding: 32px 22px;
+  }
+
+  .mystery-conclusion h3 {
+    font-size: 1.5rem;
+  }
+
+  .mystery-conclusion p {
+    font-size: 0.92rem;
+  }
+
+  .solar-container {
+    height: 38vh;
+  }
+
+  .nasa-card {
+    padding: 22px 18px;
+  }
+
+  .apod-image {
+    height: 220px;
+  }
+
+  .apod-details {
+    padding: 22px 18px;
+  }
+
+  .apod-title {
+    font-size: 1.3rem;
+  }
+
+  .slideshow-container {
+    height: 45vh;
+  }
+
+  .blog-content {
+    padding: 22px 18px;
+  }
+
+  .blog-card h3 {
+    font-size: 1.22rem;
+  }
+
+  .popup-content {
+    padding: 25px 16px;
+  }
+
+  #popup-body h4 {
+    font-size: 1.35rem;
+  }
+
+  .stat-value {
+    font-size: 1.95rem;
+  }
+
+  .launch-image-container {
+    height: 200px;
+  }
+
+  .launch-details {
+    padding: 22px 18px;
+  }
+
+  .launch-name {
+    font-size: 1.45rem;
+  }
+
+  .starlink-viz-container {
+    height: 280px;
+  }
+
+  .audio-toggle {
+    width: 48px;
+    height: 48px;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .audio-toggle svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .footer {
+    padding: 50px 0 18px;
+  }
+
+  .footer-title {
+    font-size: 1.45rem;
+  }
+
+  .footer-heading {
+    font-size: 1.05rem;
+  }
+
+  .social-link {
+    width: 38px;
+    height: 38px;
+  }
+
+  .social-link svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+
+  .solar-container {
+    height: 85vh;
+  }
+
+  .slideshow-container {
+    height: 85vh;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .section-space {
+    padding: 50px 0;
+  }
+
+  .starlink-viz-container {
+    height: 75vh;
+  }
+}
+
+@media print {
+
+  .glass-header,
+  .scroll-indicator,
+  .audio-toggle,
+  .slideshow-controls,
+  .slideshow-indicators,
+  .mobile-menu-toggle,
+  .controls-panel {
+    display: none !important;
+  }
+
+  .hero-section {
+    background-attachment: scroll !important;
+  }
+
+  .section-space {
+    padding: 40px 0;
+    page-break-inside: avoid;
+  }
+
+  * {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 }
