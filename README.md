@@ -147,6 +147,7 @@ space-alone/
 
 ### Mobile Experience
 ![Mobile View](https://i.postimg.cc/tTJKS3m6/image.png)
+
 *Responsive design across all devices*
 
 ## TECH STACK INFORMATION
