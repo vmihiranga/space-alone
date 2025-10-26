@@ -32,8 +32,6 @@ An immersive space-themed web experience that takes you on a journey through the
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-</div>
-
 ---
 
 ## 📖 OVERVIEW
@@ -47,6 +45,8 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 ---
 
 ## ✨ KEY FEATURES
+
+</div>
 
 ### 🌌 Immersive Space Environment
 - **3D Solar System Visualization**: Interactive solar system with realistic planetary orbits
@@ -81,6 +81,8 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 - **Progressive Enhancement**: Graceful degradation for older browsers
 - **Security Features**: Helmet.js protection, rate limiting, CORS configuration
 - **Performance Optimized**: Lazy loading, efficient rendering, optimized assets
+
+<div align="center">
 
 ---
 
@@ -124,6 +126,8 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 - `post_likes`, `post_dislikes`, `post_shares` - Social engagement tracking
 - `app_settings` - Application configuration
 
+</div>
+
 ### API Endpoints
 
 #### Authentication (`/api/auth/*`)
@@ -151,6 +155,8 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 - `GET /api/news` - Space news feed
 - `GET /api/health` - Health check
 
+<div align="center">
+
 ---
 
 ## 🚀 INSTALLATION & SETUP
@@ -164,6 +170,8 @@ Before getting started, ensure you have:
 - A modern web browser (Chrome 90+, Firefox 88+, Safari 14+, or Edge 90+)
 
 ### Quick Start
+
+</div>
 
 1. **Clone the repository**
 ```bash
@@ -187,6 +195,8 @@ Open your browser and navigate to:
 - Main site: `http://localhost:3000`
 - Admin dashboard: `http://localhost:3000/admin`
 
+<div align="center">
+
 ### Default Admin Credentials
 
 **⚠️ IMPORTANT: Change these immediately after first login!**
@@ -195,6 +205,8 @@ Open your browser and navigate to:
 - **Password**: `admin123`
 
 ### Troubleshooting
+
+</div>
 
 **Port already in use?**
 ```bash
@@ -217,6 +229,8 @@ psql -U postgres -l | grep space_alone
 rm -rf node_modules package-lock.json
 npm install
 ```
+
+<div align="center">
 
 ---
 
@@ -298,6 +312,8 @@ space-alone/
 
 ### Deployment on Replit
 
+</div>
+
 1. **Import from GitHub**
 ```bash
 # In Replit, use "Import from GitHub"
@@ -317,14 +333,22 @@ node backend/init-db-postgres.js
 npm start
 ```
 
+<div align="center">
+
 ### Deployment on Render/Heroku
+
+</div>
 
 1. **Connect GitHub repository**
 2. **Set environment variables** in dashboard
 3. **Deploy command**: `npm start`
 4. **Auto-deploy** on push to main branch
 
+<div align="center">
+
 ### Configuration for Production
+
+</div>
 
 **Environment Variables:**
 ```env
@@ -340,9 +364,13 @@ NASA_API_KEY=<your-api-key>
 - Minimum instances: 1
 - Maximum instances: Auto
 
+<div align="center">
+
 ---
 
 ## 🔐 SECURITY FEATURES
+
+</div>
 
 - **Helmet.js**: Security headers protection
 - **Rate Limiting**: API endpoint protection
@@ -352,15 +380,21 @@ NASA_API_KEY=<your-api-key>
 - **XSS Protection**: Input sanitization
 - **HTTPS Ready**: SSL/TLS support
 
+<div align="center">
+
 ---
 
 ## ⚡ PERFORMANCE METRICS
+
+</div>
 
 - **Load Time**: < 3 seconds (average)
 - **First Contentful Paint**: < 1.5 seconds
 - **Time to Interactive**: < 4 seconds
 - **Lighthouse Score**: 85+ (Performance)
 - **Frame Rate**: Consistent 60fps for 3D visualizations
+
+<div align="center">
 
 ---
 
@@ -403,36 +437,64 @@ limitations under the License.
 ## 🙏 CREDITS & ATTRIBUTIONS
 
 ### 🔊 Audio Assets
+
+</div>
+
 - Space ambient sound from **Pixabay**  
   Source: https://pixabay.com/sound-effects/ambient-soundscapes-007-space-atmosphere-304974/
 
+<div align="center">
+
 ### 🖼️ Visual Assets
+
+</div>
+
 - Publicly available space imagery sourced from Google (subject to original copyrights)
 - NASA image archives
 - ESA public domain imagery
 
+<div align="center">
+
 ### 🚀 APIs & Data Sources
+
+</div>
+
 - **NASA APIs** - Astronomy Picture of the Day, Near-Earth Objects, Mars photos
 - **SpaceX API** - Launch data and mission information
 - **Spaceflight News API** - Curated space news (https://spaceflightnewsapi.net/)
 - **Open Notify API** - ISS location tracking
 
+<div align="center">
+
 ### 🔤 Typography
+
+</div>
+
 - **Google Fonts** - Roboto family
 - **CDNFonts** - Starcraft font
 
+<div align="center">
+
 ### 🎨 Design Inspiration
+
+</div>
+
 - UI components and design elements inspired by **Universe.io**
 
+<div align="center">
+
 ### 🤖 Development Tools
+
+</div>
+
 - Content generation assistance from **ChatGPT** (OpenAI)
 - Code optimization with **GitHub Copilot**
+
+<div align="center">
 
 ---
 
 ## 👨‍💻 AUTHOR
-
-<div align="center">
 
 **Vishwa Mihiranga**
 
@@ -440,11 +502,11 @@ limitations under the License.
 [![Project](https://img.shields.io/badge/Project-Space_Alone-4CAF50?style=for-the-badge&logo=github)](https://github.com/vmihiranga/space-alone)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Now-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://space-alone.onrender.com)
 
-</div>
-
 ---
 
 ## 🌟 ACKNOWLEDGMENTS
+
+</div>
 
 Special thanks to:
 - The **open-source community** for incredible tools and libraries
@@ -453,9 +515,9 @@ Special thanks to:
 - **AI tools** that support modern development workflows
 - All the **space enthusiasts** who inspired this project
 
----
-
 <div align="center">
+
+---
 
 ### 🚀 Ready to explore the cosmos?
 
