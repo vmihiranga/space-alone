@@ -88,6 +88,8 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 
 ## 🏗️ ARCHITECTURE
 
+</div>
+
 ### System Overview
 
 ```
@@ -126,7 +128,6 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 - `post_likes`, `post_dislikes`, `post_shares` - Social engagement tracking
 - `app_settings` - Application configuration
 
-</div>
 
 ### API Endpoints
 
@@ -161,6 +162,8 @@ This isn't just another space website—it's an **immersive cosmic experience** 
 
 ## 🚀 INSTALLATION & SETUP
 
+</div>
+
 ### Prerequisites
 
 Before getting started, ensure you have:
@@ -170,8 +173,6 @@ Before getting started, ensure you have:
 - A modern web browser (Chrome 90+, Firefox 88+, Safari 14+, or Edge 90+)
 
 ### Quick Start
-
-</div>
 
 1. **Clone the repository**
 ```bash
@@ -195,7 +196,6 @@ Open your browser and navigate to:
 - Main site: `http://localhost:3000`
 - Admin dashboard: `http://localhost:3000/admin`
 
-<div align="center">
 
 ### Default Admin Credentials
 
@@ -206,7 +206,6 @@ Open your browser and navigate to:
 
 ### Troubleshooting
 
-</div>
 
 **Port already in use?**
 ```bash
@@ -230,11 +229,12 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-<div align="center">
 
 ---
-
+<div align="center">
 ## 📁 PROJECT STRUCTURE
+  
+</div>
 
 ```
 space-alone/
@@ -292,7 +292,11 @@ space-alone/
 
 ---
 
+<div align="center">
+  
 ## 🖼️ SCREENSHOTS & PREVIEW
+
+
 
 ### Main Space Environment
 [![Space View](https://i.postimg.cc/85nSNKrt/image.png)](https://space-alone.onrender.com)
@@ -309,6 +313,8 @@ space-alone/
 ---
 
 ## 🌐 DEPLOYMENT
+
+</div>
 
 ### Deployment on Replit
 
