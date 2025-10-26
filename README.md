@@ -89,6 +89,7 @@ npm start
 ```
 space-alone/
 ├── package.json
+├── vercel.json
 ├── .env
 ├── README.md
 └── backend/
