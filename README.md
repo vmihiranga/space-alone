@@ -1,3 +1,5 @@
+<div align="center">
+
 # Space Alone 🚀
 
 An immersive space-themed web experience that takes you on a journey through the cosmos. Navigate through stunning celestial environments and experience the solitude and beauty of space exploration.
@@ -123,15 +125,15 @@ space-alone/
 ## SCREENSHOTS AND PREVIEW
 
 ### Main View of Home
-![Space View](https://i.postimg.cc/85nSNKrt/image.png)
+![Space View](https://i.ibb.co/BVBxQLg/image.png)
 *The immersive main space environment*
 
 ### Interactive Elements
-![Interactive Features](https://i.postimg.cc/mDcbzWRx/image.png)
+![Interactive Features](https://i.ibb.co/Z1LFHMM/image.png)
 *Various interactive celestial objects and controls*
 
 ### Mobile Experience
-![Mobile View](https://i.postimg.cc/tTJKS3m6/image.png)
+![Mobile View](https://i.ibb.co/HDg93Q2/image.png)
 *Responsive design across all devices*
 
 ## TECH STACK INFORMATION
@@ -145,6 +147,7 @@ space-alone/
 - **HTML5** - Structure and semantic markup
 - **CSS3** - Styling, animations, and responsive design
 - **JavaScript (ES6+)** - Interactive functionality and logic
+- **Three.js** - 3D graphics and animations
 
 ### Development Tools
 - **Git** - Version control
@@ -224,3 +227,7 @@ Special thanks to:
 - AI tools and platforms that support creativity, design, and development
 
 ---
+
+**Made with ❤️ and ☕ by the Space Alone Team**
+
+*Explore the universe, one click at a time* 🌟
