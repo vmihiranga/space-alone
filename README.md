@@ -232,6 +232,7 @@ npm install
 
 ---
 <div align="center">
+  
 ## 📁 PROJECT STRUCTURE
   
 </div>
