@@ -8,6 +8,7 @@ An immersive space-themed web experience that takes you on a journey through the
 
 ## OVERVIEW
 
+
 ![Stars](https://img.shields.io/github/stars/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=yellow)
 ![Forks](https://img.shields.io/github/forks/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=blue)
 ![Issues](https://img.shields.io/github/issues/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=red)
@@ -26,7 +27,7 @@ An immersive space-themed web experience that takes you on a journey through the
 Space Alone is an interactive web-based space simulation and visualization platform that creates an engaging astronomical experience. This full-stack application combines modern web technologies with real-time space data to deliver a visually captivating journey through space, featuring realistic space environments, celestial bodies, and interactive elements.
 
 ## SPECIAL FEATURES
-
+</div>
 - 🌌 **Immersive Space Environment** - Explore beautifully rendered space scenes with realistic celestial effects
 - 🛰️ **Real-Time Space Data** - Integration with NASA APIs for live astronomical information
 - ⭐ **Interactive Elements** - Engage with various space objects and navigate through the cosmos
@@ -38,9 +39,9 @@ Space Alone is an interactive web-based space simulation and visualization platf
 - 📰 **Space News Feed** - Stay updated with the latest space exploration news
 - 👤 **User Authentication** - Secure login and personalized experience
 - 💬 **Community Posts** - Share your space discoveries with other explorers
-
+<div align="center">
 ## INSTALLATION & SETUP
-
+</div>
 ### Prerequisites
 Before running the application, ensure you have the following installed:
 
@@ -73,8 +74,12 @@ npm start
 ### Troubleshooting
 
 - If port 3000 is already in use, change the `PORT` in your `.env` file
-
+  
+<div align="center">
+   
 ## PROJECT STRUCTURE
+</div>
+
 ```
 space-alone/
 ├── package.json
@@ -121,7 +126,7 @@ space-alone/
     ├── server.js
     └── sessions.sqlite
 ```
-
+<div align="center">
 ## SCREENSHOTS AND PREVIEW
 
 ### Main View of Home
@@ -138,6 +143,8 @@ space-alone/
 
 ## TECH STACK INFORMATION
 
+</div>
+
 ### Backend
 - **Node.js** - JavaScript runtime environment
 - **Express.js** - Web application framework
@@ -153,9 +160,9 @@ space-alone/
 - **Git** - Version control
 - **VS Code** - Code editor
 - **Chrome DevTools** - Debugging and optimization
-
+<div align="center">
 ## BROWSER COMPATIBILITY
-
+</div>   
 - ✅ Chrome (90+)
 - ✅ Firefox (88+)
 - ✅ Safari (14+)
@@ -169,9 +176,9 @@ The project is optimized for smooth performance:
 - Optimized texture sizes
 - Hardware acceleration enabled
 - Responsive viewport adjustments
-
+<div align="center">
 ## CREDITS & ATTRIBUTIONS
-
+</div>
 ### 🔊 Audio
 - Space ambient sound from Pixabay  
   Source: https://pixabay.com/sound-effects/ambient-soundscapes-007-space-atmosphere-304974/
@@ -192,7 +199,7 @@ The project is optimized for smooth performance:
 
 ### 🎨 UI / Custom Elements
 - Components and visual elements inspired by Universe.io
-
+<div align="center">
 ## LICENSE INFORMATION
 
 ![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
@@ -220,7 +227,7 @@ limitations under the License.
 ---
 
 ### ACKNOWLEDGMENTS
-
+</div>
 Special thanks to:
 - The open-source community for amazing tools and libraries
 - NASA and ESA for providing incredible space imagery to the public
@@ -228,6 +235,4 @@ Special thanks to:
 
 ---
 
-**Made with ❤️ and ☕ by the Space Alone Team**
 
-*Explore the universe, one click at a time* 🌟
