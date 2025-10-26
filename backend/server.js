@@ -78,34 +78,34 @@ app.use("/api/spacex", spacexRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/news", newsRoutes); 
 
-app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "./frontend")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+  res.sendFile(path.join(__dirname, "./frontend/index.html"));
 });
 
 app.get("/blog", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/blog.html"));
+  res.sendFile(path.join(__dirname, "./frontend/blog.html"));
 });
 
 app.get("/post", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/post.html"));
+  res.sendFile(path.join(__dirname, "./frontend/post.html"));
 });
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/login.html"));
+  res.sendFile(path.join(__dirname, "./frontend/login.html"));
 });
 
 app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/admin.html"));
+  res.sendFile(path.join(__dirname, "./frontend/admin.html"));
 });
 
 app.get("/news", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/news.html"));
+  res.sendFile(path.join(__dirname, "./frontend/news.html"));
 });
 
 app.get("/api/docs", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/api.html"));
+  res.sendFile(path.join(__dirname, "./frontend/api.html"));
 });
 
 app.get("/api/health", (req, res) => {
@@ -123,7 +123,7 @@ app.use((req, res) => {
     res.status(404).json({ error: "API endpoint not found" });
   } else {
 
-    res.status(404).sendFile(path.join(__dirname, "../frontend/errors/404.html"));
+    res.status(404).sendFile(path.join(__dirname, "./frontend/errors/404.html"));
   }
 });
 
@@ -139,7 +139,7 @@ app.use((err, req, res, next) => {
     });
   } else {
  
-    res.status(500).sendFile(path.join(__dirname, "../frontend/errors/500.html"));
+    res.status(500).sendFile(path.join(__dirname, "./frontend/errors/500.html"));
   }
 });
 
@@ -171,3 +171,4 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`   ⚡ Node:        ${process.version}`);
   console.log("   ═══════════════════════════════════════════════════════\n");
 });
+
