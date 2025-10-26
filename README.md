@@ -1,8 +1,10 @@
 # Space Alone 🚀
 
-A immersive space-themed web experience that takes you on a journey through the cosmos. Navigate through stunning celestial environments and experience the solitude and beauty of space exploration.
+An immersive space-themed web experience that takes you on a journey through the cosmos. Navigate through stunning celestial environments and experience the solitude and beauty of space exploration.
 
-## Overview
+![Space Alone Banner](https://i.ibb.co/ZpWCBtY/image.png)
+
+## OVERVIEW
 
 ![Stars](https://img.shields.io/github/stars/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=yellow)
 ![Forks](https://img.shields.io/github/forks/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=blue)
@@ -21,7 +23,7 @@ A immersive space-themed web experience that takes you on a journey through the 
 
 Space Alone is an interactive web-based space simulation and visualization platform that creates an engaging astronomical experience. This full-stack application combines modern web technologies with real-time space data to deliver a visually captivating journey through space, featuring realistic space environments, celestial bodies, and interactive elements.
 
-## Features
+## SPECIAL FEATURES
 
 - 🌌 **Immersive Space Environment** - Explore beautifully rendered space scenes with realistic celestial effects
 - 🛰️ **Real-Time Space Data** - Integration with NASA APIs for live astronomical information
@@ -30,13 +32,12 @@ Space Alone is an interactive web-based space simulation and visualization platf
 - 📱 **Responsive Design** - Fully optimized for desktop, tablet, and mobile devices
 - 🎵 **Ambient Soundscape** - Atmospheric audio that enhances the space exploration experience
 - 🚀 **Smooth Navigation** - Intuitive controls for seamless exploration
-- ✨ **Particle Effects** - Dynamic star fields and space dust for realistic atmosphere
+- ✨ **Particle Effects** - Dynamic star fields and space dust for a realistic atmosphere
 - 📰 **Space News Feed** - Stay updated with the latest space exploration news
 - 👤 **User Authentication** - Secure login and personalized experience
 - 💬 **Community Posts** - Share your space discoveries with other explorers
 
-
-## Installation & Setup
+## INSTALLATION & SETUP
 
 ### Prerequisites
 Before running the application, ensure you have the following installed:
@@ -59,15 +60,13 @@ npm install
 ```
 
 3. **Start the server**
-
 ```bash
 npm start
 ```
 
-6. **Access the application**
-
-- Navigate to `http://localhost:3000` in your browser
-- Enjoy your space journey!
+4. **Access the application**
+   - Navigate to `http://localhost:3000` in your browser
+   - Enjoy your space journey!
 
 ### Troubleshooting
 
@@ -120,40 +119,47 @@ space-alone/
     ├── server.js
     └── sessions.sqlite
 ```
+
 ## SCREENSHOTS AND PREVIEW
 
 ### Main View of Home
-![Space View](https://i.ibb.co/BVBxQLg6/image.png)
+![Space View](https://i.ibb.co/BVBxQLg/image.png)
 *The immersive main space environment*
 
 ### Interactive Elements
-![Interactive Features](https://i.ibb.co/Z1LFHMM6/image.png)
+![Interactive Features](https://i.ibb.co/Z1LFHMM/image.png)
 *Various interactive celestial objects and controls*
 
 ### Mobile Experience
-![Mobile View](https://i.ibb.co/HDg93Q2C/image.png)
+![Mobile View](https://i.ibb.co/HDg93Q2/image.png)
 *Responsive design across all devices*
 
-## TECH STACKS INFOMATIONS
+## TECH STACK INFORMATION
 
-### Core Technologies
+### Backend
+- **Node.js** - JavaScript runtime environment
+- **Express.js** - Web application framework
+- **PostgreSQL** - Relational database management
+
+### Frontend
 - **HTML5** - Structure and semantic markup
 - **CSS3** - Styling, animations, and responsive design
 - **JavaScript (ES6+)** - Interactive functionality and logic
+- **Three.js** - 3D graphics and animations
 
 ### Development Tools
 - **Git** - Version control
 - **VS Code** - Code editor
 - **Chrome DevTools** - Debugging and optimization
 
-## Browser Compatibility
+## BROWSER COMPATIBILITY
 
 - ✅ Chrome (90+)
 - ✅ Firefox (88+)
 - ✅ Safari (14+)
 - ✅ Edge (90+)
 
-## Performance Optimization
+## PERFORMANCE OPTIMIZATION
 
 The project is optimized for smooth performance:
 - Efficient rendering with requestAnimationFrame
@@ -161,7 +167,6 @@ The project is optimized for smooth performance:
 - Optimized texture sizes
 - Hardware acceleration enabled
 - Responsive viewport adjustments
-
 
 ## CREDITS & ATTRIBUTIONS
 
@@ -186,8 +191,7 @@ The project is optimized for smooth performance:
 ### 🎨 UI / Custom Elements
 - Components and visual elements inspired by Universe.io
 
-
-## LICENSE INFOMATION
+## LICENSE INFORMATION
 
 ![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
 
@@ -205,7 +209,7 @@ limitations under the License.
 
 © 2024 vmihiranga
 
-## AUTHOR INFOMATION
+## AUTHOR INFORMATION
 
 **Vishwa Mihiranga**
 - GitHub: [@vmihiranga](https://github.com/vmihiranga)
@@ -221,8 +225,3 @@ Special thanks to:
 - AI tools and platforms that support creativity, design, and development
 
 ---
-
-
-**Made with ❤️ and ☕ by the Space Alone Team**
-
-*Explore the universe, one click at a time* 🌟
