@@ -4,6 +4,10 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Space Blog - Space Alone</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+
         <link
             rel="icon"
             type="image/svg+xml"
@@ -15,7 +19,6 @@
         />
         <link rel="stylesheet" href="./src/styles/main.css" />
         <style>
-      
             .search-container {
                 max-width: 600px;
                 margin: 0 auto 40px;
@@ -212,7 +215,6 @@
                 height: 18px;
             }
 
-           
             .features-section {
                 padding: 80px 0;
                 background: var(--space-black);
@@ -456,12 +458,10 @@
                 }
             }
 
-           
             html {
                 scroll-behavior: smooth;
             }
 
-            
             @media (max-width: 768px) {
                 .hero-stats {
                     gap: 20px;
@@ -671,7 +671,6 @@
 
         <div class="section-divider"></div>
 
-
         <section class="features-section">
             <div class="container">
                 <div class="section-header">
@@ -685,15 +684,12 @@
                     id="features-slider"
                     style="--width: 200px; --height: 200px; --quantity: 9"
                 >
-                    <div class="list" id="slider-list">
-                
-                    </div>
+                    <div class="list" id="slider-list"></div>
                 </div>
             </div>
         </section>
 
         <div class="blog-container">
-
             <div class="search-container">
                 <input
                     type="text"
@@ -783,23 +779,19 @@
                 const sliderList = document.getElementById("slider-list");
                 const slider = document.getElementById("features-slider");
 
-
                 const images = allPosts
                     .filter((post) => post.image_url)
                     .slice(0, 9)
                     .map((post) => post.image_url);
 
-         
                 while (images.length < 9) {
                     images.push(
                         fallbackImages[images.length % fallbackImages.length],
                     );
                 }
 
-             
                 slider.style.setProperty("--quantity", images.length);
 
-        
                 sliderList.innerHTML = images
                     .map(
                         (img, index) => `
@@ -847,7 +839,6 @@
                     grid.innerHTML = "";
                     displayPosts();
 
-                    
                     loadFeaturesSlider();
                 } catch (error) {
                     console.error("Error loading posts:", error);
@@ -995,7 +986,6 @@
                 }
             }
 
-            
             document
                 .getElementById("load-more-btn")
                 .addEventListener("click", () => {
@@ -1019,7 +1009,6 @@
                     }
                 });
 
-            
             const mobileToggle = document.getElementById("mobile-menu-toggle");
             const navLinks = document.getElementById("nav-links");
 
@@ -1030,7 +1019,6 @@
                 });
             }
 
-            
             loadBlogPosts();
         </script>
     </body>
