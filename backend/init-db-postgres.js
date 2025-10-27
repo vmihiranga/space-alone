@@ -2,16 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const postgres = require('postgres');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 async function initDatabase() {
   console.log('\n🚀 Initializing Space Alone PostgreSQL Database...\n');
 
   const sql = postgres({
-    host: 'ep-cool-truth-a1nvfpxx.ap-southeast-1.pg.koyeb.app',
-    database: 'koyebdb',
-    username: 'koyeb-adm',
-    password: 'npg_TZFIqH73wmQa',
-    ssl: 'require',
+    host: process.env.PGHOST || 'ep-cool-truth-a1nvfpxx.ap-southeast-1.pg.koyeb.app',
+    database: process.env.PGDATABASE || 'koyebdb',
+    username: process.env.PGUSER || 'koyeb-adm',
+    password: process.env.PGPASSWORD || 'npg_TZFIqH73wmQa',
+    ssl: process.env.PGSSL === 'require' ? 'require' : false,
   });
 
   try {
