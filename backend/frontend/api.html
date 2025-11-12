@@ -585,37 +585,1053 @@
                 </div>
             </section>
 
-            <section id="authentication" class="endpoint-card" style="--card-index: 1">
+<section id="authentication" class="endpoint-card">
                 <h2><span class="icon icon-lock"></span> Authentication</h2>
-                <p>Protected endpoints use session-based authentication. After logging in, a session cookie is set automatically.</p>
-                <p style="margin-top: 1rem">Login via <code>/api/auth/login</code> endpoint to establish a session.</p>
-                <p style="margin-top: 0.5rem; color: rgba(255, 255, 255, 0.7)">Sessions are valid for 24 hours and stored in SQLite.</p>
+                <p>
+                    Protected endpoints use session-based authentication. After
+                    logging in, a session cookie is set automatically.
+                </p>
+                <p style="margin-top: 1rem">
+                    Login via <code>/api/auth/login</code> endpoint to establish
+                    a session.
+                </p>
+                <p style="margin-top: 0.5rem; color: rgba(255, 255, 255, 0.7)">
+                    Sessions are valid for 24 hours and stored in SQLite.
+                </p>
             </section>
 
             <section id="system-endpoints">
                 <h2><span class="icon icon-chart"></span> System Endpoints</h2>
-                <div class="endpoint-card" style="--card-index: 2">
+
+                <div class="endpoint-card">
                     <div class="mb-3">
                         <span class="method-badge method-get">GET</span>
                         <span class="ms-2">/api/health</span>
-                        <span class="resource-badge resource-system">System</span>
+                        <span class="resource-badge resource-system"
+                            >System</span
+                        >
                     </div>
                     <p>Health check with system metrics</p>
+
                     <h5>Response Example:</h5>
                     <div class="response-example">
                         <pre><code>{
   "status": "ok",
   "service": "Space Alone API",
-  "uptime": { "seconds": 3600, "formatted": "1h 0m 0s" },
-  "memory": { "used": "45MB", "total": "128MB" },
+  "uptime": {
+    "seconds": 3600,
+    "formatted": "1h 0m 0s"
+  },
+  "memory": {
+    "used": "45MB",
+    "total": "128MB"
+  },
   "environment": "development",
   "nodeVersion": "v18.17.0",
   "authMethod": "session"
 }</code></pre>
                     </div>
                 </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/status</span>
+                        <span class="resource-badge resource-system"
+                            >System</span
+                        >
+                    </div>
+                    <p>API status and available resources</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api</span>
+                        <span class="resource-badge resource-system"
+                            >System</span
+                        >
+                    </div>
+                    <p>Complete API endpoints list with documentation</p>
+                </div>
             </section>
 
+            <section id="auth-endpoints">
+                <h2>
+                    <span class="icon icon-key"></span> Authentication Endpoints
+                </h2>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/auth/login</span>
+                    </div>
+                    <p>Admin login - Creates a session</p>
+
+                    <h5>Request Body:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>username</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Admin username</td>
+                            </tr>
+                            <tr>
+                                <td>password</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Admin password</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/auth/logout</span>
+                    </div>
+                    <p>Logout and destroy session (requires authentication)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/auth/verify</span>
+                    </div>
+                    <p>
+                        Verify current session status (requires authentication)
+                    </p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/auth/change-password</span>
+                    </div>
+                    <p>Change user password (requires authentication)</p>
+
+                    <h5>Request Body:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>currentPassword</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Current password</td>
+                            </tr>
+                            <tr>
+                                <td>newPassword</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>New password (min 6 chars)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="posts-endpoints">
+                <h2>
+                    <span class="icon icon-blog"></span> Blog Posts Endpoints
+                </h2>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/posts</span>
+                    </div>
+                    <p>Get all blog posts with pagination</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>page</td>
+                                <td>integer</td>
+                                <td>1</td>
+                                <td>Page number</td>
+                            </tr>
+                            <tr>
+                                <td>limit</td>
+                                <td>integer</td>
+                                <td>100</td>
+                                <td>Posts per page</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/posts/search/query</span>
+                    </div>
+                    <p>Search posts by title or content</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>q</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Search query</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/posts/:id</span>
+                    </div>
+                    <p>Get single post by ID or slug</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/posts</span>
+                    </div>
+                    <p>Create new blog post (requires admin authentication)</p>
+
+                    <h5>Request Body:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>title</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Post title</td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Post content</td>
+                            </tr>
+                            <tr>
+                                <td>image_url</td>
+                                <td>string</td>
+                                <td>No</td>
+                                <td>Featured image URL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-put">PUT</span>
+                        <span class="ms-2">/api/posts/:id</span>
+                    </div>
+                    <p>Update existing post (requires admin authentication)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-delete">DELETE</span>
+                        <span class="ms-2">/api/posts/:id</span>
+                    </div>
+                    <p>Delete post (requires admin authentication)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/posts/:id/likes</span>
+                    </div>
+                    <p>Get like count for a post</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/posts/:id/like</span>
+                    </div>
+                    <p>Like a post (uses session or IP for identification)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-delete">DELETE</span>
+                        <span class="ms-2">/api/posts/:id/like</span>
+                    </div>
+                    <p>Unlike a post</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/posts/:id/liked</span>
+                    </div>
+                    <p>Check if current user liked a post</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/posts/:id/share</span>
+                    </div>
+                    <p>Track post share</p>
+
+                    <h5>Request Body:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>platform</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>
+                                    Social platform (twitter, facebook, etc.)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/posts/:id/shares</span>
+                    </div>
+                    <p>Get share count for a post</p>
+                </div>
+            </section>
+
+            <section id="uploads-endpoints">
+                <h2>
+                    <span class="icon icon-upload"></span> Uploads Endpoints
+                </h2>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/uploads</span>
+                    </div>
+                    <p>Upload files (images, documents)</p>
+
+                    <h5>Request:</h5>
+                    <p>Multipart form data with file field</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/uploads</span>
+                    </div>
+                    <p>List all uploaded files</p>
+                </div>
+            </section>
+
+            <section id="solar-endpoints">
+                <h2>
+                    <span class="icon icon-sun"></span> Solar System Endpoints
+                </h2>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/solar-config</span>
+                    </div>
+                    <p>Get all solar system configurations</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="ms-2">/api/solar-config</span>
+                    </div>
+                    <p>
+                        Create solar system configuration (requires admin
+                        authentication)
+                    </p>
+
+                    <h5>Request Body:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>planet_name</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Planet name</td>
+                            </tr>
+                            <tr>
+                                <td>size</td>
+                                <td>number</td>
+                                <td>No</td>
+                                <td>Planet size (default: 1)</td>
+                            </tr>
+                            <tr>
+                                <td>distance</td>
+                                <td>number</td>
+                                <td>No</td>
+                                <td>Distance from sun (default: 1)</td>
+                            </tr>
+                            <tr>
+                                <td>color</td>
+                                <td>string</td>
+                                <td>No</td>
+                                <td>Planet color (default: #ffffff)</td>
+                            </tr>
+                            <tr>
+                                <td>speed</td>
+                                <td>number</td>
+                                <td>No</td>
+                                <td>Orbit speed (default: 1)</td>
+                            </tr>
+                            <tr>
+                                <td>info</td>
+                                <td>string</td>
+                                <td>No</td>
+                                <td>Planet information</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-put">PUT</span>
+                        <span class="ms-2">/api/solar-config/:id</span>
+                    </div>
+                    <p>
+                        Update solar system configuration (requires admin
+                        authentication)
+                    </p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-delete">DELETE</span>
+                        <span class="ms-2">/api/solar-config/:id</span>
+                    </div>
+                    <p>
+                        Delete solar system configuration (requires admin
+                        authentication)
+                    </p>
+                </div>
+            </section>
+
+            <section id="nasa-endpoints">
+                <h2>
+                    <span class="icon icon-satellite"></span> NASA Data
+                    Endpoints
+                </h2>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/apod</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Astronomy Picture of the Day</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>date</td>
+                                <td>string</td>
+                                <td>today</td>
+                                <td>Date in YYYY-MM-DD format</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/mars-photos</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Mars Rover Photos from Curiosity</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>sol</td>
+                                <td>integer</td>
+                                <td>1000</td>
+                                <td>Martian sol (day)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/neo</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Near Earth Objects</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>start_date</td>
+                                <td>string</td>
+                                <td>today</td>
+                                <td>Start date (YYYY-MM-DD)</td>
+                            </tr>
+                            <tr>
+                                <td>end_date</td>
+                                <td>string</td>
+                                <td>start_date</td>
+                                <td>End date (YYYY-MM-DD)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/earth-imagery</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Earth Imagery</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>lat</td>
+                                <td>number</td>
+                                <td>29.78</td>
+                                <td>Latitude</td>
+                            </tr>
+                            <tr>
+                                <td>lon</td>
+                                <td>number</td>
+                                <td>-95.33</td>
+                                <td>Longitude</td>
+                            </tr>
+                            <tr>
+                                <td>date</td>
+                                <td>string</td>
+                                <td>2018-01-01</td>
+                                <td>Image date</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/epic</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Earth Polychromatic Imaging Camera</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/asteroids</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Browse Asteroids Database (NeoWs)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/exoplanets</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Exoplanet Archive Data (limited to 100 results)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/mars-weather</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Mars Weather from InSight</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/solar-flares</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Solar Flare Data (DONKI)</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>start_date</td>
+                                <td>string</td>
+                                <td>30 days ago</td>
+                                <td>Start date (YYYY-MM-DD)</td>
+                            </tr>
+                            <tr>
+                                <td>end_date</td>
+                                <td>string</td>
+                                <td>today</td>
+                                <td>End date (YYYY-MM-DD)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/iss-location</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Current International Space Station Location</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/space-weather</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>Space Weather Notifications (DONKI)</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/nasa/status</span>
+                        <span class="resource-badge resource-nasa">NASA</span>
+                    </div>
+                    <p>NASA API Gateway Status</p>
+                </div>
+            </section>
+
+            <section id="news-endpoints">
+                <h2><span class="icon">📰</span> News Endpoints</h2>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/news/latest</span>
+                        <span class="resource-badge resource-system">News</span>
+                    </div>
+                    <p>
+                        Get latest space news from all sources (articles, blogs,
+                        reports)
+                    </p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>limit</td>
+                                <td>integer</td>
+                                <td>10</td>
+                                <td>Number of news items (max 30)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/news/articles</span>
+                        <span class="resource-badge resource-system">News</span>
+                    </div>
+                    <p>Get space articles with pagination</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>limit</td>
+                                <td>integer</td>
+                                <td>10</td>
+                                <td>Items per page (max 100)</td>
+                            </tr>
+                            <tr>
+                                <td>offset</td>
+                                <td>integer</td>
+                                <td>0</td>
+                                <td>Pagination offset</td>
+                            </tr>
+                            <tr>
+                                <td>search</td>
+                                <td>string</td>
+                                <td>-</td>
+                                <td>Search term</td>
+                            </tr>
+                            <tr>
+                                <td>news_site</td>
+                                <td>string</td>
+                                <td>-</td>
+                                <td>Filter by news source</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/news/blogs</span>
+                        <span class="resource-badge resource-system">News</span>
+                    </div>
+                    <p>
+                        Get space blogs with pagination (same parameters as
+                        articles)
+                    </p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/news/reports</span>
+                        <span class="resource-badge resource-system">News</span>
+                    </div>
+                    <p>
+                        Get space reports with pagination (same parameters as
+                        articles)
+                    </p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/news/search</span>
+                        <span class="resource-badge resource-system">News</span>
+                    </div>
+                    <p>Search across all news types</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>query</td>
+                                <td>string</td>
+                                <td>Yes</td>
+                                <td>Search query</td>
+                            </tr>
+                            <tr>
+                                <td>limit</td>
+                                <td>integer</td>
+                                <td>No</td>
+                                <td>Results limit (max 30)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="spacex-endpoints">
+                <h2>
+                    <span class="icon icon-rocket"></span> SpaceX Data Endpoints
+                </h2>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/spacex/latest</span>
+                        <span class="resource-badge resource-spacex"
+                            >SpaceX</span
+                        >
+                    </div>
+                    <p>Get the latest SpaceX launch</p>
+
+                    <h5>Response Example:</h5>
+                    <div class="response-example">
+                        <pre><code>{
+  "id": "5eb87d47ffd86e000604b38a",
+  "name": "Starlink-15 (v1.0)",
+  "date_utc": "2024-10-15T10:30:00.000Z",
+  "success": true,
+  "details": "This mission launched...",
+  "rocket": "5e9d0d95eda69973a809d1ec",
+  "launchpad": "5e9e4502f509094188566f88"
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/spacex/upcoming</span>
+                        <span class="resource-badge resource-spacex"
+                            >SpaceX</span
+                        >
+                    </div>
+                    <p>Get next 5 upcoming SpaceX launches</p>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/spacex/past</span>
+                        <span class="resource-badge resource-spacex"
+                            >SpaceX</span
+                        >
+                    </div>
+                    <p>Get past SpaceX launches with pagination</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>limit</td>
+                                <td>integer</td>
+                                <td>10</td>
+                                <td>Number of launches to return</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/spacex/starlink</span>
+                        <span class="resource-badge resource-spacex"
+                            >SpaceX</span
+                        >
+                    </div>
+                    <p>Get Starlink satellites information</p>
+
+                    <h5>Query Parameters:</h5>
+                    <table class="param-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>limit</td>
+                                <td>integer</td>
+                                <td>50</td>
+                                <td>Number of satellites to return</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="endpoint-card">
+                    <div class="mb-3">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="ms-2">/api/spacex/stats</span>
+                        <span class="resource-badge resource-spacex"
+                            >SpaceX</span
+                        >
+                    </div>
+                    <p>Get SpaceX launch statistics and success rate</p>
+
+                    <h5>Response Example:</h5>
+                    <div class="response-example">
+                        <pre><code>{
+  "totalLaunches": 180,
+  "upcomingLaunches": 12,
+  "successfulLaunches": 165,
+  "failedLaunches": 8,
+  "latestLaunch": {
+    "name": "Starlink-15 (v1.0)",
+    "date": "2024-10-15T10:30:00.000Z",
+    "success": true,
+    "rocket": "5e9d0d95eda69973a809d1ec"
+  },
+  "successRate": "91.67"
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="errors" class="endpoint-card">
+                <h2><span class="icon icon-warning"></span> Error Codes</h2>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>400</td>
+                            <td>Bad Request - Invalid parameters</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Unauthorized - Session expired or invalid</td>
+                        </tr>
+                        <tr>
+                            <td>403</td>
+                            <td>Forbidden - Admin access required</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Not Found - Resource doesn't exist</td>
+                        </tr>
+                        <tr>
+                            <td>429</td>
+                            <td>Too Many Requests - Rate limit exceeded</td>
+                        </tr>
+                        <tr>
+                            <td>500</td>
+                            <td>Internal Server Error</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5>Error Response Format:</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "error": "Route not found",
+  "path": "/api/invalid",
+  "method": "GET",
+  "timestamp": "2024-10-20T12:00:00.000Z",
+  "suggestion": "Check /api for available endpoints"
+}</code></pre>
+                </div>
+            </section>
             <section id="errors" class="endpoint-card" style="--card-index: 15">
                 <h2><span class="icon icon-warning"></span> Error Codes</h2>
                 <table class="param-table">
@@ -695,3 +1711,4 @@
         </script>
     </body>
 </html>
+
