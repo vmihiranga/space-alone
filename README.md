@@ -16,12 +16,13 @@ An immersive space-themed web experience that takes you on a journey through the
 
 ## 📊 PROJECT STATUS
 
-![Stars](https://img.shields.io/github/stars/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=yellow)
-![Forks](https://img.shields.io/github/forks/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=blue)
-![Issues](https://img.shields.io/github/issues/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=red)
-![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)
-![Visitors](https://api.visitorbadge.io/api/visitors?path=vmihiranga%2Fspace-alone&label=Visitors&countColor=%23263759&style=for-the-badge)
-![Last Commit](https://img.shields.io/github/last-commit/vmihiranga/space-alone?style=for-the-badge&logo=git&logoColor=white&color=purple)
+[![Stars](https://img.shields.io/github/stars/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=yellow)](https://github.com/vmihiranga/space-alone/stargazers)
+[![Forks](https://img.shields.io/github/forks/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=blue)](https://github.com/vmihiranga/space-alone/network/members)
+[![Issues](https://img.shields.io/github/issues/vmihiranga/space-alone?style=for-the-badge&logo=github&logoColor=white&color=red)](https://github.com/vmihiranga/space-alone/issues)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
+[![Visitors](https://api.visitorbadge.io/api/visitors?path=vmihiranga%2Fspace-alone&label=Visitors&countColor=%23263759&style=for-the-badge)](https://github.com/vmihiranga/space-alone)
+[![Last Commit](https://img.shields.io/github/last-commit/vmihiranga/space-alone?style=for-the-badge&logo=git&logoColor=white&color=purple)](https://github.com/vmihiranga/space-alone/commits)
+
 
 ## 🛠️ TECH STACK
 
